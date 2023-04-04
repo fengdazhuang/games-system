@@ -3,6 +3,8 @@ package com.fzz.common.result;
 import com.fzz.common.enums.ResponseStatusEnum;
 import lombok.Data;
 
+import java.util.Map;
+
 @Data
 public class ReturnResult{
 
@@ -25,6 +27,13 @@ public class ReturnResult{
         this.code = responseStatus.code();
         this.message = responseStatus.message();
         this.success = responseStatus.success();
+    }
+
+    public ReturnResult(ResponseStatusEnum responseStatus,Object data) {
+        this.code = responseStatus.code();
+        this.message = responseStatus.message();
+        this.success = responseStatus.success();
+        this.data=data;
     }
 
     /**
@@ -54,10 +63,21 @@ public class ReturnResult{
     }
 
 
+    /**
+     * 异常返回
+     * @param responseStatusEnum 异常类型
+     * @return 异常包装类
+     */
+    public static ReturnResult exception(ResponseStatusEnum responseStatusEnum) {
+        return new ReturnResult(responseStatusEnum);
+    }
 
-
-
-
-
-
+    /**
+     * 返回错误集合
+     * @param errors 错误信息集合
+     * @return 错误集合包装对象
+     */
+    public static ReturnResult errorMap(Map<String, String> errors) {
+        return new ReturnResult(ResponseStatusEnum.FAILED,errors);
+    }
 }

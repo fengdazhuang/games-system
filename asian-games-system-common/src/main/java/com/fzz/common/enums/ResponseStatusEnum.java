@@ -7,15 +7,11 @@ public enum ResponseStatusEnum {
 
     //admin
     ADMIN_NOT_EXISTS(201,false,"管理员用户名错误或不存在"),
-    ADMIN_PASSWORD_ERROR(202,false,"管理员密码错误")
+    ADMIN_PASSWORD_ERROR(202,false,"管理员密码错误"),
+    ADMIN_NOT_AVAILABLE(203,false ,"该管理员已被禁用" ),
 
+    SYSTEM_VALIDATE_CODE_ERROR(600,false ,"验证码错误" );
 
-
-
-
-
-
-    ;
 
 
 

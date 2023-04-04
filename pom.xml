@@ -9,6 +9,9 @@
         <module>asian-games-system-model</module>
         <module>asian-games-system-service-api</module>
         <module>asian-games-system-service-personnel</module>
+        <module>asian-games-system-service-news</module>
+        <module>asian-games-system-service-service</module>
+        <module>asian-games-system-service-competition</module>
     </modules>
 
 
@@ -31,6 +34,7 @@
         <mybatis-spring-boot-starter.version>2.1.0</mybatis-spring-boot-starter.version>
         <mybatis-plus-boot-starter.version>3.4.2</mybatis-plus-boot-starter.version>
 
+        <fastjson.version>1.2.76</fastjson.version>
         <okhttp.version>4.2.2</okhttp.version>
         <jackson.version>2.10.2</jackson.version>
         <lombok.version>1.18.24</lombok.version>
@@ -75,13 +79,6 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!-- 引入 mongodb 依赖
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongodb-driver</artifactId>
-                &lt;!&ndash;mongodb-driver.version&ndash;&gt;
-                <version>3.11.1</version>
-            </dependency>-->
 
             <!-- mysql 驱动 -->
             <dependency>
@@ -119,6 +116,12 @@
                 <version>${jackson.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
             <!-- apache 工具类 -->
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -143,22 +146,22 @@
                 <version>${google-guava.version}</version>
             </dependency>
 
-            <!-- swagger2 配置 -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox-swagger2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox-swagger2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>swagger-bootstrap-ui</artifactId>
-                <version>${swagger-bootstrap-ui.version}</version>
-            </dependency>
+<!--            &lt;!&ndash; swagger2 配置 &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>io.springfox</groupId>-->
+<!--                <artifactId>springfox-swagger2</artifactId>-->
+<!--                <version>${springfox-swagger2.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.springfox</groupId>-->
+<!--                <artifactId>springfox-swagger-ui</artifactId>-->
+<!--                <version>${springfox-swagger2.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.github.xiaoymin</groupId>-->
+<!--                <artifactId>swagger-bootstrap-ui</artifactId>-->
+<!--                <version>${swagger-bootstrap-ui.version}</version>-->
+<!--            </dependency>-->
 
             <!-- 文件上传fdfs工具 -->
             <dependency>

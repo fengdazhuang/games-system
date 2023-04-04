@@ -9,25 +9,22 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName(value = "player")
-public class Player {
+@TableName(value = "competition_info")
+public class CompetitionInfo {
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 
-    private Integer sex;
+    private String category;
 
-    private String country;
-
-    private Integer competitionName;
-
-    private String email;
+    private String principal;
 
     private Date createTime;
 
+    private Date updateTime;
+
     @TableLogic
     private Integer isDeleted;
-
 }

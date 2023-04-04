@@ -1,5 +1,6 @@
 package com.fzz.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.util.Date;
 @TableName(value = "admin")
 public class Admin {
 
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     private String username;
@@ -18,6 +19,12 @@ public class Admin {
     private String password;
 
     private Integer sex;
+
+    /**
+     * 0 正常
+     * 1 禁用
+     */
+    private Integer status;
 
     private Date createTime;
 
