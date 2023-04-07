@@ -17,11 +17,15 @@ public class Player {
 
     private String name;
 
+    private String photo;
+
     private Integer sex;
 
     private String country;
 
-    private Integer competitionName;
+    private Integer competitionNameId;
+
+    private Integer competitionCategoryId;
 
     private String email;
 

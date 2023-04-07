@@ -13,7 +13,6 @@ import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.ValidateCodeVO;
 import com.fzz.personnel.service.AdminService;
 import com.wf.captcha.SpecCaptcha;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,18 +79,15 @@ public class AdminController extends BaseController implements AdminControllerAp
      * @return 验证码图片键值对
      */
     @Override
-    public ReturnResult getCodeImage(String key) {
-        if (StringUtils.isNotBlank(key)) {
-            redisUtil.del(key);
-        }
-        key = UUID.randomUUID().toString();
+    public ReturnResult getCodeImage() {
+        String key = UUID.randomUUID().toString();
         SpecCaptcha specCaptcha = ValidateCodeUtils.validateCodeImage();
         String code = specCaptcha.text();
         String base64 = specCaptcha.toBase64();
         redisUtil.set(key,code,30*60);
         ValidateCodeVO validateCodeVO=new ValidateCodeVO();
         validateCodeVO.setKey(key);
-        validateCodeVO.setCodeImage(base64);
+        validateCodeVO.setValidateCode(base64);
         return ReturnResult.ok(validateCodeVO);
     }
 

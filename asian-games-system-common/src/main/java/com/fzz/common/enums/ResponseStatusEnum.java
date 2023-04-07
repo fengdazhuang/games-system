@@ -10,7 +10,11 @@ public enum ResponseStatusEnum {
     ADMIN_PASSWORD_ERROR(202,false,"管理员密码错误"),
     ADMIN_NOT_AVAILABLE(203,false ,"该管理员已被禁用" ),
 
-    SYSTEM_VALIDATE_CODE_ERROR(600,false ,"验证码错误" );
+    COMPETITION_CATEGORY_ADD_ERROR(301,false ,"赛事类型添加失败" ),
+    COMPETITION_INFO_ADD_ERROR(302,false , "赛事项目添加失败"),
+
+    SYSTEM_VALIDATE_CODE_ERROR(600,false ,"验证码错误" ),
+    SYSTEM_BUSY_ERROR(601,false ,"系统繁忙，请稍后重试" ) ;
 
 
 

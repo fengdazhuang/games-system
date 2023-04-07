@@ -1,8 +1,8 @@
 server:
-  port: 8004
+  port: 8005
 spring:
   application:
-    name: asian-games-system-competition
+    name: asian-games-system-file
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -19,3 +19,8 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+fdfs:
+  connect-timeout: 30
+  tracker-list: 192.168.91.136:22122
+  so-timeout: 30

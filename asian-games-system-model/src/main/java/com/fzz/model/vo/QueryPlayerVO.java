@@ -1,4 +1,4 @@
-package com.fzz.model.entity;
+package com.fzz.model.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,28 +9,29 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName(value = "judge")
-public class Judge {
+@TableName(value = "player")
+public class QueryPlayerVO {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     private String name;
 
-    private String email;
-
-    private Integer competitionNameId;
-
-    private Integer competitionCategoryId;
+    private String photo;
 
     private Integer sex;
 
     private String country;
 
+    private String competitionName;
+
+    private String competitionCategory;
+
+    private String email;
+
     private Date createTime;
 
     @TableLogic
     private Integer isDeleted;
-
 
 }

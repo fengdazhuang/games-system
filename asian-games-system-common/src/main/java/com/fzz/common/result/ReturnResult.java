@@ -16,6 +16,10 @@ public class ReturnResult{
 
     private Object data;
 
+    public ReturnResult(){
+
+    }
+
     public ReturnResult(Object data) {
         this.code = ResponseStatusEnum.SUCCESS.code();
         this.message = ResponseStatusEnum.SUCCESS.message();

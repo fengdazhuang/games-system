@@ -12,6 +12,7 @@
         <module>asian-games-system-service-news</module>
         <module>asian-games-system-service-service</module>
         <module>asian-games-system-service-competition</module>
+        <module>asian-games-system-service-file</module>
     </modules>
 
 
@@ -146,22 +147,22 @@
                 <version>${google-guava.version}</version>
             </dependency>
 
-<!--            &lt;!&ndash; swagger2 配置 &ndash;&gt;-->
-<!--            <dependency>-->
-<!--                <groupId>io.springfox</groupId>-->
-<!--                <artifactId>springfox-swagger2</artifactId>-->
-<!--                <version>${springfox-swagger2.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>io.springfox</groupId>-->
-<!--                <artifactId>springfox-swagger-ui</artifactId>-->
-<!--                <version>${springfox-swagger2.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>com.github.xiaoymin</groupId>-->
-<!--                <artifactId>swagger-bootstrap-ui</artifactId>-->
-<!--                <version>${swagger-bootstrap-ui.version}</version>-->
-<!--            </dependency>-->
+            <!-- swagger2 配置 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>swagger-bootstrap-ui</artifactId>
+                <version>${swagger-bootstrap-ui.version}</version>
+            </dependency>
 
             <!-- 文件上传fdfs工具 -->
             <dependency>

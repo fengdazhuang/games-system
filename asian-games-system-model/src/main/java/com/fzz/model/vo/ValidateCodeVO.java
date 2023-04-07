@@ -8,5 +8,5 @@ public class ValidateCodeVO {
 
     private String key;
 
-    private String codeImage;
+    private String validateCode;
 }
