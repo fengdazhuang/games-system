@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
-import com.fzz.model.bo.AddJudge;
+import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.mapper.JudgeMapper;
@@ -31,7 +31,7 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
 
 
     @Override
-    public boolean saveJudge(AddJudge addJudge) {
+    public boolean saveJudge(AddJudgeBO addJudge) {
         Judge judge=new Judge();
         BeanUtils.copyProperties(addJudge,judge);
         SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
@@ -57,7 +57,7 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
     }
 
     @Override
-    public boolean updatePlayerById(AddJudge addJudge) {
+    public boolean updatePlayerById(AddJudgeBO addJudge) {
         Judge judge=new Judge();
         BeanUtils.copyProperties(addJudge,judge);
         return this.updateById(judge);
@@ -67,8 +67,9 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
     public Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
         Page<Judge> playerPage=new Page<>(pageNumber,pageSize);
         LambdaQueryWrapper<Judge> queryWrapper=new LambdaQueryWrapper<>();
+        String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Judge::getCountry, country);
-        queryWrapper.eq(StringUtils.isNotBlank(competitionName),Judge::getCompetitionName,competitionName);
+        queryWrapper.in(names.length>0, Judge::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Judge::getName,name);
         this.page(playerPage,queryWrapper);
         Page<QueryJudgeVO> queryJudgeVOPage=new Page<>();

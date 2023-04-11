@@ -1,7 +1,7 @@
 package com.fzz.api.controller.personnal;
 
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.AddJudge;
+import com.fzz.model.bo.AddJudgeBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +22,11 @@ public interface JudgeControllerApi {
 
     @PostMapping("/addJudge")
     @ApiOperation(value = "添加裁判")
-    ReturnResult addJudge(@Valid @RequestBody AddJudge addJudge);
+    ReturnResult addJudge(@Valid @RequestBody AddJudgeBO addJudge);
 
     @PutMapping("/updateJudge")
     @ApiOperation(value = "修改裁判")
-    ReturnResult updateJudge(@Valid @RequestBody AddJudge addJudge);
+    ReturnResult updateJudge(@Valid @RequestBody AddJudgeBO addJudge);
 
     @GetMapping("/queryJudge")
     @ApiOperation(value = "查找裁判")

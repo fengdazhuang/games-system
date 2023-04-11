@@ -3,7 +3,7 @@ package com.fzz.competition.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.competition.mapper.CompetitionCategoryMapper;
 import com.fzz.competition.service.CompetitionCategoryService;
-import com.fzz.model.bo.AddCompetitionCategory;
+import com.fzz.model.bo.AddCompetitionCategoryBO;
 import com.fzz.model.entity.CompetitionCategory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class CompetitionCategoryServiceImpl extends ServiceImpl<CompetitionCateg
 
     @Override
     @Transactional
-    public boolean saveCompetitionCategory(AddCompetitionCategory addCompetitionCategory){
+    public boolean saveCompetitionCategory(AddCompetitionCategoryBO addCompetitionCategory){
         CompetitionCategory competitionCategory=new CompetitionCategory();
         BeanUtils.copyProperties(addCompetitionCategory,competitionCategory);
         competitionCategory.setCreateTime(new Date());

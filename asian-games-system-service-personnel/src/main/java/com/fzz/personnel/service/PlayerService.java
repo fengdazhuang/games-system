@@ -2,7 +2,7 @@ package com.fzz.personnel.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fzz.model.bo.AddPlayer;
+import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryCountryVO;
 import com.fzz.model.vo.QueryPlayerVO;
@@ -13,11 +13,11 @@ public interface PlayerService extends IService<Player> {
 
     List<QueryCountryVO> getRatioByCountry();
 
-    boolean savePlayer(AddPlayer addPlayer);
+    boolean savePlayer(AddPlayerBO addPlayer);
 
     boolean removePlayer(Long id);
 
-    boolean updatePlayerById(AddPlayer addPlayer);
+    boolean updatePlayerById(AddPlayerBO addPlayer);
 
     Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName, String name, String country);
 }

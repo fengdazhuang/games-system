@@ -7,7 +7,7 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
-import com.fzz.model.bo.AddJudge;
+import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.service.JudgeService;
@@ -39,7 +39,7 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     }
 
     @Override
-    public ReturnResult addJudge(AddJudge addJudge) {
+    public ReturnResult addJudge(AddJudgeBO addJudge) {
         boolean res = judgeService.saveJudge(addJudge);
         if(res){
             return ReturnResult.ok();
@@ -48,7 +48,7 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     }
 
     @Override
-    public ReturnResult updateJudge(AddJudge addJudge) {
+    public ReturnResult updateJudge(AddJudgeBO addJudge) {
         boolean res = judgeService.updatePlayerById(addJudge);
         if(res){
             return ReturnResult.ok();

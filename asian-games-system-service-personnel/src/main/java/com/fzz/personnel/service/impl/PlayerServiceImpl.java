@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
-import com.fzz.model.bo.AddPlayer;
+import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryCountryVO;
 import com.fzz.model.vo.QueryPlayerVO;
@@ -55,7 +55,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     @Override
     @Transactional
-    public boolean savePlayer(AddPlayer addPlayer) {
+    public boolean savePlayer(AddPlayerBO addPlayer) {
         Player player=new Player();
         BeanUtils.copyProperties(addPlayer,player);
         SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
@@ -83,7 +83,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     @Override
     @Transactional
-    public boolean updatePlayerById(AddPlayer addPlayer) {
+    public boolean updatePlayerById(AddPlayerBO addPlayer) {
         Player player=new Player();
         BeanUtils.copyProperties(addPlayer,player);
         return this.updateById(player);
@@ -93,8 +93,9 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     public Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
         Page<Player> playerPage=new Page<>(pageNumber,pageSize);
         LambdaQueryWrapper<Player> queryWrapper=new LambdaQueryWrapper<>();
+        String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Player::getCountry, country);
-        queryWrapper.eq(StringUtils.isNotBlank(competitionName),Player::getCompetitionName,competitionName);
+        queryWrapper.in(names.length>0,Player::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Player::getName,name);
         this.page(playerPage,queryWrapper);
         Page<QueryPlayerVO> queryPlayerVOPage=new Page<>();

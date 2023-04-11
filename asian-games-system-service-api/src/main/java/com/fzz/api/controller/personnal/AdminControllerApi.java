@@ -1,13 +1,12 @@
 package com.fzz.api.controller.personnal;
 
 import com.fzz.common.result.ReturnResult;
+import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.AdminLoginBO;
+import com.fzz.model.entity.Admin;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,4 +32,26 @@ public interface AdminControllerApi {
     ReturnResult logout(Long id,
                        HttpServletRequest request,
                        HttpServletResponse response) throws Exception;
+
+    @GetMapping("/listAdmins")
+    @ApiOperation(value = "分页查询所有管理员")
+    ReturnResult listAdmins(@RequestParam Integer pageNumber,
+                            @RequestParam Integer pageSize,
+                            @RequestParam String name);
+
+    @PostMapping("/addAdmin")
+    @ApiOperation(value = "添加管理员")
+    ReturnResult addAdmin(@RequestBody AddAdminBO addAdminBO);
+
+    @GetMapping("/queryAdmin")
+    @ApiOperation(value = "查询该用户名是否已经存在")
+    ReturnResult queryAdmin(@RequestParam String username);
+
+    @PutMapping("/updateStatus")
+    @ApiOperation(value = "修改管理员状态")
+    ReturnResult updateStatus(@RequestParam Integer id,@RequestParam Integer status);
+
+    @PutMapping("/resetPassword")
+    @ApiOperation(value = "重置管理员密码")
+    ReturnResult resetPassword(@RequestBody AddAdminBO addAdminBO);
 }

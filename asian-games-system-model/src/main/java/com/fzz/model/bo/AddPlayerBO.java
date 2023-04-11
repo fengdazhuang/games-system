@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class AddPlayer {
+public class AddPlayerBO {
 
     private Long id;
 
