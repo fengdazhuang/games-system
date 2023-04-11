@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,19 +18,26 @@ import java.util.List;
 public class CompetitionInfoServiceImpl extends ServiceImpl<CompetitionInfoMapper, CompetitionInfo> implements CompetitionInfoService {
 
 
-    @Override
-    public List<CompetitionInfo> listComNamesByComCategoryId(Integer competitionCategoryId) {
-        LambdaQueryWrapper<CompetitionInfo> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(CompetitionInfo::getCompetitionCategoryId,competitionCategoryId);
-        return this.list(queryWrapper);
-
-    }
+//    @Override
+//    public List<CompetitionInfo> listComNamesByComCategoryId(Integer competitionCategoryId) {
+//        LambdaQueryWrapper<CompetitionInfo> queryWrapper=new LambdaQueryWrapper<>();
+//        queryWrapper.eq(CompetitionInfo::getCompetitionCategoryId,competitionCategoryId);
+//        return this.list(queryWrapper);
+//
+//    }
 
     @Override
     @Transactional
     public boolean saveCompetitionInfo(AddCompetitionInfo addCompetitionInfo) {
         CompetitionInfo competitionInfo=new CompetitionInfo();
         BeanUtils.copyProperties(addCompetitionInfo,competitionInfo);
+        competitionInfo.setCreateTime(new Date());
+        competitionInfo.setUpdateTime(new Date());
         return this.save(competitionInfo);
+    }
+
+    @Override
+    public List<CompetitionInfo> listComInfos() {
+        return this.list();
     }
 }

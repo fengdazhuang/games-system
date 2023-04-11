@@ -26,13 +26,13 @@ public class Swagger2Config {
     public Docket createRestApi() {
 //        Predicate<RequestHandler> adminPredicate = RequestHandlerSelectors.basePackage("com.imooc.admin.controller");
 //        Predicate<RequestHandler> articlePredicate = RequestHandlerSelectors.basePackage("com.imooc.article.controller");
-        Predicate<RequestHandler> predicate = RequestHandlerSelectors.basePackage("com.fzz.personnel.controller");
-//        Predicate<RequestHandler> filesPredicate = RequestHandlerSelectors.basePackage("com.imooc.files.controller");
+        Predicate<RequestHandler> personnelPredicate = RequestHandlerSelectors.basePackage("com.fzz.personnel.controller");
+        Predicate<RequestHandler> competitionPredicate = RequestHandlerSelectors.basePackage("com.fzz.competition.controller");
 
         return new Docket(DocumentationType.SWAGGER_2)  // 指定api类型为swagger2
                 .apiInfo(apiInfo())                 // 用于定义api文档汇总信息
                 .select()
-                .apis(Predicates.or(predicate))
+                .apis(Predicates.or(personnelPredicate,competitionPredicate))
 //                .apis(Predicates.or(adminPredicate, articlePredicate, userPredicate, filesPredicate))
                 .paths(PathSelectors.any())         // 所有controller
                 .build();
@@ -41,11 +41,11 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("慕课新闻·自媒体接口api")                       // 文档页标题
-                .contact(new Contact("imooc",
+                .title("亚运会管理系统接口api")                       // 文档页标题
+                .contact(new Contact("asian-games-system",
                         "https://www.imooc.com",
                         "abc@imooc.com"))                   // 联系人信息
-                .description("专为慕课新闻·自媒体平台提供的api文档")      // 详细信息
+                .description("专为亚运会提供的api文档")      // 详细信息
                 .version("1.0.1")                               // 文档版本号
                 .termsOfServiceUrl("https://www.imooc.com")     // 网站地址
                 .build();

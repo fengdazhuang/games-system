@@ -19,9 +19,7 @@ public class Judge {
 
     private String email;
 
-    private Integer competitionNameId;
-
-    private Integer competitionCategoryId;
+    private String competitionName;
 
     private Integer sex;
 

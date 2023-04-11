@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Api(value = "AdminController")
-@RequestMapping("/admin")
+@RequestMapping("/api1/admin")
 public interface AdminControllerApi {
 
 

@@ -23,9 +23,7 @@ public class Player {
 
     private String country;
 
-    private Integer competitionNameId;
-
-    private Integer competitionCategoryId;
+    private String competitionName;
 
     private String email;
 

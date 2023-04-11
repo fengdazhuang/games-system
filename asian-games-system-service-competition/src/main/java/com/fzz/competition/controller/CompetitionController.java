@@ -45,17 +45,30 @@ public class CompetitionController extends BaseController implements Competition
     }
 
     @Override
-    public ReturnResult queryComNames(Integer competitionCategoryId) {
-        String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId);
+    public ReturnResult queryComNames() {
+        String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS);
         List<CompetitionInfo> competitionInfos;
         if(StringUtils.isNotBlank(infosStr)){
             competitionInfos = JsonUtils.jsonToList(infosStr, CompetitionInfo.class);
         }else{
-            competitionInfos = competitionInfoService.listComNamesByComCategoryId(competitionCategoryId);
-            redisUtil.set(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId, JsonUtils.objectToJson(competitionInfos));
+            competitionInfos = competitionInfoService.listComInfos();
+            redisUtil.set(REDIS_COMPETITION_INFOS,JsonUtils.objectToJson(competitionInfos));
         }
         return ReturnResult.ok(competitionInfos);
     }
+
+//    @Override
+//    public ReturnResult queryComNames(Integer competitionCategoryId) {
+//        String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId);
+//        List<CompetitionInfo> competitionInfos;
+//        if(StringUtils.isNotBlank(infosStr)){
+//            competitionInfos = JsonUtils.jsonToList(infosStr, CompetitionInfo.class);
+//        }else{
+//            competitionInfos = competitionInfoService.listComNamesByComCategoryId(competitionCategoryId);
+//            redisUtil.set(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId, JsonUtils.objectToJson(competitionInfos));
+//        }
+//        return ReturnResult.ok(competitionInfos);
+//    }
 
     @Override
     public ReturnResult addComCategory(AddCompetitionCategory addCompetitionCategory) {
@@ -71,10 +84,13 @@ public class CompetitionController extends BaseController implements Competition
     public ReturnResult addComInfo(AddCompetitionInfo addCompetitionInfo) {
         boolean res = competitionInfoService.saveCompetitionInfo(addCompetitionInfo);
         if(res){
-            redisUtil.del(REDIS_COMPETITION_INFOS+":"+addCompetitionInfo.getCompetitionCategoryId());
+//            redisUtil.del(REDIS_COMPETITION_INFOS+":"+addCompetitionInfo.getCompetitionCategoryId());
+            redisUtil.del(REDIS_COMPETITION_INFOS);
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_ADD_ERROR);
 
     }
+
+
 }

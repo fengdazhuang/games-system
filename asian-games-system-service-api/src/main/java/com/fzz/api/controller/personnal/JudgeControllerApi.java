@@ -1,19 +1,38 @@
 package com.fzz.api.controller.personnal;
 
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.ListJudgesBO;
+import com.fzz.model.bo.AddJudge;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RequestMapping("/judge")
+@RequestMapping("/api1/judge")
 @Api(value = "judgeController")
 public interface JudgeControllerApi {
 
-    @RequestMapping("/listJudges")
+    @GetMapping("/listJudges")
     @ApiOperation(value="根据条件分页查询裁判")
-    ReturnResult listJudges(@Valid @RequestBody ListJudgesBO listJudgeBO);
+    ReturnResult listJudges(@RequestParam Integer pageNumber,
+                            @RequestParam Integer pageSize,
+                            @RequestParam String competitionName,
+                            @RequestParam String name,
+                            @RequestParam String country);
+
+    @PostMapping("/addJudge")
+    @ApiOperation(value = "添加裁判")
+    ReturnResult addJudge(@Valid @RequestBody AddJudge addJudge);
+
+    @PutMapping("/updateJudge")
+    @ApiOperation(value = "修改裁判")
+    ReturnResult updateJudge(@Valid @RequestBody AddJudge addJudge);
+
+    @GetMapping("/queryJudge")
+    @ApiOperation(value = "查找裁判")
+    ReturnResult queryJudge(@RequestParam Long id);
+
+    @DeleteMapping("/deleteJudge")
+    @ApiOperation(value = "删除裁判")
+    ReturnResult deleteJudge(@RequestParam Long id);
 }

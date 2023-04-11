@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface CompetitionInfoService extends IService<CompetitionInfo> {
 
-    List<CompetitionInfo> listComNamesByComCategoryId(Integer competitionCategoryId);
+//    List<CompetitionInfo> listComNamesByComCategoryId(Integer competitionCategoryId);
 
     boolean saveCompetitionInfo(AddCompetitionInfo addCompetitionInfo);
+
+    List<CompetitionInfo> listComInfos();
 }

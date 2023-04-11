@@ -3,16 +3,17 @@ package com.fzz.personnel.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.personnal.PlayerControllerApi;
+import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.ListPlayersBO;
+import com.fzz.common.utils.JsonUtils;
+import com.fzz.common.utils.RedisUtil;
+import com.fzz.model.bo.AddPlayer;
 import com.fzz.model.entity.Player;
-import com.fzz.model.vo.QueryCountryVO;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.service.PlayerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class PlayerController extends BaseController implements PlayerControllerApi {
@@ -20,28 +21,66 @@ public class PlayerController extends BaseController implements PlayerController
     @Autowired
     private PlayerService playerService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+
+//    @Override
+//    public ReturnResult queryRatioByCountry() {
+//        List<QueryCountryVO> queryCountryVOList = playerService.getRatioByCountry();
+//        return ReturnResult.ok(queryCountryVOList);
+//    }
+
 
     @Override
-    public ReturnResult queryRatioByCountry() {
-        List<QueryCountryVO> queryCountryVOList = playerService.getRatioByCountry();
-        return ReturnResult.ok(queryCountryVOList);
-    }
-
-    @Override
-    public ReturnResult listPlayers(ListPlayersBO listPlayersBO) {
-        Integer pageNumber = listPlayersBO.getPageNumber();
-        Integer pageSize = listPlayersBO.getPageSize();
+    public ReturnResult listPlayers(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
         if(pageNumber<=0){
-            listPlayersBO.setPageNumber(COMMON_START_PAGE);
+            pageNumber=COMMON_START_PAGE;
         }
         if(pageSize<=0){
-            listPlayersBO.setPageSize(COMMON_PAGE_SIZE);
+            pageSize=COMMON_PAGE_SIZE;
         }
-        Page<QueryPlayerVO> playerPage=playerService.pagePlayers(listPlayersBO);
+        Page<QueryPlayerVO> playerPage=playerService.pagePlayers(pageNumber, pageSize, competitionName, name, country);
         return ReturnResult.ok(playerPage);
     }
 
+    @Override
+    public ReturnResult addPlayer(AddPlayer addPlayer) {
+        boolean res = playerService.savePlayer(addPlayer);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.PLAYER_CREATE_ERROR);
+    }
 
+    @Override
+    public ReturnResult deletePlayer(Long id) {
+        boolean res = playerService.removePlayer(id);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.PLAYER_DELETE_ERROR);
+    }
+
+    @Override
+    public ReturnResult updatePlayer(AddPlayer addPlayer) {
+        boolean res = playerService.updatePlayerById(addPlayer);
+        if(res){
+            return ReturnResult.ok();
+        }
+
+        return ReturnResult.error(ResponseStatusEnum.PLAYER_MODIFY_ERROR);
+    }
+
+    @Override
+    public ReturnResult queryPlayer(Long id) {
+        String playerStr = redisUtil.get(REDIS_PLAYER_INFO + ":" + id);
+        if(StringUtils.isNotBlank(playerStr)){
+            Player player = JsonUtils.jsonToPojo(playerStr, Player.class);
+            return ReturnResult.ok(player);
+        }
+        return ReturnResult.error(ResponseStatusEnum.PLAYER_NOT_EXISTS);
+    }
 
 
 }

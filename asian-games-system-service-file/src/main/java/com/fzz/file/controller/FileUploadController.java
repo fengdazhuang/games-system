@@ -24,7 +24,7 @@ public class FileUploadController extends BaseController implements FileUploadCo
     private FileResource fileResource;
 
     @Override
-    public ReturnResult uploadFiles(Integer competitionNameId, MultipartFile[] files) throws IOException {
+    public ReturnResult uploadFiles(MultipartFile[] files) throws IOException {
         List<String> filePathList = new ArrayList<>();
         if (files != null && files.length > 0) {
             for (MultipartFile file : files) {

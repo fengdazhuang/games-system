@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * mybatisplus的组件
  */
-@Component
+//@Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {

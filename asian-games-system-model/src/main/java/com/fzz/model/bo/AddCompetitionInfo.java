@@ -3,7 +3,6 @@ package com.fzz.model.bo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class AddCompetitionInfo {
@@ -18,8 +17,8 @@ public class AddCompetitionInfo {
     @NotBlank(message = "赛事图片不能为空")
     private String picture;
 
-    @NotNull(message = "赛事类型不能为空")
-    private Integer competitionCategoryId;
+    @NotBlank(message = "赛事类型不能为空")
+    private String type;
 
     @NotBlank(message = "赛事介绍不能为空")
     private String info;

@@ -24,6 +24,9 @@ public class BaseController {
     public static final String REDIS_COMPETITION_CATEGORYS = "redis_competition_categorys";
     public static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
 
+    public static final String REDIS_PLAYER_INFO = "redis_player_info";
+    public static final String REDIS_JUDGE_INFO = "redis_judge_info";
+
 
     public static final String REDIS_ADMIN_TOKEN = "redis_admin_token";
 

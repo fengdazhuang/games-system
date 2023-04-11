@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,6 +26,8 @@ public class CompetitionCategoryServiceImpl extends ServiceImpl<CompetitionCateg
     public boolean saveCompetitionCategory(AddCompetitionCategory addCompetitionCategory){
         CompetitionCategory competitionCategory=new CompetitionCategory();
         BeanUtils.copyProperties(addCompetitionCategory,competitionCategory);
+        competitionCategory.setCreateTime(new Date());
+        competitionCategory.setUpdateTime(new Date());
         return this.save(competitionCategory);
     }
 }

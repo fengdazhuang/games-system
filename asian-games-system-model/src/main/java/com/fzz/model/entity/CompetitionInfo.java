@@ -21,7 +21,9 @@ public class CompetitionInfo {
 
     private String picture;
 
-    private Integer competitionCategoryId;
+//    private Integer competitionCategoryId;
+
+    private String type;
 
     private String principal;
 
