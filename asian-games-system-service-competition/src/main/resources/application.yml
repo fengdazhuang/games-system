@@ -14,7 +14,7 @@ spring:
     port: 6379
     password: 123456
     database: 0
-    timeout: 5000
+    timeout: 10000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
