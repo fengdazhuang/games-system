@@ -8,8 +8,11 @@ import com.fzz.common.enums.AdminStatusEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.AddAdminBO;
+import com.fzz.model.bo.ResetPasswordBO;
+import com.fzz.model.bo.UpdateAdminStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
+import com.fzz.personnel.entity.EmailContent;
 import com.fzz.personnel.mapper.AdminMapper;
 import com.fzz.personnel.service.AdminService;
 import com.fzz.personnel.service.IEmailService;
@@ -47,11 +50,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return this.getOne(queryWrapper);
     }
 
+
     @Override
     public Page<QueryAdminVO> pageAdmins(Integer pageNumber, Integer pageSize, String name) {
         Page<Admin> adminPage=new Page<>(pageNumber,pageSize);
         LambdaQueryWrapper<Admin> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(name), Admin::getUsername,name);
+        queryWrapper.like(StringUtils.isNotBlank(name), Admin::getName,name);
         this.page(adminPage,queryWrapper);
         Page<QueryAdminVO> queryAdminVOPage=new Page<>();
         BeanUtils.copyProperties(adminPage,queryAdminVOPage,"records");
@@ -69,8 +73,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     public boolean saveAdmin(AddAdminBO addAdminBO) {
         Admin admin=new Admin();
         BeanUtils.copyProperties(addAdminBO,admin);
+        String randomPassword = RandomStringUtils.randomAlphanumeric(10);
+        admin.setPassword(randomPassword);
         admin.setCreateTime(new Date());
-        return this.save(admin);
+        boolean res = this.save(admin);
+        if(res){
+            String username = admin.getUsername();
+            String password = admin.getPassword();
+            iEmailService.sendSimpleMail(Arrays.asList(admin.getEmail()),"亚运会管理员账户创建成功",
+                    EmailContent.getCreateAdminEmailContent(username,password));
+        }
+        return res;
     }
 
     @Override
@@ -80,7 +93,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public boolean updateStatusById(Integer id,Integer status) {
+    public boolean updateAdminStatus(UpdateAdminStatusBO updateAdminStatusBO) {
+        Integer id = updateAdminStatusBO.getId();
+        Integer status = updateAdminStatusBO.getStatus();
         LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Admin::getId,id);
         updateWrapper.set(Admin::getStatus, status.equals(AdminStatusEnum.AVAILABLE.code())
@@ -89,13 +104,16 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public void resetAdminPasswordById(Integer id,String email) {
+    public void resetAdminPassword(ResetPasswordBO resetPasswordBO) {
+        Integer id = resetPasswordBO.getId();
+        String email = resetPasswordBO.getEmail();
         String randomPassword = RandomStringUtils.randomAlphanumeric(10);
         LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Admin::getId,id);
         updateWrapper.set(Admin::getPassword,randomPassword);
         this.update(updateWrapper);
-        iEmailService.sendSimpleMail(Arrays.asList(email),null,randomPassword);
+        iEmailService.sendSimpleMail(Arrays.asList(email),"亚运会管理系统密码重置",
+                EmailContent.getResetPasswordEmailContent(randomPassword));
 
     }
 

@@ -16,6 +16,9 @@ public class IEmailServiceImpl implements IEmailService {
     @Value("${spring.mail.username}")
     private String sender;
 
+    @Value("${spring.mail.nickname}")
+    private String nickname;
+
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -23,7 +26,7 @@ public class IEmailServiceImpl implements IEmailService {
     public void sendSimpleMail(List<String> emails, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
         for(String email:emails){
-            message.setFrom(sender);
+            message.setFrom(nickname+'<'+sender+'>');
             message.setTo(email);
             message.setSubject(subject);
             message.setText(content);

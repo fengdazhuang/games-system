@@ -11,10 +11,13 @@ import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.ValidateCodeUtils;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.AdminLoginBO;
+import com.fzz.model.bo.ResetPasswordBO;
+import com.fzz.model.bo.UpdateAdminStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 import com.fzz.model.vo.ValidateCodeVO;
 import com.fzz.personnel.service.AdminService;
+import com.fzz.personnel.service.IEmailService;
 import com.wf.captcha.SpecCaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +34,9 @@ public class AdminController extends BaseController implements AdminControllerAp
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private IEmailService iEmailService;
 
     /**
      * 管理员登录
@@ -143,8 +149,8 @@ public class AdminController extends BaseController implements AdminControllerAp
     }
 
     @Override
-    public ReturnResult updateStatus(Integer id,Integer status) {
-        boolean res = adminService.updateStatusById(id,status);
+    public ReturnResult updateStatus(UpdateAdminStatusBO updateAdminStatusBO) {
+        boolean res = adminService.updateAdminStatus(updateAdminStatusBO);
         if(res){
             return ReturnResult.ok();
         }
@@ -153,8 +159,9 @@ public class AdminController extends BaseController implements AdminControllerAp
 
 
     @Override
-    public ReturnResult resetPassword(Integer id,String email) {
-        adminService.resetAdminPasswordById(id,email);
+    public ReturnResult resetPassword(ResetPasswordBO resetPasswordBO) {
+
+        adminService.resetAdminPassword(resetPasswordBO);
         return ReturnResult.ok();
     }
 
