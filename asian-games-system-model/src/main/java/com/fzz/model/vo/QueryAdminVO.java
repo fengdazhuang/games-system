@@ -12,6 +12,8 @@ public class QueryAdminVO {
 
     private String username;
 
+    private String name;
+
     private Integer sex;
 
     /**

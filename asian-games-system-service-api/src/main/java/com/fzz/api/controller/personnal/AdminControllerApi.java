@@ -53,5 +53,5 @@ public interface AdminControllerApi {
 
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置管理员密码")
-    ReturnResult resetPassword(@RequestBody AddAdminBO addAdminBO);
+    ReturnResult resetPassword(@RequestParam Integer id,@RequestParam String email);
 }

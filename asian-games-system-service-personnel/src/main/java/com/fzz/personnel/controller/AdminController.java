@@ -153,8 +153,8 @@ public class AdminController extends BaseController implements AdminControllerAp
 
 
     @Override
-    public ReturnResult resetPassword(AddAdminBO addAdminBO) {
-        adminService.resetAdminPassword(addAdminBO);
+    public ReturnResult resetPassword(Integer id,String email) {
+        adminService.resetAdminPasswordById(id,email);
         return ReturnResult.ok();
     }
 
