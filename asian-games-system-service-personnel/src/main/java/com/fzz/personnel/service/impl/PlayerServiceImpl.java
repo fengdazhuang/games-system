@@ -30,6 +30,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             "印度尼西亚","印度","伊朗","伊拉克","约旦","日本","哈萨克斯坦","吉尔吉斯斯坦","韩国","沙特阿拉伯","科威特",
             "老挝","黎巴嫩","中国澳门","马来西亚","马尔代夫"};
 
+
     private static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
     private static final String REDIS_PLAYER_INFO = "redis_player_info";
 

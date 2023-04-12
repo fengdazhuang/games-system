@@ -18,6 +18,8 @@ public class Admin {
 
     private String password;
 
+    private String name;
+
     private String picture;
 
     private Integer sex;

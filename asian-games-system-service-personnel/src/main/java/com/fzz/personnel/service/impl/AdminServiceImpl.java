@@ -89,12 +89,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public void resetAdminPassword(AddAdminBO addAdminBO) {
-        String username = addAdminBO.getUsername();
-        String email = addAdminBO.getEmail();
+    public void resetAdminPasswordById(Integer id,String email) {
         String randomPassword = RandomStringUtils.randomAlphanumeric(10);
         LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
-        updateWrapper.eq(Admin::getUsername,username);
+        updateWrapper.eq(Admin::getId,id);
         updateWrapper.set(Admin::getPassword,randomPassword);
         this.update(updateWrapper);
         iEmailService.sendSimpleMail(Arrays.asList(email),null,randomPassword);

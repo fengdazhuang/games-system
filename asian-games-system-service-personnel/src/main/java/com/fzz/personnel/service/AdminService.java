@@ -18,6 +18,6 @@ public interface AdminService extends IService<Admin> {
 
     boolean updateStatusById(Integer id,Integer status);
 
-    void resetAdminPassword(AddAdminBO addAdminBO);
+    void resetAdminPasswordById(Integer id,String email);
 
 }
