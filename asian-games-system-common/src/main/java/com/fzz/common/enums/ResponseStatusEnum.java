@@ -34,7 +34,8 @@ public enum ResponseStatusEnum {
 
 
     NEWS_CREATE_ERROR(901,false , "新闻创建失败" ),
-    NEWS(902,false , "新闻创建失败" );
+    NEWS(902,false , "新闻创建失败" ),
+    NEWS_COVER_IS_NULL(903,false , "新闻的封面为空");
 
 
 

@@ -1,17 +1,14 @@
 package com.fzz.news.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.NewsControllerApi;
-import com.fzz.common.enums.NewsStatusEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddNewsBO;
-import com.fzz.model.entity.News;
 import com.fzz.model.vo.QueryNewsVO;
 import com.fzz.news.service.NewsService;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,26 +23,16 @@ public class NewsController extends BaseController implements NewsControllerApi 
 
     @Override
     public ReturnResult addNews(AddNewsBO addNewsBO) {
-        Integer isAppoint = addNewsBO.getIsAppoint();
-        News news=new News();
-        BeanUtils.copyProperties(addNewsBO,news);
-        news.setCreateTime(new Date());
-        news.setUpdateTime(new Date());
-
-        //即时发布
-        if(isAppoint==0){
-            news.setArticleStatus(1);
-            boolean res = newsService.save(news);
-            if(res){
-                return ReturnResult.ok();
-            }
-            return ReturnResult.error(ResponseStatusEnum.NEWS_CREATE_ERROR);
-        } else {
-            news.setArticleStatus(3);
-
+        Integer articleType = addNewsBO.getArticleType();
+        String articleCover = addNewsBO.getArticleCover();
+        if(articleType==2){
+            addNewsBO.setArticleCover(null);
+        }else if(articleType==1&&StringUtils.isBlank(articleCover)){
+            return ReturnResult.error(ResponseStatusEnum.NEWS_COVER_IS_NULL);
         }
+        newsService.saveNews(addNewsBO);
+        return ReturnResult.ok();
 
-        return null;
     }
 
     @Override

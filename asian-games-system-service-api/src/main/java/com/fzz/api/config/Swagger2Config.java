@@ -28,11 +28,13 @@ public class Swagger2Config {
 //        Predicate<RequestHandler> articlePredicate = RequestHandlerSelectors.basePackage("com.imooc.article.controller");
         Predicate<RequestHandler> personnelPredicate = RequestHandlerSelectors.basePackage("com.fzz.personnel.controller");
         Predicate<RequestHandler> competitionPredicate = RequestHandlerSelectors.basePackage("com.fzz.competition.controller");
+        Predicate<RequestHandler> newsPredicate = RequestHandlerSelectors.basePackage("com.fzz.news.controller");
+        Predicate<RequestHandler> servicePredicate = RequestHandlerSelectors.basePackage("com.fzz.service.controller");
 
         return new Docket(DocumentationType.SWAGGER_2)  // 指定api类型为swagger2
                 .apiInfo(apiInfo())                 // 用于定义api文档汇总信息
                 .select()
-                .apis(Predicates.or(personnelPredicate,competitionPredicate))
+                .apis(Predicates.or(personnelPredicate,competitionPredicate,newsPredicate,servicePredicate))
 //                .apis(Predicates.or(adminPredicate, articlePredicate, userPredicate, filesPredicate))
                 .paths(PathSelectors.any())         // 所有controller
                 .build();
@@ -44,7 +46,7 @@ public class Swagger2Config {
                 .title("亚运会管理系统接口api")                       // 文档页标题
                 .contact(new Contact("asian-games-system",
                         "https://www.imooc.com",
-                        "abc@imooc.com"))                   // 联系人信息
+                        "3172029811@qq.com"))                   // 联系人信息
                 .description("专为亚运会提供的api文档")      // 详细信息
                 .version("1.0.1")                               // 文档版本号
                 .termsOfServiceUrl("https://www.imooc.com")     // 网站地址

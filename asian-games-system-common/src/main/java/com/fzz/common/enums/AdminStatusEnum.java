@@ -3,7 +3,7 @@ package com.fzz.common.enums;
 public enum AdminStatusEnum {
 
     DISABLED(1),
-    AVAILABLE(0);
+    AVAILABLE(0),;
 
 
     private final Integer code;
