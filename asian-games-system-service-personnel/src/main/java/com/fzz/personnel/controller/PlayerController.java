@@ -7,7 +7,7 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
-import com.fzz.model.bo.AddPlayer;
+import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.service.PlayerService;
@@ -28,6 +28,7 @@ public class PlayerController extends BaseController implements PlayerController
 //    @Override
 //    public ReturnResult queryRatioByCountry() {
 //        List<QueryCountryVO> queryCountryVOList = playerService.getRatioByCountry();
+
 //        return ReturnResult.ok(queryCountryVOList);
 //    }
 
@@ -45,7 +46,7 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult addPlayer(AddPlayer addPlayer) {
+    public ReturnResult addPlayer(AddPlayerBO addPlayer) {
         boolean res = playerService.savePlayer(addPlayer);
         if(res){
             return ReturnResult.ok();
@@ -63,7 +64,7 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult updatePlayer(AddPlayer addPlayer) {
+    public ReturnResult updatePlayer(AddPlayerBO addPlayer) {
         boolean res = playerService.updatePlayerById(addPlayer);
         if(res){
             return ReturnResult.ok();

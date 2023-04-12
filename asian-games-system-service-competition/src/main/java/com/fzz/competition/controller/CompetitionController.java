@@ -8,8 +8,8 @@ import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.competition.service.CompetitionCategoryService;
 import com.fzz.competition.service.CompetitionInfoService;
-import com.fzz.model.bo.AddCompetitionCategory;
-import com.fzz.model.bo.AddCompetitionInfo;
+import com.fzz.model.bo.AddCompetitionCategoryBO;
+import com.fzz.model.bo.AddCompetitionInfoBO;
 import com.fzz.model.entity.CompetitionCategory;
 import com.fzz.model.entity.CompetitionInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -71,7 +71,7 @@ public class CompetitionController extends BaseController implements Competition
 //    }
 
     @Override
-    public ReturnResult addComCategory(AddCompetitionCategory addCompetitionCategory) {
+    public ReturnResult addComCategory(AddCompetitionCategoryBO addCompetitionCategory) {
         boolean res = competitionCategoryService.saveCompetitionCategory(addCompetitionCategory);
         if(res){
             redisUtil.del(REDIS_COMPETITION_CATEGORYS);
@@ -81,7 +81,7 @@ public class CompetitionController extends BaseController implements Competition
     }
 
     @Override
-    public ReturnResult addComInfo(AddCompetitionInfo addCompetitionInfo) {
+    public ReturnResult addComInfo(AddCompetitionInfoBO addCompetitionInfo) {
         boolean res = competitionInfoService.saveCompetitionInfo(addCompetitionInfo);
         if(res){
 //            redisUtil.del(REDIS_COMPETITION_INFOS+":"+addCompetitionInfo.getCompetitionCategoryId());

@@ -1,10 +1,9 @@
 package com.fzz.competition.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.competition.mapper.CompetitionInfoMapper;
 import com.fzz.competition.service.CompetitionInfoService;
-import com.fzz.model.bo.AddCompetitionInfo;
+import com.fzz.model.bo.AddCompetitionInfoBO;
 import com.fzz.model.entity.CompetitionInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class CompetitionInfoServiceImpl extends ServiceImpl<CompetitionInfoMappe
 
     @Override
     @Transactional
-    public boolean saveCompetitionInfo(AddCompetitionInfo addCompetitionInfo) {
+    public boolean saveCompetitionInfo(AddCompetitionInfoBO addCompetitionInfo) {
         CompetitionInfo competitionInfo=new CompetitionInfo();
         BeanUtils.copyProperties(addCompetitionInfo,competitionInfo);
         competitionInfo.setCreateTime(new Date());

@@ -1,5 +1,6 @@
 package com.fzz.personnel.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.personnal.AdminControllerApi;
 import com.fzz.common.enums.AdminStatusEnum;
@@ -8,8 +9,10 @@ import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.ValidateCodeUtils;
+import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.AdminLoginBO;
 import com.fzz.model.entity.Admin;
+import com.fzz.model.vo.QueryAdminVO;
 import com.fzz.model.vo.ValidateCodeVO;
 import com.fzz.personnel.service.AdminService;
 import com.wf.captcha.SpecCaptcha;
@@ -105,6 +108,53 @@ public class AdminController extends BaseController implements AdminControllerAp
         redisUtil.del(REDIS_USER_INFO+":"+id);
         deleteCookie(request,response,"utoken");
         deleteCookie(request,response,"uid");
+        return ReturnResult.ok();
+    }
+
+    @Override
+    public ReturnResult listAdmins(Integer pageNumber, Integer pageSize, String name) {
+        if(pageNumber<=0){
+            pageNumber=COMMON_START_PAGE;
+        }
+        if(pageSize<=0){
+            pageSize=COMMON_PAGE_SIZE;
+        }
+        Page<QueryAdminVO> adminPage = adminService.pageAdmins(pageNumber,pageSize,name);
+
+        return ReturnResult.ok(adminPage);
+    }
+
+    @Override
+    public ReturnResult addAdmin(AddAdminBO addAdminBO) {
+        boolean res = adminService.saveAdmin(addAdminBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.ADMIN_CREATE_ERROR);
+    }
+
+    @Override
+    public ReturnResult queryAdmin(String username) {
+        boolean res = adminService.usernameIsExists(username);
+        if(res){
+            return ReturnResult.error(ResponseStatusEnum.ADMIN_USERNAME_ALREADY_EXISTS);
+        }
+        return ReturnResult.ok();
+    }
+
+    @Override
+    public ReturnResult updateStatus(Integer id,Integer status) {
+        boolean res = adminService.updateStatusById(id,status);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.ADMIN_STATUS_MODIFY_ERROR);
+    }
+
+
+    @Override
+    public ReturnResult resetPassword(AddAdminBO addAdminBO) {
+        adminService.resetAdminPassword(addAdminBO);
         return ReturnResult.ok();
     }
 

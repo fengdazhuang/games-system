@@ -11,12 +11,14 @@ import java.util.Date;
 @TableName(value = "admin")
 public class Admin {
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     private String username;
 
     private String password;
+
+    private String picture;
 
     private Integer sex;
 

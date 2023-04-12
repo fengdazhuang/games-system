@@ -1,7 +1,7 @@
 package com.fzz.api.controller.personnal;
 
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.AddPlayer;
+import com.fzz.model.bo.AddPlayerBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public interface PlayerControllerApi {
 
     @PostMapping("/addPlayer")
     @ApiOperation(value = "添加运动员")
-    ReturnResult addPlayer(@Valid @RequestBody AddPlayer addPlayer);
+    ReturnResult addPlayer(@Valid @RequestBody AddPlayerBO addPlayer);
 
     @DeleteMapping("/deletePlayer")
     @ApiOperation(value = "删除运动员")
@@ -33,7 +33,7 @@ public interface PlayerControllerApi {
 
     @PutMapping("/updatePlayer")
     @ApiOperation(value = "修改运动员")
-    ReturnResult updatePlayer(@Valid @RequestBody AddPlayer addPlayer);
+    ReturnResult updatePlayer(@Valid @RequestBody AddPlayerBO addPlayer);
 
     @GetMapping("/queryPlayer")
     @ApiOperation(value = "查找运动员")
