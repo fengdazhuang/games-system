@@ -1,4 +1,4 @@
-package com.fzz.api.controller;
+package com.fzz.api.controller.news;
 
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddNewsBO;

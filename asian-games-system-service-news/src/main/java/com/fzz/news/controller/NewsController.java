@@ -2,7 +2,7 @@ package com.fzz.news.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
-import com.fzz.api.controller.NewsControllerApi;
+import com.fzz.api.controller.news.NewsControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddNewsBO;
