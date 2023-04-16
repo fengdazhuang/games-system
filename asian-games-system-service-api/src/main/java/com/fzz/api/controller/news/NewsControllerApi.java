@@ -34,7 +34,4 @@ public interface NewsControllerApi {
     @ApiOperation(value = "撤回新闻")
     ReturnResult withdrawNews(@RequestParam Long id);
 
-    @PutMapping("/update")
-    @ApiOperation(value = "更新新闻")
-    ReturnResult updateNews(@Valid @RequestBody AddNewsBO addNewsBO);
 }

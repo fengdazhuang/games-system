@@ -57,11 +57,6 @@ public class NewsController extends BaseController implements NewsControllerApi 
         return ReturnResult.error(ResponseStatusEnum.NEWS_DELETE_ERROR);
     }
 
-    @Override
-    public ReturnResult updateNews(AddNewsBO addNewsBO) {
-        boolean res = newsService.updateNews(addNewsBO);
-        return null;
-    }
 
     @Override
     public ReturnResult withdrawNews(Long id) {
