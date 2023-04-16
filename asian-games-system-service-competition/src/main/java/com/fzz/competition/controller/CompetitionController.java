@@ -12,6 +12,7 @@ import com.fzz.model.bo.AddCompetitionCategoryBO;
 import com.fzz.model.bo.AddCompetitionInfoBO;
 import com.fzz.model.entity.CompetitionCategory;
 import com.fzz.model.entity.CompetitionInfo;
+import com.fzz.model.vo.QueryCompetitionInfoVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,9 +48,9 @@ public class CompetitionController extends BaseController implements Competition
     @Override
     public ReturnResult queryComNames() {
         String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS);
-        List<CompetitionInfo> competitionInfos;
+        List<QueryCompetitionInfoVO> competitionInfos;
         if(StringUtils.isNotBlank(infosStr)){
-            competitionInfos = JsonUtils.jsonToList(infosStr, CompetitionInfo.class);
+            competitionInfos = JsonUtils.jsonToList(infosStr, QueryCompetitionInfoVO.class);
         }else{
             competitionInfos = competitionInfoService.listComInfos();
             redisUtil.set(REDIS_COMPETITION_INFOS,JsonUtils.objectToJson(competitionInfos));

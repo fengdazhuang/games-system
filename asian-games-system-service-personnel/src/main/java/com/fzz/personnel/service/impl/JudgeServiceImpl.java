@@ -69,7 +69,7 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
         LambdaQueryWrapper<Judge> queryWrapper=new LambdaQueryWrapper<>();
         String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Judge::getCountry, country);
-        queryWrapper.in(names.length>0, Judge::getCompetitionName, (Object[]) names);
+        queryWrapper.in(names.length>0&&!names[0].equals(""), Judge::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Judge::getName,name);
         this.page(playerPage,queryWrapper);
         Page<QueryJudgeVO> queryJudgeVOPage=new Page<>();
