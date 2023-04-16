@@ -96,7 +96,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         LambdaQueryWrapper<Player> queryWrapper=new LambdaQueryWrapper<>();
         String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Player::getCountry, country);
-        queryWrapper.in(names.length>0,Player::getCompetitionName, (Object[]) names);
+        queryWrapper.in(names.length>0&&!names[0].equals(""),Player::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Player::getName,name);
         this.page(playerPage,queryWrapper);
         Page<QueryPlayerVO> queryPlayerVOPage=new Page<>();

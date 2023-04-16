@@ -25,4 +25,16 @@ public interface NewsControllerApi {
                            @RequestParam Date endDate,
                            @RequestParam String keyword,
                            @RequestParam Integer status);
+
+    @DeleteMapping("/deleteNews")
+    @ApiOperation(value = "删除新闻")
+    ReturnResult deleteNews(@RequestParam Long id);
+
+    @PutMapping("/withdraw")
+    @ApiOperation(value = "撤回新闻")
+    ReturnResult withdrawNews(@RequestParam Long id);
+
+    @PutMapping("/update")
+    @ApiOperation(value = "更新新闻")
+    ReturnResult updateNews(@Valid @RequestBody AddNewsBO addNewsBO);
 }

@@ -47,4 +47,28 @@ public class NewsController extends BaseController implements NewsControllerApi 
         Page<QueryNewsVO> queryNewsVOPage = newsService.pageNews(pageNumber,pageSize,startDate,endDate,keyword,status);
         return ReturnResult.ok(queryNewsVOPage);
     }
+
+    @Override
+    public ReturnResult deleteNews(Long id) {
+        boolean res=newsService.removeNewsById(id);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.NEWS_DELETE_ERROR);
+    }
+
+    @Override
+    public ReturnResult updateNews(AddNewsBO addNewsBO) {
+        boolean res = newsService.updateNews(addNewsBO);
+        return null;
+    }
+
+    @Override
+    public ReturnResult withdrawNews(Long id) {
+        boolean res=newsService.withdrawNewsById(id);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.NEWS_WITHDRAW_ERROR);
+    }
 }

@@ -1,5 +1,6 @@
 package com.fzz.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -21,6 +22,7 @@ public class QueryJudgeVO {
 
     private String country;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh", timezone = "GMT+8")
     private Date createTime;
 
 

@@ -14,4 +14,10 @@ public interface NewsService extends IService<News> {
     void saveNews(AddNewsBO addNewsBO);
 
     void updateDelayedArticle(Long id);
+
+    boolean removeNewsById(Long id);
+
+    boolean withdrawNewsById(Long id);
+
+    boolean updateNews(AddNewsBO addNewsBO);
 }

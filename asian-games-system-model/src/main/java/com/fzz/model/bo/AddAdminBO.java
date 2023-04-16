@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class AddAdminBO {
 
+
     @NotBlank(message = "用户名不能为空")
     private String username;
 

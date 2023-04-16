@@ -1,6 +1,7 @@
 package com.fzz.model.bo;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -10,6 +11,8 @@ import java.util.Date;
 
 @Data
 public class AddNewsBO {
+
+    private Long id;
 
     @NotBlank(message = "标题不能为空")
     private String title;
@@ -35,6 +38,7 @@ public class AddNewsBO {
     @NotNull(message = "发布者id不能为空")
     private Long publisherId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
 
 

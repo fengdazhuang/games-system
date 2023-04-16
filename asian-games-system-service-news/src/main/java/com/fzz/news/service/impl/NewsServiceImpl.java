@@ -83,6 +83,29 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
 
     @Override
     @Transactional
+    public boolean updateNews(AddNewsBO addNewsBO) {
+        News news=new News();
+        BeanUtils.copyProperties(addNewsBO,news);
+        return this.updateById(news);
+    }
+
+    @Override
+    @Transactional
+    public boolean withdrawNewsById(Long id) {
+        LambdaUpdateWrapper<News> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(News::getId,id);
+        updateWrapper.set(News::getArticleStatus,NewsStatusEnum.WITHDRAWED.code());
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    @Transactional
+    public boolean removeNewsById(Long id) {
+        return this.removeById(id);
+    }
+
+    @Override
+    @Transactional
     public void updateDelayedArticle(Long id) {
         LambdaUpdateWrapper<News> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(News::getId,id);
