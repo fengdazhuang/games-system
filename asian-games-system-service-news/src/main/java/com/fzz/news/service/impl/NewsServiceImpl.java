@@ -81,13 +81,6 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
         publishDelayedNews(news);
     }
 
-    @Override
-    @Transactional
-    public boolean updateNews(AddNewsBO addNewsBO) {
-        News news=new News();
-        BeanUtils.copyProperties(addNewsBO,news);
-        return this.updateById(news);
-    }
 
     @Override
     @Transactional

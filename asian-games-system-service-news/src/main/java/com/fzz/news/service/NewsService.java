@@ -19,5 +19,4 @@ public interface NewsService extends IService<News> {
 
     boolean withdrawNewsById(Long id);
 
-    boolean updateNews(AddNewsBO addNewsBO);
 }
