@@ -15,6 +15,10 @@ public enum ResponseStatusEnum {
 
     COMPETITION_CATEGORY_ADD_ERROR(301,false ,"赛事类型添加失败" ),
     COMPETITION_INFO_ADD_ERROR(302,false , "赛事项目添加失败"),
+    COMPETITION_AREA_CREATE_ERROR(303,false ,"比赛赛区添加失败" ),
+    COMPETITION_POSITION_CREATE_ERROR(304,false ,"比赛场所添加失败" ),
+    COMPETITION_POSITION_DELETE_ERROR(305,false , "比赛场所删除失败"),
+
 
     SYSTEM_VALIDATE_CODE_ERROR(600,false ,"验证码错误" ),
     SYSTEM_BUSY_ERROR(601,false ,"系统繁忙，请稍后重试" ),
@@ -37,7 +41,7 @@ public enum ResponseStatusEnum {
     NEWS(902,false , "新闻创建失败" ),
     NEWS_COVER_IS_NULL(903,false , "新闻的封面为空"),
     NEWS_DELETE_ERROR(904,false ,"新闻删除失败" ),
-    NEWS_WITHDRAW_ERROR(905,false,"新闻撤回失败");
+    NEWS_WITHDRAW_ERROR(905,false,"新闻撤回失败") ;
 
 
 

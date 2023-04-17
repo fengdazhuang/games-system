@@ -113,10 +113,10 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
 /*    private String getComNameById(Integer categoryId ,Integer infoId){
         String comInfosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + categoryId);
-        List<CompetitionInfo> competitionInfos = JsonUtils.jsonToList(comInfosStr, CompetitionInfo.class);
-        for(CompetitionInfo competitionInfo:competitionInfos){
-            if(competitionInfo.getId().equals(infoId)){
-                return competitionInfo.getName();
+        List<ComInfo> comInfos = JsonUtils.jsonToList(comInfosStr, ComInfo.class);
+        for(ComInfo comInfo:comInfos){
+            if(ComInfo.getId().equals(infoId)){
+                return ComInfo.getName();
             }
         }
         return "未知错误";

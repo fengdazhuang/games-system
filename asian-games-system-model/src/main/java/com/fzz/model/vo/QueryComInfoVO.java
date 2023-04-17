@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class QueryCompetitionInfoVO {
+public class QueryComInfoVO {
 
     private Integer id;
 

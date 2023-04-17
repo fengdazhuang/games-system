@@ -85,10 +85,10 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
 
 /*    private String getComNameById(Integer categoryId ,Integer infoId){
         String comInfosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + categoryId);
-        List<CompetitionInfo> competitionInfos = JsonUtils.jsonToList(comInfosStr, CompetitionInfo.class);
-        for(CompetitionInfo competitionInfo:competitionInfos){
-            if(competitionInfo.getId().equals(infoId)){
-                return competitionInfo.getName();
+        List<ComInfo> comInfos = JsonUtils.jsonToList(comInfosStr, ComInfo.class);
+        for(ComInfo comInfo:comInfos){
+            if(comInfo.getId().equals(infoId)){
+                return comInfo.getName();
             }
         }
         return "未知错误";
