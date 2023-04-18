@@ -18,7 +18,7 @@ public interface VolunteerControllerApi {
 
     @PostMapping("/sendCode")
     @ApiOperation(value = "向邮箱发送验证码")
-    ReturnResult sendValidateCode(@RequestBody String email);
+    ReturnResult sendEmailCode(@RequestBody String email);
 
     @GetMapping("/pageVolunteers")
     @ApiOperation(value = "分页条件查询已招募志愿者")

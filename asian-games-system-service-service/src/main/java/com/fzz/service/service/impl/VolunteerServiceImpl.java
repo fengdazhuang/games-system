@@ -58,4 +58,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         volunteerVOPage.setRecords(volunteerVOList);
         return volunteerVOPage;
     }
+
+    @Override
+    public Volunteer getVolunteerByEmail(String email) {
+        LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(Volunteer::getEmail,email);
+        return this.getOne(queryWrapper);
+    }
 }

@@ -10,4 +10,6 @@ public interface VolunteerService extends IService<Volunteer> {
     Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk);
 
     Page<PreVolunteerVO> pagePreVolunteers(Integer pageNumber, Integer pageSize, Integer orderType);
+
+    Volunteer getVolunteerByEmail(String email);
 }

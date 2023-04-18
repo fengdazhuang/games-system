@@ -16,11 +16,11 @@ public class ComPosition {
 
     private String position;
 
-	private String competition_item;
+	private String competitionItem;
 
-	private String specific_position;
+	private String specificPosition;
 
 	private String area;
 
-	private Date create_time;
+	private Date createTime;
 }
