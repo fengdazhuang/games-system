@@ -36,4 +36,12 @@ public class Admin {
 
     private String email;
 
+    private String phone;
+
+    private Integer age;
+
+    private String school;
+
+    private String province;
+
 }

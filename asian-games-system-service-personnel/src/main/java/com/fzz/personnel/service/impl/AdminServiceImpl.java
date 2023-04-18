@@ -51,6 +51,23 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
 
+    /**
+     * 更新管理员登陆时间
+     * @param admin 登陆管理员
+     */
+    @Transactional
+    public void setAdminLoginTime(Admin admin){
+        LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.set(Admin::getLoginTime,new Date());
+        this.update(admin,updateWrapper);
+    }
+
+    @Override
+    public Admin getAdminDetail(Long id) {
+        return this.getById(id);
+    }
+
+
     @Override
     public Page<QueryAdminVO> pageAdmins(Integer pageNumber, Integer pageSize, String name) {
         Page<Admin> adminPage=new Page<>(pageNumber,pageSize);
@@ -93,6 +110,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
+    @Transactional
     public boolean updateAdminStatus(UpdateAdminStatusBO updateAdminStatusBO) {
         Integer id = updateAdminStatusBO.getId();
         Integer status = updateAdminStatusBO.getStatus();
@@ -104,6 +122,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
+    @Transactional
     public void resetAdminPassword(ResetPasswordBO resetPasswordBO) {
         Integer id = resetPasswordBO.getId();
         String email = resetPasswordBO.getEmail();

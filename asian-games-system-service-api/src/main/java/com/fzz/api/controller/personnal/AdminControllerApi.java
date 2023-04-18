@@ -57,4 +57,8 @@ public interface AdminControllerApi {
     @ApiOperation(value = "重置管理员密码")
     ReturnResult resetPassword(@RequestBody ResetPasswordBO resetPasswordBO);
 
+    @GetMapping("/getDetail")
+    @ApiOperation(value = "获取管理员详细信息")
+    ReturnResult getDetail(@RequestParam Long id);
+
 }
