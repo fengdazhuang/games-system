@@ -6,13 +6,17 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
-import com.fzz.competition.service.CompetitionCategoryService;
-import com.fzz.competition.service.CompetitionInfoService;
-import com.fzz.model.bo.AddCompetitionCategoryBO;
-import com.fzz.model.bo.AddCompetitionInfoBO;
-import com.fzz.model.entity.CompetitionCategory;
-import com.fzz.model.entity.CompetitionInfo;
-import com.fzz.model.vo.QueryCompetitionInfoVO;
+import com.fzz.competition.service.ComAreaService;
+import com.fzz.competition.service.ComPositionService;
+import com.fzz.competition.service.ComCategoryService;
+import com.fzz.competition.service.ComInfoService;
+import com.fzz.model.bo.AddComCategoryBO;
+import com.fzz.model.bo.AddComInfoBO;
+import com.fzz.model.bo.AddComPositionBO;
+import com.fzz.model.entity.ComArea;
+import com.fzz.model.entity.ComCategory;
+import com.fzz.model.entity.ComPosition;
+import com.fzz.model.vo.QueryComInfoVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +27,16 @@ import java.util.List;
 public class CompetitionController extends BaseController implements CompetitionControllerApi {
 
     @Autowired
-    private CompetitionCategoryService competitionCategoryService;
+    private ComCategoryService comCategoryService;
 
     @Autowired
-    private CompetitionInfoService competitionInfoService;
+    private ComInfoService comInfoService;
+    
+    @Autowired
+    private ComPositionService comPositionService;
+    
+    @Autowired
+    private ComAreaService comAreaService;
 
     @Autowired
     private RedisUtil redisUtil;
@@ -35,11 +45,11 @@ public class CompetitionController extends BaseController implements Competition
     @Override
     public ReturnResult queryComCategorys() {
         String categorysStr = redisUtil.get(REDIS_COMPETITION_CATEGORYS);
-        List<CompetitionCategory> competitionCategories;
+        List<ComCategory> competitionCategories;
         if(StringUtils.isNotBlank(categorysStr)){
-            competitionCategories = JsonUtils.jsonToList(categorysStr, CompetitionCategory.class);
+            competitionCategories = JsonUtils.jsonToList(categorysStr, ComCategory.class);
         }else{
-            competitionCategories = competitionCategoryService.listComCategorys();
+            competitionCategories = comCategoryService.listComCategorys();
             redisUtil.set(REDIS_COMPETITION_CATEGORYS, JsonUtils.objectToJson(competitionCategories));
         }
         return ReturnResult.ok(competitionCategories);
@@ -48,32 +58,53 @@ public class CompetitionController extends BaseController implements Competition
     @Override
     public ReturnResult queryComNames() {
         String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS);
-        List<QueryCompetitionInfoVO> competitionInfos;
+        List<QueryComInfoVO> comInfos;
         if(StringUtils.isNotBlank(infosStr)){
-            competitionInfos = JsonUtils.jsonToList(infosStr, QueryCompetitionInfoVO.class);
+            comInfos = JsonUtils.jsonToList(infosStr, QueryComInfoVO.class);
         }else{
-            competitionInfos = competitionInfoService.listComInfos();
-            redisUtil.set(REDIS_COMPETITION_INFOS,JsonUtils.objectToJson(competitionInfos));
+            comInfos = comInfoService.listComInfos();
+            redisUtil.set(REDIS_COMPETITION_INFOS,JsonUtils.objectToJson(comInfos));
         }
-        return ReturnResult.ok(competitionInfos);
+        return ReturnResult.ok(comInfos);
+    }
+
+    @Override
+    public ReturnResult queryComPositions(String area, String keyword) {
+        List<ComPosition> comPositions = comPositionService.listComPositions(area,keyword);
+        return ReturnResult.ok(comPositions);
+    }
+
+    @Override
+    public ReturnResult queryComAreas() {
+        List<ComArea> comAreas = comAreaService.listComAreas();
+        return ReturnResult.ok(comAreas);
+    }
+
+    @Override
+    public ReturnResult deleteComPosition(Integer id) {
+        boolean res = comPositionService.removeComPositionById(id);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.COMPETITION_POSITION_DELETE_ERROR);
     }
 
 //    @Override
 //    public ReturnResult queryComNames(Integer competitionCategoryId) {
 //        String infosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId);
-//        List<CompetitionInfo> competitionInfos;
+//        List<ComInfo> comInfos;
 //        if(StringUtils.isNotBlank(infosStr)){
-//            competitionInfos = JsonUtils.jsonToList(infosStr, CompetitionInfo.class);
+//            comInfos = JsonUtils.jsonToList(infosStr, ComInfo.class);
 //        }else{
-//            competitionInfos = competitionInfoService.listComNamesByComCategoryId(competitionCategoryId);
-//            redisUtil.set(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId, JsonUtils.objectToJson(competitionInfos));
+//            comInfos = comInfoService.listComNamesByComCategoryId(competitionCategoryId);
+//            redisUtil.set(REDIS_COMPETITION_INFOS + ":" + competitionCategoryId, JsonUtils.objectToJson(ComInfos));
 //        }
-//        return ReturnResult.ok(competitionInfos);
+//        return ReturnResult.ok(comInfos);
 //    }
 
     @Override
-    public ReturnResult addComCategory(AddCompetitionCategoryBO addCompetitionCategory) {
-        boolean res = competitionCategoryService.saveCompetitionCategory(addCompetitionCategory);
+    public ReturnResult addComCategory(AddComCategoryBO addCompetitionCategory) {
+        boolean res = comCategoryService.saveCompetitionCategory(addCompetitionCategory);
         if(res){
             redisUtil.del(REDIS_COMPETITION_CATEGORYS);
             return ReturnResult.ok();
@@ -82,15 +113,33 @@ public class CompetitionController extends BaseController implements Competition
     }
 
     @Override
-    public ReturnResult addComInfo(AddCompetitionInfoBO addCompetitionInfo) {
-        boolean res = competitionInfoService.saveCompetitionInfo(addCompetitionInfo);
+    public ReturnResult addComInfo(AddComInfoBO addComInfo) {
+        boolean res = comInfoService.saveComInfo(addComInfo);
         if(res){
-//            redisUtil.del(REDIS_COMPETITION_INFOS+":"+addCompetitionInfo.getCompetitionCategoryId());
+//            redisUtil.del(REDIS_COMPETITION_INFOS+":"+addComInfo.getCompetitionCategoryId());
             redisUtil.del(REDIS_COMPETITION_INFOS);
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_ADD_ERROR);
 
+    }
+
+    @Override
+    public ReturnResult addComArea(String comArea) {
+        boolean res = comAreaService.saveComArea(comArea);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.COMPETITION_AREA_CREATE_ERROR);
+    }
+
+    @Override
+    public ReturnResult addComPosition(AddComPositionBO addComPositionBO) {
+        boolean res = comPositionService.saveComPosition(addComPositionBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.COMPETITION_POSITION_CREATE_ERROR);
     }
 
 

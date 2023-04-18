@@ -17,7 +17,6 @@ import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 import com.fzz.model.vo.ValidateCodeVO;
 import com.fzz.personnel.service.AdminService;
-import com.fzz.personnel.service.IEmailService;
 import com.wf.captcha.SpecCaptcha;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +34,7 @@ public class AdminController extends BaseController implements AdminControllerAp
     @Autowired
     private RedisUtil redisUtil;
 
-    @Autowired
-    private IEmailService iEmailService;
+
 
     /**
      * 管理员登录
@@ -79,8 +77,13 @@ public class AdminController extends BaseController implements AdminControllerAp
 
         setCookie(request,response,"utoken",uToken,COOKIE_MONTH);
         setCookie(request,response,"uid",String.valueOf(admin.getId()),COOKIE_MONTH);
+
+        //更新管理员登陆时间
+        adminService.setAdminLoginTime(admin);
         return ReturnResult.ok(admin);
     }
+
+
 
 
     /**
@@ -163,6 +166,12 @@ public class AdminController extends BaseController implements AdminControllerAp
 
         adminService.resetAdminPassword(resetPasswordBO);
         return ReturnResult.ok();
+    }
+
+    @Override
+    public ReturnResult getDetail(Long id) {
+        Admin admin = adminService.getAdminDetail(id);
+        return ReturnResult.ok(admin);
     }
 
 }

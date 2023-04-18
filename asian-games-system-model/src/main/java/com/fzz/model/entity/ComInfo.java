@@ -9,13 +9,21 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName(value = "competition_category")
-public class CompetitionCategory {
+@TableName(value = "competition_info")
+public class ComInfo {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
 
     private String name;
+
+    private String info;
+
+    private String picture;
+
+//    private Integer competitionCategoryId;
+
+    private String type;
 
     private String principal;
 

@@ -22,4 +22,7 @@ public interface AdminService extends IService<Admin> {
 
     void resetAdminPassword(ResetPasswordBO resetPasswordBO);
 
+    void setAdminLoginTime(Admin admin);
+
+    Admin getAdminDetail(Long id);
 }
