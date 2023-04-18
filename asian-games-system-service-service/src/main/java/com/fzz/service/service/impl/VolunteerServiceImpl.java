@@ -1,23 +1,33 @@
 package com.fzz.service.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.enums.OrderColumnEnum;
+import com.fzz.model.bo.DoReviewBO;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.mapper.VolunteerMapper;
+import com.fzz.service.service.IEmailService;
 import com.fzz.service.service.VolunteerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer> implements VolunteerService {
+
+    @Autowired
+    private IEmailService emailService;
+
     @Override
     public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk) {
         Page<Volunteer> page=new Page<>(pageNumber,pageSize);
@@ -64,5 +74,28 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(Volunteer::getEmail,email);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    @Transactional
+    public boolean doReview(DoReviewBO doReviewBO) {
+        Integer status = doReviewBO.getStatus();
+
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getId,doReviewBO.getId());
+        if(status==0){
+            updateWrapper.set(Volunteer::getProgress,4);
+        }
+        if(status==1){
+            String risk = doReviewBO.getRisk();;
+            if(StringUtils.isNotBlank(risk)){
+                updateWrapper.set(Volunteer::getProgress,3);
+                updateWrapper.set(Volunteer::getRisk,risk);
+            }
+            updateWrapper.set(Volunteer::getProgress,2);
+
+        }
+
+        return this.update(updateWrapper);
     }
 }

@@ -1,6 +1,7 @@
 package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
+import com.fzz.model.bo.DoReviewBO;
 import com.fzz.model.bo.VolunteerRegisterBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,5 +33,9 @@ public interface VolunteerControllerApi {
     ReturnResult pagePreVolunteers(@RequestParam Integer pageNumber,
                                    @RequestParam Integer pageSize,
                                    @RequestParam Integer orderType);
+
+    @PutMapping("/doReview")
+    @ApiOperation(value = "审批志愿者")
+    ReturnResult doReview(@RequestBody DoReviewBO doReviewBO);
 
 }

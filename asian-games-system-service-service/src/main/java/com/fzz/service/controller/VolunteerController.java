@@ -1,12 +1,14 @@
 package com.fzz.service.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.service.VolunteerControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.RedisUtil;
+import com.fzz.model.bo.DoReviewBO;
 import com.fzz.model.bo.VolunteerRegisterBO;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
@@ -14,6 +16,7 @@ import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.service.IEmailService;
 import com.fzz.service.service.VolunteerService;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,5 +77,21 @@ public class VolunteerController extends BaseController implements VolunteerCont
         }
         Page<PreVolunteerVO> volunteerVOPage = volunteerService.pagePreVolunteers(pageNumber,pageSize,orderType);
         return ReturnResult.ok(volunteerVOPage);
+    }
+
+    @Override
+    public ReturnResult doReview(DoReviewBO doReviewBO) {
+        boolean res = volunteerService.doReview(doReviewBO);
+        if(res){
+            String email = doReviewBO.getEmail();
+            String emailContent = doReviewBO.getEmailContent();
+            Integer status = doReviewBO.getStatus();
+            if(StringUtils.isNotBlank(emailContent)){
+                emailService.sendSimpleMail(Arrays.asList(email),
+                        status ==1?"志愿者审核通过":"志愿者审核未通过",emailContent);
+            }
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_REVIEW_ERROR);
     }
 }

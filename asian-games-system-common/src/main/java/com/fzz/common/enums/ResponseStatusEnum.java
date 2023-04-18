@@ -44,7 +44,8 @@ public enum ResponseStatusEnum {
     NEWS_WITHDRAW_ERROR(905,false,"新闻撤回失败"),
 
     //VOLUNTEER
-    VOLUNTEER_IS_ALREADY_EXISTS(1001,false , "该邮箱志愿者账号已存在");
+    VOLUNTEER_IS_ALREADY_EXISTS(1001,false , "该邮箱志愿者账号已存在"),
+    VOLUNTEER_REVIEW_ERROR(1002,false ,"志愿者审核失败" );
 
 
 

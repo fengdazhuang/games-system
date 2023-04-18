@@ -1,5 +1,6 @@
 package com.fzz.competition.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.competition.CompetitionControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
@@ -126,7 +127,9 @@ public class CompetitionController extends BaseController implements Competition
 
     @Override
     public ReturnResult addComArea(String comArea) {
-        boolean res = comAreaService.saveComArea(comArea);
+        JSONObject jsonObject = JSONObject.parseObject(comArea);
+        String area = (String) jsonObject.get("comArea");
+        boolean res = comAreaService.saveComArea(area);
         if(res){
             return ReturnResult.ok();
         }
