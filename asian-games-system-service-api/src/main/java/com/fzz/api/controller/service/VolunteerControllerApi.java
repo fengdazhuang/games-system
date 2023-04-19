@@ -1,6 +1,7 @@
 package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
+import com.fzz.model.bo.DoReviewBO;
 import com.fzz.model.bo.VolunteerRegisterBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ public interface VolunteerControllerApi {
 
     @PostMapping("/sendCode")
     @ApiOperation(value = "向邮箱发送验证码")
-    ReturnResult sendValidateCode(@RequestBody String email);
+    ReturnResult sendEmailCode(@RequestBody String email);
 
     @GetMapping("/pageVolunteers")
     @ApiOperation(value = "分页条件查询已招募志愿者")
@@ -32,5 +33,9 @@ public interface VolunteerControllerApi {
     ReturnResult pagePreVolunteers(@RequestParam Integer pageNumber,
                                    @RequestParam Integer pageSize,
                                    @RequestParam Integer orderType);
+
+    @PutMapping("/doReview")
+    @ApiOperation(value = "审批志愿者")
+    ReturnResult doReview(@RequestBody DoReviewBO doReviewBO);
 
 }
