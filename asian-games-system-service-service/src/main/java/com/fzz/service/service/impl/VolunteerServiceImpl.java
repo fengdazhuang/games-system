@@ -6,27 +6,23 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.enums.OrderColumnEnum;
 import com.fzz.model.bo.DoReviewBO;
+import com.fzz.model.bo.ResetVolunteerRiskBO;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.mapper.VolunteerMapper;
-import com.fzz.service.service.IEmailService;
 import com.fzz.service.service.VolunteerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer> implements VolunteerService {
 
-    @Autowired
-    private IEmailService emailService;
 
     @Override
     public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk) {
@@ -78,6 +74,23 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
 
     @Override
     @Transactional
+    public boolean updateVolunteerRisk(ResetVolunteerRiskBO resetVolunteerRiskBO) {
+        Integer risk = resetVolunteerRiskBO.getRisk();
+        Long id = resetVolunteerRiskBO.getId();
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getId,id);
+        updateWrapper.set(Volunteer::getRisk,risk);
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    @Transactional
+    public boolean saveVolunteer(Volunteer volunteer) {
+        return this.save(volunteer);
+    }
+
+    @Override
+    @Transactional
     public boolean doReview(DoReviewBO doReviewBO) {
         Integer status = doReviewBO.getStatus();
 
@@ -87,7 +100,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
             updateWrapper.set(Volunteer::getProgress,4);
         }
         if(status==1){
-            String risk = doReviewBO.getRisk();;
+            String risk = doReviewBO.getRisk();
             if(StringUtils.isNotBlank(risk)){
                 updateWrapper.set(Volunteer::getProgress,3);
                 updateWrapper.set(Volunteer::getRisk,risk);

@@ -24,6 +24,8 @@ public enum ResponseStatusEnum {
     SYSTEM_BUSY_ERROR(601,false ,"系统繁忙，请稍后重试" ),
     SYSTEM_DATE_PARSER_ERROR(602,false , "时间转换错误"),
 
+    FRIENDLINK_CREATE_ERROR(651,false ,"友情链接添加失败" ),
+
     PLAYER_CREATE_ERROR(701,false ,"运动员添加失败" ),
     PLAYER_DELETE_ERROR(702,false ,"运动员删除失败" ),
     PLAYER_NOT_EXISTS(703,false , "该运动员不存在"),
@@ -45,7 +47,10 @@ public enum ResponseStatusEnum {
 
     //VOLUNTEER
     VOLUNTEER_IS_ALREADY_EXISTS(1001,false , "该邮箱志愿者账号已存在"),
-    VOLUNTEER_REVIEW_ERROR(1002,false ,"志愿者审核失败" );
+    VOLUNTEER_REVIEW_ERROR(1002,false ,"志愿者审核失败" ),
+    VOLUNTEER_REGISTER_VALIDATE_CODE_ERROR(1003,false ,"注册验证码错误" ),
+    VOLUNTEER_REGISTER_FAILED(1004,false ,"志愿者注册失败" ),
+    VOLUNTEER_REST_RISK_ERROR(1005,false ,"重新分配志愿者任务失败" );
 
 
 
