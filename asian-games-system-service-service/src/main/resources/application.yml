@@ -9,3 +9,17 @@ spring:
     password: root
     url: jdbc:mysql://localhost:3306/asian-games-system?serverTimezone=UTC
     type: com.alibaba.druid.pool.DruidDataSource
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 3172029811@qq.com
+    password: llfcopdlqufzddgd
+    protocol: smtp
+    nickname: 亚运会官方
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.port: 465
+    properties.mail.display.sendmail: xiaoMing
+    properties.mail.display.sendname: xiaoming
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true

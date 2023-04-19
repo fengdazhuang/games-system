@@ -21,7 +21,7 @@ public class ComPositionServiceImpl extends ServiceImpl<ComPositionMapper, ComPo
     public boolean saveComPosition(AddComPositionBO addComPositionBO) {
         ComPosition comPosition=new ComPosition();
         BeanUtils.copyProperties(addComPositionBO,comPosition);
-        comPosition.setCreate_time(new Date());
+        comPosition.setCreateTime(new Date());
         return this.save(comPosition);
     }
 
@@ -35,7 +35,7 @@ public class ComPositionServiceImpl extends ServiceImpl<ComPositionMapper, ComPo
     @Override
     public List<ComPosition> listComPositions(String area, String keyword) {
         LambdaQueryWrapper<ComPosition> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(keyword),ComPosition::getCompetition_item,keyword);
+        queryWrapper.like(StringUtils.isNotBlank(keyword),ComPosition::getCompetitionItem,keyword);
         queryWrapper.eq(ComPosition::getArea,area);
         return this.list(queryWrapper);
     }
