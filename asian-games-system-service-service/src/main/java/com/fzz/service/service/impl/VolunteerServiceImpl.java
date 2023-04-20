@@ -75,6 +75,14 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
     }
 
     @Override
+    public boolean updateVolunteerType(Long id, Integer volunteerType) {
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getId,id);
+        updateWrapper.set(Volunteer::getVolunteerType,volunteerType);
+        return this.update(updateWrapper);
+    }
+
+    @Override
     public boolean perfectOrUpdateVolunteerInfo(VolunteerInfoBO volunteerInfoBO) {
         Volunteer volunteer=new Volunteer();
         BeanUtils.copyProperties(volunteerInfoBO,volunteer);

@@ -27,4 +27,6 @@ public interface VolunteerService extends IService<Volunteer> {
     boolean forgetVolunteerPassword(VolunteerRegisterBO volunteerRegisterBO);
 
     boolean perfectOrUpdateVolunteerInfo(VolunteerInfoBO volunteerInfoBO);
+
+    boolean updateVolunteerType(Long id, Integer volunteerType);
 }

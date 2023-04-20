@@ -2,7 +2,6 @@ package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.*;
-import com.fzz.model.entity.Volunteer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +75,17 @@ public interface VolunteerControllerApi {
     @PutMapping("/modifyInfo")
     @ApiOperation(value = "志愿者修改个人信息")
     ReturnResult modifyInfo(@Valid @RequestBody VolunteerInfoBO volunteerInfoBO);
+
+    @PutMapping("/chooseVolType")
+    @ApiOperation(value = "志愿者修改个人信息")
+    ReturnResult chooseVolunteerType(@RequestParam Long id,@RequestParam Integer volunteerType);
+
+    @GetMapping("/pageVolPositions")
+    @ApiOperation(value = "分页条件查询志愿服务点")
+    ReturnResult pageVolunteerPositions(@RequestParam Integer pageNumber,
+                                   @RequestParam Integer pageSize);
+
+
 
 
 }

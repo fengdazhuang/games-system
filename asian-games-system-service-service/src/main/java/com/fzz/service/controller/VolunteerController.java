@@ -1,5 +1,6 @@
 package com.fzz.service.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.service.VolunteerControllerApi;
@@ -13,14 +14,15 @@ import com.fzz.model.entity.VolDirection;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.ValidateCodeVO;
+import com.fzz.model.vo.VolPositionVO;
 import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.service.IEmailService;
 import com.fzz.service.service.VolDirectionService;
+import com.fzz.service.service.VolPositionService;
 import com.fzz.service.service.VolunteerService;
 import com.wf.captcha.SpecCaptcha;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +41,9 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Autowired
     private VolDirectionService volDirectionService;
+
+    @Autowired
+    private VolPositionService volPositionService;
 
     @Autowired
     private IEmailService emailService;
@@ -66,6 +71,8 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Override
     public ReturnResult sendEmailCode(String email) {
+        JSONObject jsonObject = JSONObject.parseObject(email);
+        email = (String) jsonObject.get("email");
         Volunteer volunteer = volunteerService.getVolunteerByEmail(email);
         if(volunteer!=null){
             return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_IS_ALREADY_EXISTS);
@@ -182,6 +189,27 @@ public class VolunteerController extends BaseController implements VolunteerCont
         return ReturnResult.ok(validateCodeVO);
     }
 
+
+    @Override
+    public ReturnResult pageVolunteerPositions(Integer pageNumber, Integer pageSize) {
+        if(pageNumber<=0){
+            pageNumber=COMMON_START_PAGE;
+        }
+        if(pageSize<=0){
+            pageSize=COMMON_PAGE_SIZE;
+        }
+        Page<VolPositionVO> page = volPositionService.pageVolunteerPositions(pageNumber,pageSize);
+        return ReturnResult.ok(page);
+    }
+
+    @Override
+    public ReturnResult chooseVolunteerType(Long id, Integer volunteerType) {
+        boolean res = volunteerService.updateVolunteerType(id, volunteerType);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_MODIFY_TYPE_FAILED);
+    }
 
     @Override
     public ReturnResult modifyInfo(VolunteerInfoBO volunteerInfoBO) {

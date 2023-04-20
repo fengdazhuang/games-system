@@ -24,5 +24,7 @@ public interface AdminService extends IService<Admin> {
 
     void setAdminLoginTime(Admin admin);
 
-    Admin getAdminDetail(Long id);
+    Admin getAdminInfo(Long id);
+
+    boolean updateAdminInfo(Admin admin);
 }
