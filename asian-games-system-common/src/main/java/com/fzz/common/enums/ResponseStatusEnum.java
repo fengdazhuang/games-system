@@ -48,9 +48,12 @@ public enum ResponseStatusEnum {
     //VOLUNTEER
     VOLUNTEER_IS_ALREADY_EXISTS(1001,false , "该邮箱志愿者账号已存在"),
     VOLUNTEER_REVIEW_ERROR(1002,false ,"志愿者审核失败" ),
-    VOLUNTEER_REGISTER_VALIDATE_CODE_ERROR(1003,false ,"注册验证码错误" ),
+    VOLUNTEER_VALIDATE_CODE_ERROR(1003,false ,"邮箱验证码错误" ),
     VOLUNTEER_REGISTER_FAILED(1004,false ,"志愿者注册失败" ),
-    VOLUNTEER_REST_RISK_ERROR(1005,false ,"重新分配志愿者任务失败" );
+    VOLUNTEER_REST_RISK_ERROR(1005,false ,"重新分配志愿者任务失败" ),
+    VOLUNTEER_LOGIN_ERROR(1006,false ,"登录信息有误" ),
+    VOLUNTEER_MODIFY_PASSWORD_FAILED(1007,false ,"密码修改失败" ),
+    VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败");
 
 
 

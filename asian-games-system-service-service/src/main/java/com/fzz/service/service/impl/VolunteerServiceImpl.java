@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.enums.OrderColumnEnum;
-import com.fzz.model.bo.DoReviewBO;
-import com.fzz.model.bo.ResetVolunteerRiskBO;
+import com.fzz.common.enums.ResponseStatusEnum;
+import com.fzz.common.exception.CustomException;
+import com.fzz.model.bo.*;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
@@ -17,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,6 +72,48 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(Volunteer::getEmail,email);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public boolean perfectOrUpdateVolunteerInfo(VolunteerInfoBO volunteerInfoBO) {
+        Volunteer volunteer=new Volunteer();
+        BeanUtils.copyProperties(volunteerInfoBO,volunteer);
+        volunteer.setUpdateTime(new Date());
+        volunteer.setStatus(1);
+        return this.updateById(volunteer);
+    }
+
+    @Override
+    @Transactional
+    public boolean forgetVolunteerPassword(VolunteerRegisterBO volunteerRegisterBO) {
+        String email = volunteerRegisterBO.getEmail();
+        String password = volunteerRegisterBO.getPassword();
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getEmail,email);
+        updateWrapper.set(Volunteer::getPassword,password);
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateVolunteerPassword(ModifyPasswordBO modifyPasswordBO) {
+        Long id = modifyPasswordBO.getId();
+        String newPassword = modifyPasswordBO.getNewPassword();
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getId,id);
+        updateWrapper.set(Volunteer::getPassword,newPassword);
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    public Volunteer volunteerIsExists(String email) {
+        LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(Volunteer::getEmail,email);
+        Volunteer volunteer = this.getOne(queryWrapper);
+        if(volunteer==null){
+            throw new CustomException(ResponseStatusEnum.VOLUNTEER_LOGIN_ERROR);
+        }
+        return volunteer;
     }
 
     @Override

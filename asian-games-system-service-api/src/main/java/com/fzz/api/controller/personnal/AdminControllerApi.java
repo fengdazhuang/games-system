@@ -29,7 +29,7 @@ public interface AdminControllerApi {
     @ApiOperation(value = "获取验证码")
     ReturnResult getCodeImage();
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     @ApiOperation(value = "管理员登出")
     ReturnResult logout(Long id,
                        HttpServletRequest request,

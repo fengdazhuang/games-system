@@ -2,8 +2,7 @@ package com.fzz.service.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.fzz.model.bo.DoReviewBO;
-import com.fzz.model.bo.ResetVolunteerRiskBO;
+import com.fzz.model.bo.*;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
@@ -20,4 +19,12 @@ public interface VolunteerService extends IService<Volunteer> {
     boolean saveVolunteer(Volunteer volunteer);
 
     boolean updateVolunteerRisk(ResetVolunteerRiskBO resetVolunteerRiskBO);
+
+    Volunteer volunteerIsExists(String email);
+
+    boolean updateVolunteerPassword(ModifyPasswordBO modifyPasswordBO);
+
+    boolean forgetVolunteerPassword(VolunteerRegisterBO volunteerRegisterBO);
+
+    boolean perfectOrUpdateVolunteerInfo(VolunteerInfoBO volunteerInfoBO);
 }
