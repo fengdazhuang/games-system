@@ -14,7 +14,7 @@ public class VolDirectionServiceImpl extends ServiceImpl<VolDirectionMapper, Vol
     @Override
     public List<VolDirection> listVolDirections(Integer volunteerType) {
         LambdaQueryWrapper<VolDirection> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(VolDirection::getVolunteerType,volunteerType);
+        queryWrapper.eq(volunteerType!=null,VolDirection::getVolunteerType,volunteerType);
         return this.list(queryWrapper);
     }
 }

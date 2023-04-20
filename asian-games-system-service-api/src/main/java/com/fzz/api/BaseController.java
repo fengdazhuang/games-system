@@ -21,6 +21,9 @@ public class BaseController {
     public static final String REDIS_USER_TOKEN = "redis_user_token";
     public static final String REDIS_USER_INFO = "redis_user_info";
 
+    public static final String REDIS_VOLUNTEER_TOKEN="redis_volunteer_token";
+    public static final String REDIS_VOLUNTEER_INFO = "redis_volunteer_info";
+
     public static final String REDIS_COMPETITION_CATEGORYS = "redis_competition_categorys";
     public static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
 

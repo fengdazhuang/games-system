@@ -1,13 +1,14 @@
 package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.DoReviewBO;
-import com.fzz.model.bo.ResetVolunteerRiskBO;
-import com.fzz.model.bo.VolunteerRegisterBO;
+import com.fzz.model.bo.*;
+import com.fzz.model.entity.Volunteer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequestMapping("/api3/volunteer")
@@ -46,5 +47,35 @@ public interface VolunteerControllerApi {
     @GetMapping("/getVolDirections")
     @ApiOperation(value = "根据志愿者类型获取所有志愿方向")
     ReturnResult queryVolDirections(@RequestParam Integer volunteerType);
+
+
+    @PostMapping("/login")
+    @ApiOperation(value = "根据志愿者类型获取所有志愿方向")
+    ReturnResult login(@RequestBody VolunteerLoginBO volunteerLoginBO,
+                       HttpServletRequest request,
+                       HttpServletResponse response);
+
+    @GetMapping("/getCodeImage")
+    @ApiOperation(value = "获取登陆时验证码的图片")
+    ReturnResult getCodeImage();
+
+    @GetMapping("/logout")
+    @ApiOperation(value = "志愿者登出")
+    ReturnResult logout(Long id,
+                        HttpServletRequest request,
+                        HttpServletResponse response) throws Exception;
+
+    @PutMapping("/forgetPassword")
+    @ApiOperation(value = "志愿者忘记密码")
+    ReturnResult forgetPassword(@Valid @RequestBody VolunteerRegisterBO volunteerRegisterBO);
+
+    @PutMapping("/modifyPassword")
+    @ApiOperation(value = "志愿者修改密码")
+    ReturnResult modifyPassword(@Valid @RequestBody ModifyPasswordBO modifyPasswordBO);
+
+    @PutMapping("/modifyInfo")
+    @ApiOperation(value = "志愿者修改个人信息")
+    ReturnResult modifyInfo(@Valid @RequestBody VolunteerInfoBO volunteerInfoBO);
+
 
 }
