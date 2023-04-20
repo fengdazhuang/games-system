@@ -1,0 +1,16 @@
+server:
+  port: 8002
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 020929Fzz...
+    url: jdbc:mysql://43.142.253.194:3306/asian-games-system?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 43.142.253.194
+    port: 6379
+    password: 123456
+    database: 0
+    timeout: 10000
+

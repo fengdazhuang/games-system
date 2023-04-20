@@ -2,6 +2,7 @@ package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.DoReviewBO;
+import com.fzz.model.bo.ResetVolunteerRiskBO;
 import com.fzz.model.bo.VolunteerRegisterBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,5 +38,13 @@ public interface VolunteerControllerApi {
     @PutMapping("/doReview")
     @ApiOperation(value = "审批志愿者")
     ReturnResult doReview(@RequestBody DoReviewBO doReviewBO);
+
+    @PutMapping("/resetRisk")
+    @ApiOperation(value = "修改志愿者服务任务")
+    ReturnResult resetVolunteerRisk(@RequestBody ResetVolunteerRiskBO resetVolunteerRiskBO);
+
+    @GetMapping("/getVolDirections")
+    @ApiOperation(value = "根据志愿者类型获取所有志愿方向")
+    ReturnResult queryVolDirections(@RequestParam Integer volunteerType);
 
 }

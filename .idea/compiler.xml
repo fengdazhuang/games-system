@@ -10,6 +10,7 @@
         <module name="asian-games-system-model" />
         <module name="asian-games-system-service-service" />
         <module name="asian-games-system-service-news" />
+        <module name="asian-games-system-service-system" />
         <module name="asian-games-system-service-competition" />
         <module name="asian-games-system-common" />
         <module name="asian-games-system-service-api" />
@@ -29,6 +30,7 @@
       <module name="asian-games-system-service-news" options="-parameters" />
       <module name="asian-games-system-service-personnel" options="-parameters" />
       <module name="asian-games-system-service-service" options="-parameters" />
+      <module name="asian-games-system-service-system" options="-parameters" />
     </option>
   </component>
 </project>

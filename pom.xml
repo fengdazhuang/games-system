@@ -13,6 +13,7 @@
         <module>asian-games-system-service-service</module>
         <module>asian-games-system-service-competition</module>
         <module>asian-games-system-service-file</module>
+        <module>asian-games-system-service-system</module>
     </modules>
 
 
