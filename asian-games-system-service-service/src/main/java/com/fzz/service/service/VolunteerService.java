@@ -8,7 +8,7 @@ import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
 
 public interface VolunteerService extends IService<Volunteer> {
-    Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk);
+    Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, Integer risk);
 
     Page<PreVolunteerVO> pagePreVolunteers(Integer pageNumber, Integer pageSize, Integer orderType);
 

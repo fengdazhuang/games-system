@@ -8,13 +8,16 @@ import com.fzz.common.enums.OrderColumnEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.*;
+import com.fzz.model.entity.VolDirection;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.mapper.VolunteerMapper;
+import com.fzz.service.service.VolDirectionService;
 import com.fzz.service.service.VolunteerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,19 +28,23 @@ import java.util.stream.Collectors;
 @Service
 public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer> implements VolunteerService {
 
+    @Autowired
+    private VolDirectionService volDirectionService;
 
     @Override
-    public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk) {
+    public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, Integer risk) {
         Page<Volunteer> page=new Page<>(pageNumber,pageSize);
         Page<VolunteerVO> volunteerVOPage=new Page<>();
         BeanUtils.copyProperties(page,volunteerVOPage,"records");
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(volunteerType!=null,Volunteer::getVolunteerType,volunteerType);
-        queryWrapper.eq(StringUtils.isNotBlank(risk),Volunteer::getRisk,risk);
+        queryWrapper.eq(risk!=null,Volunteer::getRisk,risk);
         this.page(page,queryWrapper);
         List<VolunteerVO> volunteerVOList = page.getRecords().stream().map(((item -> {
             VolunteerVO volunteerVO = new VolunteerVO();
             BeanUtils.copyProperties(item, volunteerVO);
+            VolDirection volDirection = volDirectionService.getById(item.getId());
+            volunteerVO.setRisk(volDirection.getName());
             return volunteerVO;
         }))).collect(Collectors.toList());
         volunteerVOPage.setRecords(volunteerVOList);

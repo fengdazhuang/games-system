@@ -84,7 +84,7 @@ public class VolunteerController extends BaseController implements VolunteerCont
     }
 
     @Override
-    public ReturnResult pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, String risk) {
+    public ReturnResult pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, Integer risk) {
         if(pageNumber<=0){
             pageNumber=COMMON_START_PAGE;
         }
@@ -159,8 +159,15 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Override
     public ReturnResult queryVolDirections(Integer volunteerType) {
-        List<VolDirection> list = volDirectionService.listVolDirections(volunteerType);
-        return ReturnResult.ok(list);
+        String str = redisUtil.get(REDIS_VOLUNTEER_DIRECTION_INFOS + ":" + volunteerType);
+        List<VolDirection> volDirections = null;
+        if(StringUtils.isNotBlank(str)){
+            volDirections = JsonUtils.jsonToList(str, VolDirection.class);
+        }else{
+            volDirections = volDirectionService.listVolDirections(volunteerType);
+            redisUtil.set(REDIS_VOLUNTEER_DIRECTION_INFOS+":"+volunteerType,JsonUtils.objectToJson(volDirections));
+        }
+        return ReturnResult.ok(volDirections);
     }
 
     @Override

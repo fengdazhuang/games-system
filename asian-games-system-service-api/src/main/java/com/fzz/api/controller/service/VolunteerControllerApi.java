@@ -27,7 +27,7 @@ public interface VolunteerControllerApi {
     ReturnResult pageVolunteers(@RequestParam Integer pageNumber,
                                 @RequestParam Integer pageSize,
                                 @RequestParam Integer volunteerType,
-                                @RequestParam String risk);
+                                @RequestParam Integer risk);
 
     @GetMapping("/pagePreVolunteers")
     @ApiOperation(value = "分页条件查询待审批志愿者")

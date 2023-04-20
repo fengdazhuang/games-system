@@ -78,7 +78,7 @@ public class Volunteer {
     /**
      * 分配任务类型
      */
-    private String risk;
+    private Integer risk;
 
     /**
      * 账号注册时间
