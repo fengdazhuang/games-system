@@ -63,8 +63,13 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     }
 
     @Override
-    public Admin getAdminDetail(Long id) {
+    public Admin getAdminInfo(Long id) {
         return this.getById(id);
+    }
+
+    @Override
+    public boolean updateAdminInfo(Admin admin) {
+        return this.updateById(admin);
     }
 
 

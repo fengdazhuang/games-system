@@ -169,9 +169,18 @@ public class AdminController extends BaseController implements AdminControllerAp
     }
 
     @Override
-    public ReturnResult getDetail(Long id) {
-        Admin admin = adminService.getAdminDetail(id);
+    public ReturnResult getInfo(Long id) {
+        Admin admin = adminService.getAdminInfo(id);
         return ReturnResult.ok(admin);
     }
 
+    @Override
+    public ReturnResult modifyInfo(Admin admin) {
+        boolean res = adminService.updateAdminInfo(admin);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.ADMIN_MODIFY_INFO_ERROR);
+    }
 }
+

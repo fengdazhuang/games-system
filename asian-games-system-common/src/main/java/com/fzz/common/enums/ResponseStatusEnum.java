@@ -12,6 +12,8 @@ public enum ResponseStatusEnum {
     ADMIN_USERNAME_ALREADY_EXISTS(204,false , "该用户名已存在"),
     ADMIN_CREATE_ERROR(205, false , "管理员添加失败"),
     ADMIN_STATUS_MODIFY_ERROR(206,false ,"管理员状态修改失败" ),
+    ADMIN_MODIFY_INFO_ERROR(207,false ,"管理员个人详细信息修改失败" ),
+
 
     COMPETITION_CATEGORY_ADD_ERROR(301,false ,"赛事类型添加失败" ),
     COMPETITION_INFO_ADD_ERROR(302,false , "赛事项目添加失败"),
@@ -53,7 +55,8 @@ public enum ResponseStatusEnum {
     VOLUNTEER_REST_RISK_ERROR(1005,false ,"重新分配志愿者任务失败" ),
     VOLUNTEER_LOGIN_ERROR(1006,false ,"登录信息有误" ),
     VOLUNTEER_MODIFY_PASSWORD_FAILED(1007,false ,"密码修改失败" ),
-    VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败");
+    VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败"),
+    VOLUNTEER_MODIFY_TYPE_FAILED(1009,false ,"志愿者类型选择失败，请稍后再试" );
 
 
 
