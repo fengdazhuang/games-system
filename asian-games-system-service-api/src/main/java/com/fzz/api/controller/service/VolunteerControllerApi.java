@@ -86,6 +86,11 @@ public interface VolunteerControllerApi {
                                    @RequestParam Integer pageSize);
 
 
+    @PostMapping("/applyVolunteer")
+    @ApiOperation(value = "提交志愿者申请")
+    ReturnResult applyVolunteer(@RequestBody ApplyVolunteerBO applyVolunteerBO);
+
+
 
 
 }

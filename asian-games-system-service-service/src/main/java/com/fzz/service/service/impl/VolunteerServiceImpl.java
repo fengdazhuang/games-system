@@ -82,6 +82,18 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
     }
 
     @Override
+    @Transactional
+    public boolean applyVolunteer(ApplyVolunteerBO applyVolunteerBO) {
+        LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Volunteer::getId,applyVolunteerBO.getId());
+        updateWrapper.set(Volunteer::getApplyTime,new Date());
+        updateWrapper.set(Volunteer::getIntention,applyVolunteerBO.getIntention());
+        updateWrapper.set(Volunteer::getComment,applyVolunteerBO.getComment());
+        updateWrapper.set(Volunteer::getProgress,1);
+        return this.update(updateWrapper);
+    }
+
+    @Override
     public boolean updateVolunteerType(Long id, Integer volunteerType) {
         LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Volunteer::getId,id);
