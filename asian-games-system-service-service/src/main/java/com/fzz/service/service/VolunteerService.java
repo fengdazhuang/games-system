@@ -29,4 +29,6 @@ public interface VolunteerService extends IService<Volunteer> {
     boolean perfectOrUpdateVolunteerInfo(VolunteerInfoBO volunteerInfoBO);
 
     boolean updateVolunteerType(Long id, Integer volunteerType);
+
+    boolean applyVolunteer(ApplyVolunteerBO applyVolunteerBO);
 }

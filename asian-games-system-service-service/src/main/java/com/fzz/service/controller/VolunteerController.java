@@ -198,6 +198,15 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
 
     @Override
+    public ReturnResult applyVolunteer(ApplyVolunteerBO applyVolunteerBO) {
+        boolean res = volunteerService.applyVolunteer(applyVolunteerBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_APPLY_FAILED);
+    }
+
+    @Override
     public ReturnResult pageVolunteerPositions(Integer pageNumber, Integer pageSize) {
         if(pageNumber<=0){
             pageNumber=COMMON_START_PAGE;
