@@ -2,6 +2,7 @@ package com.fzz.competition.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fzz.model.bo.AddComInfoBO;
+import com.fzz.model.bo.ComInfoBO;
 import com.fzz.model.entity.ComInfo;
 import com.fzz.model.vo.QueryComInfoVO;
 
@@ -14,4 +15,8 @@ public interface ComInfoService extends IService<ComInfo> {
     boolean saveComInfo(AddComInfoBO addComInfoBO);
 
     List<QueryComInfoVO> listComInfos();
+
+    boolean removeComInfoById(Integer id);
+
+    boolean updateComInfo(ComInfoBO comInfoBO);
 }

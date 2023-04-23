@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Map;
 
 @RequestMapping("/api3/volunteer")
 @Api(value = "志愿者服务")
@@ -20,7 +21,7 @@ public interface VolunteerControllerApi {
 
     @PostMapping("/sendCode")
     @ApiOperation(value = "向邮箱发送验证码")
-    ReturnResult sendEmailCode(@RequestBody String email);
+    ReturnResult sendEmailCode(@RequestBody Map<String,Object> map);
 
     @GetMapping("/pageVolunteers")
     @ApiOperation(value = "分页条件查询已招募志愿者")

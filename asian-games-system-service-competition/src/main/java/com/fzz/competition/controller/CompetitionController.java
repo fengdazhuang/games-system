@@ -14,6 +14,7 @@ import com.fzz.competition.service.ComInfoService;
 import com.fzz.model.bo.AddComCategoryBO;
 import com.fzz.model.bo.AddComInfoBO;
 import com.fzz.model.bo.AddComPositionBO;
+import com.fzz.model.bo.ComInfoBO;
 import com.fzz.model.entity.ComArea;
 import com.fzz.model.entity.ComCategory;
 import com.fzz.model.entity.ComPosition;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CompetitionController extends BaseController implements CompetitionControllerApi {
@@ -126,14 +128,31 @@ public class CompetitionController extends BaseController implements Competition
     }
 
     @Override
-    public ReturnResult addComArea(String comArea) {
-        JSONObject jsonObject = JSONObject.parseObject(comArea);
-        String area = (String) jsonObject.get("comArea");
-        boolean res = comAreaService.saveComArea(area);
+    public ReturnResult addComArea(Map<String,Object> map) {
+        String comArea = (String) map.get("comArea");
+        boolean res = comAreaService.saveComArea(comArea);
         if(res){
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.COMPETITION_AREA_CREATE_ERROR);
+    }
+
+    @Override
+    public ReturnResult modifyComInfo(ComInfoBO comInfoBO) {
+        boolean res = comInfoService.updateComInfo(comInfoBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_UPDATE_ERROR);
+    }
+
+    @Override
+    public ReturnResult deleteComInfo(Integer id) {
+        boolean res = comInfoService.removeComInfoById(id);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_DELETE_ERROR);
     }
 
     @Override

@@ -4,11 +4,14 @@ import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddComCategoryBO;
 import com.fzz.model.bo.AddComInfoBO;
 import com.fzz.model.bo.AddComPositionBO;
+import com.fzz.model.bo.ComInfoBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RequestMapping("/api4/competition")
 @Api(value = "CompetitionController")
@@ -48,10 +51,19 @@ public interface CompetitionControllerApi {
 
     @PostMapping("/addComArea")
     @ApiOperation(value = "添加比赛赛区")
-    ReturnResult addComArea(@RequestBody String comArea);
+    ReturnResult addComArea(@RequestBody Map<String,Object> map);
 
     @PostMapping("/addComPosition")
     @ApiOperation(value = "添加具体比赛场所")
     ReturnResult addComPosition(@Valid @RequestBody AddComPositionBO addComPositionBO);
+
+    @DeleteMapping("/deleteComInfo")
+    @ApiOperation(value = "删除具体运动项目")
+    ReturnResult deleteComInfo(Integer id);
+
+    @PutMapping("/modifyComInfo")
+    @ApiOperation(value = "修改具体运动项目")
+    ReturnResult modifyComInfo(@Valid @RequestBody ComInfoBO comInfoBO);
+
 
 }
