@@ -115,13 +115,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     @Transactional
-    public boolean updateAdminStatus(UpdateAdminStatusBO updateAdminStatusBO) {
-        Integer id = updateAdminStatusBO.getId();
-        Integer status = updateAdminStatusBO.getStatus();
-        LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
-        updateWrapper.eq(Admin::getId,id);
-        updateWrapper.set(Admin::getStatus, status);
-        return this.update(updateWrapper);
+    public boolean updateAdminStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList) {
+        boolean flag;
+        for(UpdateAdminStatusBO item:updateAdminStatusBOList){
+            Integer id = item.getId();
+            Integer status = item.getStatus();
+            LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
+            updateWrapper.eq(Admin::getId,id);
+            updateWrapper.set(Admin::getStatus, status);
+            flag = this.update(updateWrapper);
+            if(!flag){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

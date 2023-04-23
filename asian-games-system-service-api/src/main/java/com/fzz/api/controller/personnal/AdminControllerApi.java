@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(value = "AdminController")
 @RequestMapping("/api1/admin")
@@ -51,7 +52,7 @@ public interface AdminControllerApi {
 
     @PutMapping("/updateStatus")
     @ApiOperation(value = "修改管理员状态")
-    ReturnResult updateStatus(@RequestBody UpdateAdminStatusBO updateAdminStatusBO);
+    ReturnResult updateStatus(@RequestBody List<UpdateAdminStatusBO> updateAdminStatusBOList);
 
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置管理员密码")
