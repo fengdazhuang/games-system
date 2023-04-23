@@ -20,7 +20,8 @@ public enum ResponseStatusEnum {
     COMPETITION_AREA_CREATE_ERROR(303,false ,"比赛赛区添加失败" ),
     COMPETITION_POSITION_CREATE_ERROR(304,false ,"比赛场所添加失败" ),
     COMPETITION_POSITION_DELETE_ERROR(305,false , "比赛场所删除失败"),
-
+    COMPETITION_INFO_DELETE_ERROR(306,false ,"比赛项目删除失败" ),
+    COMPETITION_INFO_UPDATE_ERROR(307,false ,"比赛项目修改失败" ),
 
     SYSTEM_VALIDATE_CODE_ERROR(600,false ,"验证码错误" ),
     SYSTEM_BUSY_ERROR(601,false ,"系统繁忙，请稍后重试" ),
@@ -57,7 +58,7 @@ public enum ResponseStatusEnum {
     VOLUNTEER_MODIFY_PASSWORD_FAILED(1007,false ,"密码修改失败" ),
     VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败"),
     VOLUNTEER_MODIFY_TYPE_FAILED(1009,false ,"志愿者类型选择失败，请稍后再试" ),
-    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" );
+    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" ) ;
 
 
 

@@ -28,10 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 public class VolunteerController extends BaseController implements VolunteerControllerApi {
@@ -70,9 +67,8 @@ public class VolunteerController extends BaseController implements VolunteerCont
     }
 
     @Override
-    public ReturnResult sendEmailCode(String email) {
-        JSONObject jsonObject = JSONObject.parseObject(email);
-        email = (String) jsonObject.get("email");
+    public ReturnResult sendEmailCode(Map<String,Object> map) {
+        String email = (String) map.get("email");
         Volunteer volunteer = volunteerService.getVolunteerByEmail(email);
         if(volunteer!=null){
             return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_IS_ALREADY_EXISTS);

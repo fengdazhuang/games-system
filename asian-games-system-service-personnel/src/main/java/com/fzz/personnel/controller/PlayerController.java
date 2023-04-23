@@ -55,8 +55,8 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult deletePlayer(Long id) {
-        boolean res = playerService.removePlayer(id);
+    public ReturnResult deletePlayer(Long[] id) {
+        boolean res = playerService.removePlayers(id);
         if(res){
             return ReturnResult.ok();
         }

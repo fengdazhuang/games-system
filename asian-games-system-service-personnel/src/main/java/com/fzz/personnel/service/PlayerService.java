@@ -15,7 +15,7 @@ public interface PlayerService extends IService<Player> {
 
     boolean savePlayer(AddPlayerBO addPlayer);
 
-    boolean removePlayer(Long id);
+    boolean removePlayers(Long[] id);
 
     boolean updatePlayerById(AddPlayerBO addPlayer);
 

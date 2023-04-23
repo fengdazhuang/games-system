@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,10 +74,12 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     @Override
     @Transactional
-    public boolean removePlayer(Long id) {
-        boolean res = this.removeById(id);
+    public boolean removePlayers(Long[] id) {
+        boolean res = this.removeByIds(Arrays.asList(id));
         if(res){
-            redisUtil.del(REDIS_PLAYER_INFO+":"+id);
+            for(Long playerId:id){
+                redisUtil.del(REDIS_PLAYER_INFO+":"+playerId);
+            }
             return true;
         }
         return false;
