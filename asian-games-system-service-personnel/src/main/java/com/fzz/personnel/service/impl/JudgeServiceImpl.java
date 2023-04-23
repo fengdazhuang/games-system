@@ -16,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,10 +48,12 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
     }
 
     @Override
-    public boolean removeJudge(Long id) {
-        boolean res = this.removeById(id);
+    public boolean removeJudges(Long[] id) {
+        boolean res = this.removeByIds(Arrays.asList(id));
         if(res){
-            redisUtil.del(REDIS_JUDGE_INFO+":"+id);
+            for(Long judgeId:id){
+                redisUtil.del(REDIS_JUDGE_INFO+":"+judgeId);
+            }
             return true;
         }
         return false;

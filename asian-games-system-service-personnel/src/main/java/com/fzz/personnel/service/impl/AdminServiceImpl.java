@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fzz.common.enums.AdminStatusEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.AddAdminBO;
@@ -121,8 +120,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         Integer status = updateAdminStatusBO.getStatus();
         LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Admin::getId,id);
-        updateWrapper.set(Admin::getStatus, status.equals(AdminStatusEnum.AVAILABLE.code())
-                ?AdminStatusEnum.DISABLED.code():AdminStatusEnum.AVAILABLE.code());
+        updateWrapper.set(Admin::getStatus, status);
         return this.update(updateWrapper);
     }
 

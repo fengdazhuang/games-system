@@ -34,5 +34,5 @@ public interface JudgeControllerApi {
 
     @DeleteMapping("/deleteJudge")
     @ApiOperation(value = "删除裁判")
-    ReturnResult deleteJudge(@RequestParam Long id);
+    ReturnResult deleteJudge(@RequestParam Long[] id);
 }
