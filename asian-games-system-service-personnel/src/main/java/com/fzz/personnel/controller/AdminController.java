@@ -12,7 +12,7 @@ import com.fzz.common.utils.ValidateCodeUtils;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.AdminLoginBO;
 import com.fzz.model.bo.ResetPasswordBO;
-import com.fzz.model.bo.UpdateAdminStatusBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 import com.fzz.model.vo.ValidateCodeVO;
@@ -153,8 +153,8 @@ public class AdminController extends BaseController implements AdminControllerAp
     }
 
     @Override
-    public ReturnResult updateStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList) {
-        boolean res = adminService.updateAdminStatus(updateAdminStatusBOList);
+    public ReturnResult updateStatus(List<UpdateStatusBO> updateStatusBOList) {
+        boolean res = adminService.updateAdminStatus(updateStatusBOList);
         if(res){
             return ReturnResult.ok();
         }

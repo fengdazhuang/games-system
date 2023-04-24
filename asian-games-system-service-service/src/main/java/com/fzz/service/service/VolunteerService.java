@@ -31,4 +31,6 @@ public interface VolunteerService extends IService<Volunteer> {
     boolean updateVolunteerType(Long id, Integer volunteerType);
 
     boolean applyVolunteer(ApplyVolunteerBO applyVolunteerBO);
+
+    Volunteer getVolunteerDetailById(Long id);
 }

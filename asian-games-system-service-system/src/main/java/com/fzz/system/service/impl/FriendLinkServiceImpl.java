@@ -1,7 +1,10 @@
 package com.fzz.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fzz.model.bo.FriendLinkBO;
+import com.fzz.model.bo.AddFriendLinkBO;
+import com.fzz.model.bo.UpdateFriendLinkBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.FriendLink;
 import com.fzz.system.mapper.FriendLinkMapper;
 import com.fzz.system.service.FriendLinkService;
@@ -21,9 +24,33 @@ public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendL
 
     @Override
     @Transactional
-    public boolean saveFriendLink(FriendLinkBO friendLinkBO) {
+    public boolean updateFriendLink(UpdateFriendLinkBO updateFriendLinkBO) {
         FriendLink friendLink=new FriendLink();
-        BeanUtils.copyProperties(friendLinkBO,friendLink);
+        BeanUtils.copyProperties(updateFriendLinkBO,friendLink);
+        return this.updateById(friendLink);
+    }
+
+    @Override
+    @Transactional
+    public boolean updateFriendLinkStatus(List<UpdateStatusBO> updateStatusBOList) {
+        boolean flag;
+        for(UpdateStatusBO item:updateStatusBOList){
+            LambdaUpdateWrapper<FriendLink> updateWrapper=new LambdaUpdateWrapper<>();
+            updateWrapper.eq(FriendLink::getId,item.getId());
+            updateWrapper.set(FriendLink::getStatus,item.getStatus());
+            flag = this.update(updateWrapper);
+            if(!flag){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean saveFriendLink(AddFriendLinkBO addFriendLinkBO) {
+        FriendLink friendLink=new FriendLink();
+        BeanUtils.copyProperties(addFriendLinkBO,friendLink);
         friendLink.setCreateTime(new Date());
         return this.save(friendLink);
     }

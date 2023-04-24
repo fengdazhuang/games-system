@@ -4,7 +4,9 @@ import com.fzz.api.BaseController;
 import com.fzz.api.controller.system.SystemControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.FriendLinkBO;
+import com.fzz.model.bo.AddFriendLinkBO;
+import com.fzz.model.bo.UpdateFriendLinkBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.FriendLink;
 import com.fzz.system.service.FriendLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,26 @@ public class SystemController extends BaseController implements SystemController
     }
 
     @Override
-    public ReturnResult addFriendLink(FriendLinkBO friendLinkBO) {
-        boolean res = friendLinkService.saveFriendLink(friendLinkBO);
+    public ReturnResult modifyFriendLinkStatus(List<UpdateStatusBO> updateStatusBOList) {
+        boolean res = friendLinkService.updateFriendLinkStatus(updateStatusBOList);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.FRIENDLINK_MODIFY_STATUS_ERROR);
+    }
+
+    @Override
+    public ReturnResult modifyFriendLink(UpdateFriendLinkBO updateFriendLinkBO) {
+        boolean res = friendLinkService.updateFriendLink(updateFriendLinkBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.FRIENDLINK_UPDATE_INFO_ERROR);
+    }
+
+    @Override
+    public ReturnResult addFriendLink(AddFriendLinkBO addFriendLinkBO) {
+        boolean res = friendLinkService.saveFriendLink(addFriendLinkBO);
         if(res){
             return ReturnResult.ok();
         }

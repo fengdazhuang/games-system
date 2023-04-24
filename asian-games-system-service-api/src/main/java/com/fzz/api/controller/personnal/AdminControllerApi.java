@@ -4,7 +4,7 @@ import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.AdminLoginBO;
 import com.fzz.model.bo.ResetPasswordBO;
-import com.fzz.model.bo.UpdateAdminStatusBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.Admin;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +52,7 @@ public interface AdminControllerApi {
 
     @PutMapping("/updateStatus")
     @ApiOperation(value = "修改管理员状态")
-    ReturnResult updateStatus(@RequestBody List<UpdateAdminStatusBO> updateAdminStatusBOList);
+    ReturnResult updateStatus(@RequestBody List<UpdateStatusBO> updateStatusBOList);
 
     @PutMapping("/resetPassword")
     @ApiOperation(value = "重置管理员密码")

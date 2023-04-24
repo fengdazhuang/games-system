@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.ResetPasswordBO;
-import com.fzz.model.bo.UpdateAdminStatusBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 
@@ -20,7 +20,7 @@ public interface AdminService extends IService<Admin> {
 
     boolean usernameIsExists(String username);
 
-    boolean updateAdminStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList);
+    boolean updateAdminStatus(List<UpdateStatusBO> updateStatusBOList);
 
     void resetAdminPassword(ResetPasswordBO resetPasswordBO);
 

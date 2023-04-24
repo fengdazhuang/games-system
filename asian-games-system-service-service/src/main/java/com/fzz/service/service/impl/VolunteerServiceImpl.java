@@ -44,7 +44,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
             VolunteerVO volunteerVO = new VolunteerVO();
             BeanUtils.copyProperties(item, volunteerVO);
             Integer riskId = item.getRisk();
-            if(riskId !=null){
+            if(riskId!=null){
                 VolDirection volDirection = volDirectionService.getById(riskId);
                 volunteerVO.setRisk(volDirection.getName());
             }
@@ -82,6 +82,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(Volunteer::getEmail,email);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public Volunteer getVolunteerDetailById(Long id) {
+        return this.getById(id);
     }
 
     @Override

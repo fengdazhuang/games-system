@@ -5,8 +5,12 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * 修改管理员状态和友情链接状态的BO
+ */
+
 @Data
-public class UpdateAdminStatusBO {
+public class UpdateStatusBO {
 
     @NotNull(message = "管理员id不能为空")
     private Integer id;

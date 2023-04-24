@@ -79,7 +79,8 @@ public interface VolunteerControllerApi {
 
     @PutMapping("/chooseVolType")
     @ApiOperation(value = "志愿者修改个人信息")
-    ReturnResult chooseVolunteerType(@RequestParam Long id,@RequestParam Integer volunteerType);
+    ReturnResult chooseVolunteerType(@RequestParam Long id,
+                                     @RequestParam Integer volunteerType);
 
     @GetMapping("/pageVolPositions")
     @ApiOperation(value = "分页条件查询志愿服务点")
@@ -91,6 +92,10 @@ public interface VolunteerControllerApi {
     @ApiOperation(value = "提交志愿者申请")
     ReturnResult applyVolunteer(@RequestBody ApplyVolunteerBO applyVolunteerBO);
 
+
+    @GetMapping("/queryVolunteer")
+    @ApiOperation(value = "获取志愿者个人信息")
+    ReturnResult queryVolunteer(@RequestParam Long id);
 
 
 
