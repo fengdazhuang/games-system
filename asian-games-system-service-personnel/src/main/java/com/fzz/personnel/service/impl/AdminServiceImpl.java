@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fzz.common.enums.AdminStatusEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.AddAdminBO;
@@ -116,14 +115,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     @Transactional
-    public boolean updateAdminStatus(UpdateAdminStatusBO updateAdminStatusBO) {
-        Integer id = updateAdminStatusBO.getId();
-        Integer status = updateAdminStatusBO.getStatus();
-        LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
-        updateWrapper.eq(Admin::getId,id);
-        updateWrapper.set(Admin::getStatus, status.equals(AdminStatusEnum.AVAILABLE.code())
-                ?AdminStatusEnum.DISABLED.code():AdminStatusEnum.AVAILABLE.code());
-        return this.update(updateWrapper);
+    public boolean updateAdminStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList) {
+        boolean flag;
+        for(UpdateAdminStatusBO item:updateAdminStatusBOList){
+            Integer id = item.getId();
+            Integer status = item.getStatus();
+            LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();
+            updateWrapper.eq(Admin::getId,id);
+            updateWrapper.set(Admin::getStatus, status);
+            flag = this.update(updateWrapper);
+            if(!flag){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

@@ -13,4 +13,5 @@ public class UpdateAdminStatusBO {
 
     @NotBlank(message = "管理员状态不能为空")
     private Integer status;
+
 }

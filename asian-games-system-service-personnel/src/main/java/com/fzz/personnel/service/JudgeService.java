@@ -10,7 +10,7 @@ public interface JudgeService extends IService<Judge> {
 
     boolean saveJudge(AddJudgeBO addJudge);
 
-    boolean removeJudge(Long id);
+    boolean removeJudges(Long[] id);
 
     boolean updatePlayerById(AddJudgeBO addJudge);
 

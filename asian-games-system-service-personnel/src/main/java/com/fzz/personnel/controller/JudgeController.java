@@ -68,8 +68,8 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     }
 
     @Override
-    public ReturnResult deleteJudge(Long id) {
-        boolean res = judgeService.removeJudge(id);
+    public ReturnResult deleteJudge(Long[] id) {
+        boolean res = judgeService.removeJudges(id);
         if(res){
             return ReturnResult.ok();
         }

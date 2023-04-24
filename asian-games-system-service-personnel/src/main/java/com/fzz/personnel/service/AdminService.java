@@ -8,6 +8,8 @@ import com.fzz.model.bo.UpdateAdminStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 
+import java.util.List;
+
 public interface AdminService extends IService<Admin> {
 
     Admin adminIsExists(String username);
@@ -18,7 +20,7 @@ public interface AdminService extends IService<Admin> {
 
     boolean usernameIsExists(String username);
 
-    boolean updateAdminStatus(UpdateAdminStatusBO updateAdminStatusBO);
+    boolean updateAdminStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList);
 
     void resetAdminPassword(ResetPasswordBO resetPasswordBO);
 

@@ -58,6 +58,7 @@ public class VolunteerController extends BaseController implements VolunteerCont
         }
         Volunteer volunteer=new Volunteer();
         volunteer.setEmail(email);
+        volunteer.setPassword(volunteerRegisterBO.getPassword());
         volunteer.setCreateTime(new Date());
         boolean res = volunteerService.saveVolunteer(volunteer);
         if(res){

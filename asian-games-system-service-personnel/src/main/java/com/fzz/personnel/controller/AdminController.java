@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -152,8 +153,8 @@ public class AdminController extends BaseController implements AdminControllerAp
     }
 
     @Override
-    public ReturnResult updateStatus(UpdateAdminStatusBO updateAdminStatusBO) {
-        boolean res = adminService.updateAdminStatus(updateAdminStatusBO);
+    public ReturnResult updateStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList) {
+        boolean res = adminService.updateAdminStatus(updateAdminStatusBOList);
         if(res){
             return ReturnResult.ok();
         }
