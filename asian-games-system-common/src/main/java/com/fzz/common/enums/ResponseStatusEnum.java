@@ -28,6 +28,8 @@ public enum ResponseStatusEnum {
     SYSTEM_DATE_PARSER_ERROR(602,false , "时间转换错误"),
 
     FRIENDLINK_CREATE_ERROR(651,false ,"友情链接添加失败" ),
+    FRIENDLINK_MODIFY_STATUS_ERROR(652, false, "友情链接修改状态失败"),
+    FRIENDLINK_UPDATE_INFO_ERROR(653,false ,"友情链接修改失败" ),
 
     PLAYER_CREATE_ERROR(701,false ,"运动员添加失败" ),
     PLAYER_DELETE_ERROR(702,false ,"运动员删除失败" ),
@@ -58,7 +60,7 @@ public enum ResponseStatusEnum {
     VOLUNTEER_MODIFY_PASSWORD_FAILED(1007,false ,"密码修改失败" ),
     VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败"),
     VOLUNTEER_MODIFY_TYPE_FAILED(1009,false ,"志愿者类型选择失败，请稍后再试" ),
-    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" ) ;
+    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" );
 
 
 

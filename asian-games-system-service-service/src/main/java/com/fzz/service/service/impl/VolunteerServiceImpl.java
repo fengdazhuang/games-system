@@ -43,8 +43,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         List<VolunteerVO> volunteerVOList = page.getRecords().stream().map(((item -> {
             VolunteerVO volunteerVO = new VolunteerVO();
             BeanUtils.copyProperties(item, volunteerVO);
-            VolDirection volDirection = volDirectionService.getById(item.getId());
-            volunteerVO.setRisk(volDirection.getName());
+            Integer riskId = item.getRisk();
+            if(riskId!=null){
+                VolDirection volDirection = volDirectionService.getById(riskId);
+                volunteerVO.setRisk(volDirection.getName());
+            }
             return volunteerVO;
         }))).collect(Collectors.toList());
         volunteerVOPage.setRecords(volunteerVOList);
@@ -79,6 +82,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(Volunteer::getEmail,email);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public Volunteer getVolunteerDetailById(Long id) {
+        return this.getById(id);
     }
 
     @Override

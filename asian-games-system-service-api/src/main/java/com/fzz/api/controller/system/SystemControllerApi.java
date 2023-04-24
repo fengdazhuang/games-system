@@ -1,11 +1,12 @@
 package com.fzz.api.controller.system;
 
 import com.fzz.common.result.ReturnResult;
-import com.fzz.model.bo.FriendLinkBO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.fzz.model.bo.AddFriendLinkBO;
+import com.fzz.model.bo.UpdateFriendLinkBO;
+import com.fzz.model.bo.UpdateStatusBO;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api5/system")
 public interface SystemControllerApi {
@@ -14,5 +15,11 @@ public interface SystemControllerApi {
     ReturnResult queryFriendLinks();
 
     @PostMapping("/addFriendLink")
-    ReturnResult addFriendLink(@RequestBody FriendLinkBO friendLinkBO);
+    ReturnResult addFriendLink(@RequestBody AddFriendLinkBO addFriendLinkBO);
+
+    @PutMapping("/modifyFriendLinkStatus")
+    ReturnResult modifyFriendLinkStatus(@RequestBody List<UpdateStatusBO> updateStatusBOList);
+
+    @PutMapping("/modifyFriendLink")
+    ReturnResult modifyFriendLink(@RequestBody UpdateFriendLinkBO updateFriendLinkBO);
 }

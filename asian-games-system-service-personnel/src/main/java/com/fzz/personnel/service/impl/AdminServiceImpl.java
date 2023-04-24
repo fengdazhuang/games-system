@@ -8,7 +8,7 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.ResetPasswordBO;
-import com.fzz.model.bo.UpdateAdminStatusBO;
+import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.Admin;
 import com.fzz.model.vo.QueryAdminVO;
 import com.fzz.personnel.entity.EmailContent;
@@ -115,9 +115,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Override
     @Transactional
-    public boolean updateAdminStatus(List<UpdateAdminStatusBO> updateAdminStatusBOList) {
+    public boolean updateAdminStatus(List<UpdateStatusBO> updateStatusBOList) {
         boolean flag;
-        for(UpdateAdminStatusBO item:updateAdminStatusBOList){
+        for(UpdateStatusBO item: updateStatusBOList){
             Integer id = item.getId();
             Integer status = item.getStatus();
             LambdaUpdateWrapper<Admin> updateWrapper=new LambdaUpdateWrapper<>();

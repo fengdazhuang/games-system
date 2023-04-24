@@ -3,7 +3,7 @@ package com.fzz.model.bo;
 import lombok.Data;
 
 @Data
-public class FriendLinkBO {
+public class AddFriendLinkBO {
 
     private String url;
 

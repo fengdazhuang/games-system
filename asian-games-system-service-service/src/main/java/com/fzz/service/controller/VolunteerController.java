@@ -195,6 +195,12 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
 
     @Override
+    public ReturnResult queryVolunteer(Long id) {
+        Volunteer volunteer = volunteerService.getVolunteerDetailById(id);
+        return ReturnResult.ok(volunteer);
+    }
+
+    @Override
     public ReturnResult applyVolunteer(ApplyVolunteerBO applyVolunteerBO) {
         boolean res = volunteerService.applyVolunteer(applyVolunteerBO);
         if(res){
