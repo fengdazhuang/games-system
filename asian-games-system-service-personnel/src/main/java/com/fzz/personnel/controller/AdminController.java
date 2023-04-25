@@ -73,8 +73,8 @@ public class AdminController extends BaseController implements AdminControllerAp
 
         //保存用户标识符和id在cookie中，在redis中保存标识符和admin对象
         String uToken=UUID.randomUUID().toString();
-        redisUtil.set(REDIS_USER_TOKEN+":"+admin.getId(),uToken);
-        redisUtil.set(REDIS_USER_INFO+":"+admin.getId(), JsonUtils.objectToJson(admin));
+        redisUtil.set(REDIS_ADMIN_TOKEN+":"+admin.getId(),uToken);
+        redisUtil.set(REDIS_ADMIN_INFO+":"+admin.getId(), JsonUtils.objectToJson(admin));
 
         setCookie(request,response,"utoken",uToken,COOKIE_MONTH);
         setCookie(request,response,"uid",String.valueOf(admin.getId()),COOKIE_MONTH);
@@ -114,8 +114,8 @@ public class AdminController extends BaseController implements AdminControllerAp
                               HttpServletRequest request,
                               HttpServletResponse response) throws Exception {
 
-        redisUtil.del(REDIS_USER_TOKEN+":"+id);
-        redisUtil.del(REDIS_USER_INFO+":"+id);
+        redisUtil.del(REDIS_ADMIN_TOKEN+":"+id);
+        redisUtil.del(REDIS_ADMIN_INFO+":"+id);
         deleteCookie(request,response,"utoken");
         deleteCookie(request,response,"uid");
         return ReturnResult.ok();

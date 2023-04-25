@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
 
@@ -33,5 +34,13 @@ public interface NewsControllerApi {
     @PutMapping("/withdraw")
     @ApiOperation(value = "撤回新闻")
     ReturnResult withdrawNews(@RequestParam Long id);
+
+    @GetMapping("/ReadNews")
+    @ApiOperation(value = "阅读新闻")
+    ReturnResult readNews(@RequestParam Long id, HttpServletRequest request);
+
+    @GetMapping("/getReadCounts")
+    @ApiOperation(value = "获取新闻阅读数")
+    ReturnResult getReadCounts(@RequestParam Long id);
 
 }
