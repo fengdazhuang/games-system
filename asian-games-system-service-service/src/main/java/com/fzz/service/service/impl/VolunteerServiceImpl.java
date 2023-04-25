@@ -97,7 +97,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         updateWrapper.set(Volunteer::getApplyTime,new Date());
         updateWrapper.set(Volunteer::getIntention,applyVolunteerBO.getIntention());
         updateWrapper.set(Volunteer::getComment,applyVolunteerBO.getComment());
-        updateWrapper.set(Volunteer::getProgress,1);
+        updateWrapper.set(Volunteer::getProcess,1);
         return this.update(updateWrapper);
     }
 
@@ -176,15 +176,15 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Volunteer::getId,doReviewBO.getId());
         if(status==0){
-            updateWrapper.set(Volunteer::getProgress,4);
+            updateWrapper.set(Volunteer::getProcess,4);
         }
         if(status==1){
             String risk = doReviewBO.getRisk();
             if(StringUtils.isNotBlank(risk)){
-                updateWrapper.set(Volunteer::getProgress,3);
+                updateWrapper.set(Volunteer::getProcess,3);
                 updateWrapper.set(Volunteer::getRisk,risk);
             }
-            updateWrapper.set(Volunteer::getProgress,2);
+            updateWrapper.set(Volunteer::getProcess,2);
 
         }
 

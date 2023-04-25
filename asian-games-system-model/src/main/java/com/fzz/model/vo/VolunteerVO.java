@@ -35,6 +35,8 @@ public class VolunteerVO {
      */
     private Integer age;
 
+    private Integer process;
+
 
     /**
      * 分配任务类型
