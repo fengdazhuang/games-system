@@ -99,7 +99,7 @@ public class Volunteer {
      * 申请进度条
      * 0 未申请  1 已申请，待审核，未分配  2 已申请，已审核，未分配  3 已申请，已审核，已分配  4 未通过
      */
-    private Integer progress;
+    private Integer process;
 
     /**
      * 申请备注，如个人特长，经历

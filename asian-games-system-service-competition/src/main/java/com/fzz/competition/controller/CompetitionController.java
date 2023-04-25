@@ -1,6 +1,5 @@
 package com.fzz.competition.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.competition.CompetitionControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
