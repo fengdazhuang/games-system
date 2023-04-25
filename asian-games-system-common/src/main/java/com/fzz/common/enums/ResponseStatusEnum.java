@@ -13,6 +13,8 @@ public enum ResponseStatusEnum {
     ADMIN_CREATE_ERROR(205, false , "管理员添加失败"),
     ADMIN_STATUS_MODIFY_ERROR(206,false ,"管理员状态修改失败" ),
     ADMIN_MODIFY_INFO_ERROR(207,false ,"管理员个人详细信息修改失败" ),
+    UN_LOGIN(208,false ,"用户未登录" ),
+    TICKET_INVALID(209,false,"会话失效，请重新登录！"),
 
 
     COMPETITION_CATEGORY_ADD_ERROR(301,false ,"赛事类型添加失败" ),

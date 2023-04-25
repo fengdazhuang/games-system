@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
+import com.fzz.common.utils.RedisUtil;
 import com.fzz.model.bo.AddAdminBO;
 import com.fzz.model.bo.ResetPasswordBO;
 import com.fzz.model.bo.UpdateStatusBO;
@@ -32,6 +33,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     @Autowired
     private IEmailService iEmailService;
+
 
 
     @Override

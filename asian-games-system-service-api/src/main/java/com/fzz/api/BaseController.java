@@ -13,13 +13,13 @@ import java.net.URLEncoder;
 
 public class BaseController {
 
+
     @Autowired
     public RedisUtil redis;
 
-
+    public static final String REDIS_ADMIN_INFO = "redis_admin_info";
     public static final String MOBILE_SMSCODE = "mobile:smscode";
-    public static final String REDIS_USER_TOKEN = "redis_user_token";
-    public static final String REDIS_USER_INFO = "redis_user_info";
+
 
     public static final String REDIS_VOLUNTEER_TOKEN="redis_volunteer_token";
     public static final String REDIS_VOLUNTEER_INFO = "redis_volunteer_info";
@@ -40,10 +40,10 @@ public class BaseController {
     public static final String REDIS_WRITER_FANS_COUNTS = "redis_writer_fans_counts";
     public static final String REDIS_MY_FOLLOW_COUNTS = "redis_my_follow_counts";
 
-    public static final String REDIS_ARTICLE_READ_COUNTS = "redis_article_read_counts";
+    public static final String REDIS_NEWS_READ_COUNTS = "redis_news_read_counts";
     public static final String REDIS_ALREADY_READ = "redis_already_read";
 
-    public static final String REDIS_ARTICLE_COMMENT_COUNTS = "redis_article_comment_counts";
+    public static final String REDIS_NEWS_COMMENT_COUNTS = "redis_article_comment_counts";
 
     public static final String REDIS_VOLUNTEER_EMAIL_CODE="redis_volunteer_email_code";
     public static final String REDIS_VOLUNTEER_DIRECTION_INFOS = "redis_volunteer_direction_infos";

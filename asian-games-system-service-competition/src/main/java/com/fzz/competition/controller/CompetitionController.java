@@ -141,6 +141,7 @@ public class CompetitionController extends BaseController implements Competition
     public ReturnResult modifyComInfo(ComInfoBO comInfoBO) {
         boolean res = comInfoService.updateComInfo(comInfoBO);
         if(res){
+            redisUtil.del(REDIS_COMPETITION_CATEGORYS);
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_UPDATE_ERROR);
@@ -150,6 +151,7 @@ public class CompetitionController extends BaseController implements Competition
     public ReturnResult deleteComInfo(Integer id) {
         boolean res = comInfoService.removeComInfoById(id);
         if(res){
+            redisUtil.del(REDIS_COMPETITION_CATEGORYS);
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.COMPETITION_INFO_DELETE_ERROR);
