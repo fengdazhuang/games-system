@@ -58,6 +58,9 @@ public class PlayerController extends BaseController implements PlayerController
     public ReturnResult deletePlayer(Long[] id) {
         boolean res = playerService.removePlayers(id);
         if(res){
+            for(Long playerId:id){
+                redisUtil.del(REDIS_PLAYER_INFO + ":" + playerId);
+            }
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.PLAYER_DELETE_ERROR);
@@ -67,6 +70,7 @@ public class PlayerController extends BaseController implements PlayerController
     public ReturnResult updatePlayer(AddPlayerBO addPlayer) {
         boolean res = playerService.updatePlayerById(addPlayer);
         if(res){
+            redisUtil.del(REDIS_PLAYER_INFO + ":" + addPlayer.getId());
             return ReturnResult.ok();
         }
 
@@ -78,6 +82,7 @@ public class PlayerController extends BaseController implements PlayerController
         String playerStr = redisUtil.get(REDIS_PLAYER_INFO + ":" + id);
         if(StringUtils.isNotBlank(playerStr)){
             Player player = JsonUtils.jsonToPojo(playerStr, Player.class);
+            redisUtil.set(REDIS_PLAYER_INFO + ":" + id,JsonUtils.objectToJson(player));
             return ReturnResult.ok(player);
         }
         return ReturnResult.error(ResponseStatusEnum.PLAYER_NOT_EXISTS);

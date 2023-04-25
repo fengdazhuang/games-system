@@ -7,7 +7,7 @@ import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddFriendLinkBO;
 import com.fzz.model.bo.UpdateFriendLinkBO;
 import com.fzz.model.bo.UpdateStatusBO;
-import com.fzz.model.entity.FriendLink;
+import com.fzz.model.vo.FriendLinkVO;
 import com.fzz.system.service.FriendLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +22,7 @@ public class SystemController extends BaseController implements SystemController
 
     @Override
     public ReturnResult queryFriendLinks() {
-        List<FriendLink> list=friendLinkService.listFriendLinks();
+        List<FriendLinkVO> list=friendLinkService.listFriendLinks();
         return ReturnResult.ok(list);
     }
 
