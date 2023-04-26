@@ -6,6 +6,7 @@ import com.fzz.model.bo.AddFriendLinkBO;
 import com.fzz.model.bo.UpdateFriendLinkBO;
 import com.fzz.model.bo.UpdateStatusBO;
 import com.fzz.model.entity.FriendLink;
+import com.fzz.model.vo.FriendLinkVO;
 import com.fzz.system.mapper.FriendLinkMapper;
 import com.fzz.system.service.FriendLinkService;
 import org.springframework.beans.BeanUtils;
@@ -14,12 +15,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendLinkServiceImpl extends ServiceImpl<FriendLinkMapper, FriendLink> implements FriendLinkService {
     @Override
-    public List<FriendLink> listFriendLinks() {
-        return this.list();
+    public List<FriendLinkVO> listFriendLinks() {
+        List<FriendLink> list = this.list();
+        List<FriendLinkVO> friendLinkVOList = list.stream().map(((item -> {
+            FriendLinkVO friendLinkVO = new FriendLinkVO();
+            BeanUtils.copyProperties(item, friendLinkVO);
+            return friendLinkVO;
+        }))).collect(Collectors.toList());
+        return friendLinkVOList;
     }
 
     @Override

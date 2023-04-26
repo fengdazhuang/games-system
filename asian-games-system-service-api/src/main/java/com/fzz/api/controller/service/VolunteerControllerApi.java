@@ -50,7 +50,7 @@ public interface VolunteerControllerApi {
 
 
     @PostMapping("/login")
-    @ApiOperation(value = "根据志愿者类型获取所有志愿方向")
+    @ApiOperation(value = "志愿者登录")
     ReturnResult login(@RequestBody VolunteerLoginBO volunteerLoginBO,
                        HttpServletRequest request,
                        HttpServletResponse response);
@@ -78,7 +78,7 @@ public interface VolunteerControllerApi {
     ReturnResult modifyInfo(@Valid @RequestBody VolunteerInfoBO volunteerInfoBO);
 
     @PutMapping("/chooseVolType")
-    @ApiOperation(value = "志愿者修改个人信息")
+    @ApiOperation(value = "志愿者选择志愿者类型")
     ReturnResult chooseVolunteerType(@RequestParam Long id,
                                      @RequestParam Integer volunteerType);
 

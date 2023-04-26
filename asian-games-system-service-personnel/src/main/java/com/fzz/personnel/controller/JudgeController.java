@@ -51,6 +51,7 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     public ReturnResult updateJudge(AddJudgeBO addJudge) {
         boolean res = judgeService.updatePlayerById(addJudge);
         if(res){
+            redisUtil.del(REDIS_JUDGE_INFO + ":" + addJudge.getId());
             return ReturnResult.ok();
         }
 
@@ -62,6 +63,7 @@ public class JudgeController extends BaseController implements JudgeControllerAp
         String judgeStr = redisUtil.get(REDIS_JUDGE_INFO + ":" + id);
         if(StringUtils.isNotBlank(judgeStr)){
             Judge judge = JsonUtils.jsonToPojo(judgeStr, Judge.class);
+            redisUtil.set(REDIS_JUDGE_INFO + ":" + id,JsonUtils.objectToJson(judge));
             return ReturnResult.ok(judge);
         }
         return ReturnResult.error(ResponseStatusEnum.JUDGE_NOT_EXISTS);
@@ -71,6 +73,9 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     public ReturnResult deleteJudge(Long[] id) {
         boolean res = judgeService.removeJudges(id);
         if(res){
+            for(Long judgeId:id){
+                redisUtil.del(REDIS_JUDGE_INFO + ":" + judgeId);
+            }
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.JUDGE_DELETE_ERROR);

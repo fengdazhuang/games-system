@@ -183,11 +183,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
             if(StringUtils.isNotBlank(risk)){
                 updateWrapper.set(Volunteer::getProcess,3);
                 updateWrapper.set(Volunteer::getRisk,risk);
+            }else{
+                updateWrapper.set(Volunteer::getProcess,2);
             }
-            updateWrapper.set(Volunteer::getProcess,2);
 
         }
-
         return this.update(updateWrapper);
     }
 }

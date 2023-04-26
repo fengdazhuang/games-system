@@ -63,7 +63,7 @@ public interface AdminControllerApi {
     ReturnResult getInfo(@RequestParam Long id);
 
     @PutMapping("/modifyInfo")
-    @ApiOperation(value = "重置管理员密码")
+    @ApiOperation(value = "修改管理员个人信息")
     ReturnResult modifyInfo(@RequestBody Admin admin);
 
 }
