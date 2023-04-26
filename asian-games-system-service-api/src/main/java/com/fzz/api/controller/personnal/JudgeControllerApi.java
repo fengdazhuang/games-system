@@ -18,7 +18,9 @@ public interface JudgeControllerApi {
                             @RequestParam Integer pageSize,
                             @RequestParam String competitionName,
                             @RequestParam String name,
-                            @RequestParam String country);
+                            @RequestParam String country,
+                            @RequestParam Integer arrivalStatus,
+                            @RequestParam Integer healthyStatus);
 
     @PostMapping("/addJudge")
     @ApiOperation(value = "添加裁判")

@@ -21,7 +21,9 @@ public interface PlayerControllerApi {
                              @RequestParam Integer pageSize,
                              @RequestParam String competitionName,
                              @RequestParam String name,
-                             @RequestParam String country);
+                             @RequestParam String country,
+                             @RequestParam Integer arrivalStatus,
+                             @RequestParam Integer healthyStatus);
 
     @PostMapping("/addPlayer")
     @ApiOperation(value = "添加运动员")

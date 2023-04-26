@@ -67,6 +67,8 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         } else if(orderType==OrderColumnEnum.APPLY_TIME.code()){
             queryWrapper.orderByAsc(Volunteer::getApplyTime);
         }
+        queryWrapper.eq(Volunteer::getStatus,1);
+        queryWrapper.eq(Volunteer::getProcess,1);
         this.page(page,queryWrapper);
         List<PreVolunteerVO> volunteerVOList = page.getRecords().stream().map(((item -> {
             PreVolunteerVO preVolunteerVO = new PreVolunteerVO();

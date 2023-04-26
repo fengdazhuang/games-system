@@ -14,5 +14,6 @@ public interface JudgeService extends IService<Judge> {
 
     boolean updatePlayerById(AddJudgeBO addJudge);
 
-    Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName, String name, String country);
+    Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName,
+                                  String name, String country, Integer arrivalStatus, Integer healthyStatus);
 }
