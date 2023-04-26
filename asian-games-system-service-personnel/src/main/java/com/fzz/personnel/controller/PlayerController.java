@@ -5,12 +5,15 @@ import com.fzz.api.BaseController;
 import com.fzz.api.controller.personnal.PlayerControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
+import com.fzz.common.utils.BaiduFaceUtil;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
+import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.service.PlayerService;
+import com.mongodb.client.gridfs.GridFSBucket;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,10 @@ public class PlayerController extends BaseController implements PlayerController
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private BaiduFaceUtil baiduFaceUtil;
+
 
 
 //    @Override
@@ -50,8 +57,11 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult addPlayer(AddPlayerBO addPlayer) {
-        boolean res = playerService.savePlayer(addPlayer);
+    public ReturnResult addPlayer(AddPlayerBO addPlayerBO) {
+        SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
+        Long snowFlakeId  = snowFlakeUtil.getNextId();
+        addPlayerBO.setId(snowFlakeId);
+        boolean res = playerService.savePlayer(addPlayerBO);
         if(res){
             return ReturnResult.ok();
         }

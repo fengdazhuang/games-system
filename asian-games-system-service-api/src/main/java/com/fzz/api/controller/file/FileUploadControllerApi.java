@@ -13,4 +13,5 @@ public interface FileUploadControllerApi {
     @PostMapping("/uploadFiles")
     ReturnResult uploadFiles(MultipartFile[] files) throws IOException;
 
+
 }

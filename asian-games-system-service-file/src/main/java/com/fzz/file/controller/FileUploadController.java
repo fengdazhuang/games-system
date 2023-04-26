@@ -2,6 +2,7 @@ package com.fzz.file.controller;
 
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.file.FileUploadControllerApi;
+import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.file.FileResource;
 import com.fzz.file.service.FileUploadService;
@@ -22,6 +23,7 @@ public class FileUploadController extends BaseController implements FileUploadCo
 
     @Autowired
     private FileResource fileResource;
+
 
     @Override
     public ReturnResult uploadFiles(MultipartFile[] files) throws IOException {
