@@ -1,8 +1,11 @@
 package com.fzz.personnel.service;
 
+import com.fzz.common.utils.Base64Util;
+import com.fzz.common.utils.FileUtil;
 import com.fzz.common.utils.HttpUtil;
 import com.fzz.common.utils.JsonUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,10 +25,13 @@ public class FaceSearch {
         String url = "https://aip.baidubce.com/rest/2.0/face/v3/search";
         try {
             Map<String, Object> map = new HashMap<>();
-            map.put("image", "027d8308a2ec665acb1bdf63e513bcb9");
+            byte[] readFileByBytes = FileUtil.readFileByBytes("C:\\Users\\冯大壮\\workspace\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg");
+            String encode = Base64Util.encode(readFileByBytes);
+
+            map.put("image", encode);
             map.put("liveness_control", "NORMAL");
-            map.put("group_id_list", "group_repeat,group_233");
-            map.put("image_type", "FACE_TOKEN");
+            map.put("group_id_list", "player,judge");
+            map.put("image_type", "BASE64");
             map.put("quality_control", "LOW");
 
             String param = JsonUtils.objectToJson(map);
