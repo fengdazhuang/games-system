@@ -186,9 +186,8 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
             }else{
                 updateWrapper.set(Volunteer::getProcess,2);
             }
-            
-        }
 
+        }
         return this.update(updateWrapper);
     }
 }

@@ -25,6 +25,18 @@ public class Judge {
 
     private String country;
 
+    /**
+     * 运动员抵达情况
+     * 0 已抵达   1 未抵达
+     */
+    private Integer arrivalStatus;
+
+    /**
+     * 运动员健康情况
+     * 0 健康   1 良好  2 较差
+     */
+    private Integer healthyStatus;
+
     private Date createTime;
 
     @TableLogic

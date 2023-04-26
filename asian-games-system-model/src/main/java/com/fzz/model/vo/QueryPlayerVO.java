@@ -22,6 +22,18 @@ public class QueryPlayerVO {
 
     private String competitionCategory;
 
+    /**
+     * 运动员抵达情况
+     * 0 已抵达   1 未抵达
+     */
+    private Integer arrivalStatus;
+
+    /**
+     * 运动员健康情况
+     * 0 健康   1 良好  2 较差
+     */
+    private Integer healthyStatus;
+
     private String email;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh", timezone = "GMT+8")
