@@ -94,11 +94,14 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     }
 
     @Override
-    public Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
+    public Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName,
+                                           String name, String country,Integer arrivalStatus, Integer healthyStatus) {
         Page<Player> playerPage=new Page<>(pageNumber,pageSize);
         LambdaQueryWrapper<Player> queryWrapper=new LambdaQueryWrapper<>();
         String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Player::getCountry, country);
+        queryWrapper.eq(arrivalStatus!=null,Player::getArrivalStatus,arrivalStatus);
+        queryWrapper.eq(healthyStatus!=null, Player::getHealthyStatus,healthyStatus);
         queryWrapper.in(names.length>0&&!names[0].equals(""),Player::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Player::getName,name);
         this.page(playerPage,queryWrapper);

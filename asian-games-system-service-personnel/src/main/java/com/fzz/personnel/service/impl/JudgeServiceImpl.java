@@ -8,6 +8,7 @@ import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
+import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.mapper.JudgeMapper;
 import com.fzz.personnel.service.JudgeService;
@@ -67,11 +68,14 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
     }
 
     @Override
-    public Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
+    public Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName,
+                                         String name, String country, Integer arrivalStatus, Integer healthyStatus) {
         Page<Judge> playerPage=new Page<>(pageNumber,pageSize);
         LambdaQueryWrapper<Judge> queryWrapper=new LambdaQueryWrapper<>();
         String[] names = competitionName.split(",");
         queryWrapper.eq(StringUtils.isNotBlank(country),Judge::getCountry, country);
+        queryWrapper.eq(arrivalStatus!=null, Judge::getArrivalStatus,arrivalStatus);
+        queryWrapper.eq(healthyStatus!=null, Judge::getHealthyStatus,healthyStatus);
         queryWrapper.in(names.length>0&&!names[0].equals(""), Judge::getCompetitionName, (Object[]) names);
         queryWrapper.like(StringUtils.isNotBlank(name),Judge::getName,name);
         this.page(playerPage,queryWrapper);

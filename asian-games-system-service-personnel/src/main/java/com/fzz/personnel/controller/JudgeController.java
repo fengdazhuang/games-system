@@ -26,15 +26,16 @@ public class JudgeController extends BaseController implements JudgeControllerAp
 
 
     @Override
-    public ReturnResult listJudges(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
+    public ReturnResult listJudges(Integer pageNumber, Integer pageSize, String competitionName,
+                                   String name, String country, Integer arrivalStatus, Integer healthyStatus) {
         if(pageNumber<=0){
             pageNumber=COMMON_START_PAGE;
         }
         if(pageSize<=0){
             pageSize=COMMON_PAGE_SIZE;
         }
-        Page<QueryJudgeVO> queryJudgeVOPage=judgeService.pageJudges(pageNumber, pageSize, competitionName, name, country);
-
+        Page<QueryJudgeVO> queryJudgeVOPage=judgeService.pageJudges(pageNumber, pageSize,
+                competitionName, name, country,arrivalStatus,healthyStatus);
         return ReturnResult.ok(queryJudgeVOPage);
     }
 

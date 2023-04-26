@@ -34,14 +34,18 @@ public class PlayerController extends BaseController implements PlayerController
 
 
     @Override
-    public ReturnResult listPlayers(Integer pageNumber, Integer pageSize, String competitionName, String name, String country) {
+    public ReturnResult listPlayers(Integer pageNumber, Integer pageSize,
+                                    String competitionName, String name,
+                                    String country,Integer arrivalStatus,
+                                    Integer healthyStatus) {
         if(pageNumber<=0){
             pageNumber=COMMON_START_PAGE;
         }
         if(pageSize<=0){
             pageSize=COMMON_PAGE_SIZE;
         }
-        Page<QueryPlayerVO> playerPage=playerService.pagePlayers(pageNumber, pageSize, competitionName, name, country);
+        Page<QueryPlayerVO> playerPage=playerService.pagePlayers(pageNumber, pageSize,
+                competitionName, name, country, arrivalStatus, healthyStatus);
         return ReturnResult.ok(playerPage);
     }
 
