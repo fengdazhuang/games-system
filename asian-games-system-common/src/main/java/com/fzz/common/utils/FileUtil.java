@@ -1,5 +1,7 @@
 package com.fzz.common.utils;
 
+import sun.misc.BASE64Encoder;
+
 import java.io.*;
 
 /**
@@ -10,7 +12,7 @@ public class FileUtil {
     /**
      * 读取文件内容，作为字符串返回
      */
-    public static String readFileAsString(String filePath) throws IOException {
+    public static String readFilePathAsString(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             throw new FileNotFoundException(filePath);
@@ -34,10 +36,11 @@ public class FileUtil {
         return sb.toString();
     }
 
+
     /**
      * 根据文件路径读取byte[] 数组
      */
-    public static byte[] readFileByBytes(String filePath) throws IOException {
+    public static byte[] readFilePathByBytes(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             throw new FileNotFoundException(filePath);
@@ -69,4 +72,30 @@ public class FileUtil {
             }
         }
     }
+
+
+    /**
+     * 文件转换为base64
+     * @param file
+     * @return
+     */
+    public static String fileToBase64(File file) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        InputStream in = null;
+        byte[] fileData = null;
+        // 读取文件字节数组
+        try {
+            in = new FileInputStream(file);
+            fileData = new byte[in.available()];
+            in.read(fileData);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 对字节数组Base64编码并且返回
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(fileData);
+    }
+
+
 }

@@ -18,7 +18,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://root:root@43.142.253.194:27017/imooc-news?authSource=admin
+      uri: mongodb://root:root@43.142.253.194:27017/asian-games-system?authSource=admin
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

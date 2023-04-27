@@ -12,8 +12,6 @@ import javax.validation.Valid;
 @Api(value = "PlayerController")
 public interface PlayerControllerApi {
 
-//    @GetMapping("/queryRatioByCountry")
-//    ReturnResult queryRatioByCountry();
 
     @GetMapping("/listPlayers")
     @ApiOperation(value = "根据条件分页查询运动员")

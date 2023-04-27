@@ -36,7 +36,6 @@ public class AdminController extends BaseController implements AdminControllerAp
     private RedisUtil redisUtil;
 
 
-
     /**
      * 管理员登录
      * @param adminLoginBO 管理员的登录bo
