@@ -28,7 +28,7 @@ public class FileUtil {
         // 用于保存实际读取的字节数  
         int hasRead = 0;  
         while ( (hasRead = fis.read(bbuf)) > 0 ) {  
-            sb.append(new String(bbuf, 0, hasRead));  
+            sb.append(new String(bbuf, 0, hasRead,"GBK"));
         }  
         fis.close();  
         return sb.toString();

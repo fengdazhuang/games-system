@@ -58,15 +58,13 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     @Override
     @Transactional
     public boolean savePlayer(AddPlayerBO addPlayer) {
+        Long id = addPlayer.getId();
         Player player=new Player();
         BeanUtils.copyProperties(addPlayer,player);
-        SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
-        Long snowFlakeId  = snowFlakeUtil.getNextId();
-        player.setId(snowFlakeId);
         player.setCreateTime(new Date());
         boolean res = this.save(player);
         if(res){
-            redisUtil.set(REDIS_PLAYER_INFO+":"+snowFlakeId,JsonUtils.objectToJson(player));
+            redisUtil.set(REDIS_PLAYER_INFO+":"+id,JsonUtils.objectToJson(player));
             return true;
         }
         return false;
