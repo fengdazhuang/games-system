@@ -46,8 +46,6 @@ public class BaiduFaceUtil {
             while ((line = in.readLine()) != null) {
                 result += line;
             }
-
-            System.err.println("result:" + result);
             JSONObject jsonObject = new JSONObject(result);
             return jsonObject.getString("access_token");
         } catch (Exception e) {
@@ -75,9 +73,7 @@ public class BaiduFaceUtil {
 
             String accessToken = getAuth();
 
-            String result = HttpUtil.post(url, accessToken, "application/json", param);
-            System.out.println(result);
-            return result;
+            return HttpUtil.post(url, accessToken, "application/json", param);
         } catch (Exception e) {
             e.printStackTrace();
         }
