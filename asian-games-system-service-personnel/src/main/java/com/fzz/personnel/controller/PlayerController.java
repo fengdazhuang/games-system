@@ -86,7 +86,7 @@ public class PlayerController extends BaseController implements PlayerController
         String base64 = addPlayerBO.getPhoto();
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();
-        request.put("id",snowFlakeId);
+        request.put("id",String.valueOf(snowFlakeId));
         request.put("base64",base64);
         ResponseEntity<String> entity = restTemplate.postForEntity(url, request, String.class);
         String mongoId = entity.getBody();
