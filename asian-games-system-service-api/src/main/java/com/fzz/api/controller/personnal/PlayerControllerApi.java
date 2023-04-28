@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Map;
 
 @RequestMapping("/api1/player")
 @Api(value = "PlayerController")
@@ -25,7 +27,7 @@ public interface PlayerControllerApi {
 
     @PostMapping("/addPlayer")
     @ApiOperation(value = "添加运动员")
-    ReturnResult addPlayer(@Valid @RequestBody AddPlayerBO addPlayer);
+    ReturnResult addPlayer(@Valid @RequestBody AddPlayerBO addPlayer) throws IOException;
 
     @DeleteMapping("/deletePlayer")
     @ApiOperation(value = "删除运动员")
@@ -38,6 +40,10 @@ public interface PlayerControllerApi {
     @GetMapping("/queryPlayer")
     @ApiOperation(value = "查找运动员")
     ReturnResult queryPlayer(@RequestParam Long id);
+
+    @PostMapping("/faceSearch")
+    @ApiOperation(value = "搜索人脸")
+    ReturnResult faceSearch(@RequestBody Map<String,Object> map);
 
 
 

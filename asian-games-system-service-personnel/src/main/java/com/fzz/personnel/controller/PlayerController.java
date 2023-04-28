@@ -5,11 +5,13 @@ import com.fzz.api.BaseController;
 import com.fzz.api.controller.personnal.PlayerControllerApi;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
+import com.fzz.common.utils.BaiduFaceUtil;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
+import com.fzz.model.entity.other.FaceData;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.service.PlayerService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -31,6 +34,9 @@ public class PlayerController extends BaseController implements PlayerController
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private BaiduFaceUtil baiduFaceUtil;
 
 
     @Override
@@ -74,12 +80,15 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult addPlayer(AddPlayerBO addPlayerBO) {
+    public ReturnResult addPlayer(AddPlayerBO addPlayerBO) throws IOException {
         SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
         Long snowFlakeId  = snowFlakeUtil.getNextId();
         addPlayerBO.setId(snowFlakeId);
-
         String base64 = addPlayerBO.getPhoto();
+
+        baiduFaceUtil.faceSet(base64, snowFlakeId, "player", null);
+
+        //将图片上传到mongodb中并返回objectId
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();
         request.put("id",String.valueOf(snowFlakeId));
@@ -127,6 +136,38 @@ public class PlayerController extends BaseController implements PlayerController
             return ReturnResult.ok(player);
         }
         return ReturnResult.error(ResponseStatusEnum.PLAYER_NOT_EXISTS);
+    }
+
+    @Override
+    public ReturnResult faceSearch(Map<String, Object> map) {
+        String base64 = (String) map.get("base64");
+        String response = baiduFaceUtil.faceSearch(base64,"player");
+        System.out.println(response);
+        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
+        String resultStr = (String) responseMap.get("result");
+        Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
+        List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
+        if(userList==null||userList.size()<1){
+            return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
+        }
+        FaceData faceData = findMostSimilar(userList);
+        if(faceData.getScore()>95){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
+    }
+
+
+    private FaceData findMostSimilar(List<FaceData> faceDataList){
+        FaceData mostSimilar=null;
+        float max=faceDataList.get(0).getScore();
+        for(FaceData faceData:faceDataList){
+            if(max<faceData.getScore()){
+                max=faceData.getScore();
+                mostSimilar=faceData;
+            }
+        }
+        return mostSimilar;
     }
 
 

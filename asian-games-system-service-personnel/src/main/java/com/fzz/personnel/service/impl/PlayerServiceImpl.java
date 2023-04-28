@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> implements PlayerService {
 
-    private static final String[] countrys={"阿富汗","孟加拉国","不丹","巴林","文莱", "柬埔寨","中国","中国香港",
-            "印度尼西亚","印度","伊朗","伊拉克","约旦","日本","哈萨克斯坦","吉尔吉斯斯坦","韩国","沙特阿拉伯","科威特",
-            "老挝","黎巴嫩","中国澳门","马来西亚","马尔代夫"};
+//    private static final String[] countrys={"阿富汗","孟加拉国","不丹","巴林","文莱", "柬埔寨","中国","中国香港",
+//            "印度尼西亚","印度","伊朗","伊拉克","约旦","日本","哈萨克斯坦","吉尔吉斯斯坦","韩国","沙特阿拉伯","科威特",
+//            "老挝","黎巴嫩","中国澳门","马来西亚","马尔代夫"};
 
 
     private static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
@@ -72,6 +72,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         return this.updateById(player);
     }
 
+
     @Override
     public Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName,
                                            String name, String country,Integer arrivalStatus, Integer healthyStatus) {
@@ -99,15 +100,4 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         return queryPlayerVOPage;
     }
 
-
-/*    private String getComNameById(Integer categoryId ,Integer infoId){
-        String comInfosStr = redisUtil.get(REDIS_COMPETITION_INFOS + ":" + categoryId);
-        List<ComInfo> comInfos = JsonUtils.jsonToList(comInfosStr, ComInfo.class);
-        for(ComInfo comInfo:comInfos){
-            if(ComInfo.getId().equals(infoId)){
-                return ComInfo.getName();
-            }
-        }
-        return "未知错误";
-    }*/
 }
