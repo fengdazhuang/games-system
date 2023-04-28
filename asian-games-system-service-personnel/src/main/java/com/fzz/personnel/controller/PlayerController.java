@@ -141,7 +141,8 @@ public class PlayerController extends BaseController implements PlayerController
     @Override
     public ReturnResult faceSearch(Map<String, Object> map) {
         String base64 = (String) map.get("base64");
-        String response = baiduFaceUtil.faceSearch(base64,"player");
+        String searchImg = base64.split(",")[1];
+        String response = baiduFaceUtil.faceSearch(searchImg,"player");
         Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
         String resultStr = (String) responseMap.get("result");
 
