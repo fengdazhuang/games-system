@@ -7,6 +7,7 @@ import com.fzz.common.exception.CustomException;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.Base64Util;
 import com.fzz.common.utils.FileUtil;
+import com.fzz.common.utils.JsonUtils;
 import com.fzz.file.FileResource;
 import com.fzz.file.service.FileUploadService;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -76,7 +77,8 @@ public class FileUploadController extends BaseController implements FileUploadCo
     }
 
     @Override
-    public ReturnResult readInGridFS(Set<String> idSet) throws Exception {
+    public ReturnResult readInGridFS(String set) throws Exception {
+        Set<String> idSet = JsonUtils.jsonToSet(set, String.class);
         List<String> base64List=new ArrayList<>();
         for(String objectId:idSet){
             File file=readFileInGridFS(objectId);

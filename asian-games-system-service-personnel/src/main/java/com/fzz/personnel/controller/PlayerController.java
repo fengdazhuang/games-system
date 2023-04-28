@@ -66,7 +66,7 @@ public class PlayerController extends BaseController implements PlayerController
 
 
     private List<String> getBase64ListByMongoId(Set<String> set){
-        String url="http://localhost:8009/api9/file/readInGridFS?objectId="+JsonUtils.objectToJson(set);
+        String url="http://localhost:8009/api9/file/readInGridFS?set="+JsonUtils.objectToJson(set);
         ResponseEntity<ReturnResult> entity = restTemplate.getForEntity(url, ReturnResult.class);
         ReturnResult body = entity.getBody();
         List<String> base64List = null;
