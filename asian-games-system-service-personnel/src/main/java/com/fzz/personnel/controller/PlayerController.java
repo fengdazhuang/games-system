@@ -144,13 +144,12 @@ public class PlayerController extends BaseController implements PlayerController
         String searchImg = base64.split(",")[1];
         String response = baiduFaceUtil.faceSearch(searchImg,"player");
         Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
-        String resultStr = (String) responseMap.get("result");
+        Map<String,Object> result = (Map<String, Object>) responseMap.get("result");
 
-        if(StringUtils.isNotBlank(resultStr)){
-            Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
-            List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
-            FaceData faceData = userList.get(0);
-            if(faceData.getScore()>95){
+        if(result!=null){
+
+            List<Map<String,Object>> userList = (List<Map<String, Object>>) result.get("user_list");
+            if((double)userList.get(0).get("score")>70){
                 return ReturnResult.ok();
             }
         }
