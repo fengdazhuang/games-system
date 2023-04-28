@@ -1,6 +1,7 @@
 package com.fzz.personnel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
@@ -72,6 +73,15 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         return this.updateById(player);
     }
 
+
+    @Override
+    @Transactional
+    public void updateArrivalStatus(Long playerId) {
+        LambdaUpdateWrapper<Player> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Player::getId,playerId);
+        updateWrapper.set(Player::getArrivalStatus,0);
+        this.update(updateWrapper);
+    }
 
     @Override
     public Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName,

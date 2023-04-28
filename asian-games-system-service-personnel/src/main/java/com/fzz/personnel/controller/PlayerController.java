@@ -11,7 +11,6 @@ import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
-import com.fzz.model.entity.other.FaceData;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.service.PlayerService;
 import org.apache.commons.lang3.StringUtils;
@@ -85,8 +84,8 @@ public class PlayerController extends BaseController implements PlayerController
         Long snowFlakeId  = snowFlakeUtil.getNextId();
         addPlayerBO.setId(snowFlakeId);
         String base64 = addPlayerBO.getPhoto();
-
-        baiduFaceUtil.faceSet(base64, snowFlakeId, "player", null);
+        String img = base64.split(",")[1];
+        baiduFaceUtil.faceSet(img, snowFlakeId, "player", null);
 
         //将图片上传到mongodb中并返回objectId
         String url="http://localhost:8009/api9/file/uploadToGridFS";
@@ -141,16 +140,14 @@ public class PlayerController extends BaseController implements PlayerController
     @Override
     public ReturnResult faceSearch(Map<String, Object> map) {
         String base64 = (String) map.get("base64");
-        String searchImg = base64.split(",")[1];
-        String response = baiduFaceUtil.faceSearch(searchImg,"player");
-        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
-        String resultStr = (String) responseMap.get("result");
+        Map<String, Object> result = faceSearch(base64, "player");
+        if(result!=null){
+            List<Map<String,Object>> userList = (List<Map<String, Object>>) result.get("user_list");
+            if((double)userList.get(0).get("score")>70){
+                String id = (String) userList.get(0).get("user_id");
+                Long playerId = Long.valueOf(id);
+                playerService.updateArrivalStatus(playerId);
 
-        if(StringUtils.isNotBlank(resultStr)){
-            Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
-            List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
-            FaceData faceData = userList.get(0);
-            if(faceData.getScore()>95){
                 return ReturnResult.ok();
             }
         }

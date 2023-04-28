@@ -1,12 +1,14 @@
 package com.fzz.personnel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
+import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.mapper.JudgeMapper;
 import com.fzz.personnel.service.JudgeService;
@@ -14,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -60,6 +63,15 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
         Judge judge=new Judge();
         BeanUtils.copyProperties(addJudge,judge);
         return this.updateById(judge);
+    }
+
+    @Override
+    @Transactional
+    public void updateArrivalStatus(Long judgeId) {
+        LambdaUpdateWrapper<Judge> updateWrapper=new LambdaUpdateWrapper<>();
+        updateWrapper.eq(Judge::getId,judgeId);
+        updateWrapper.set(Judge::getArrivalStatus,0);
+        this.update(updateWrapper);
     }
 
     @Override

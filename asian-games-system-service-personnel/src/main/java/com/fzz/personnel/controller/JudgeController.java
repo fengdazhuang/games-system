@@ -11,7 +11,6 @@ import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
-import com.fzz.model.entity.other.FaceData;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.service.JudgeService;
 import org.apache.commons.lang3.StringUtils;
@@ -88,7 +87,8 @@ public class JudgeController extends BaseController implements JudgeControllerAp
         addJudgeBO.setId(snowFlakeId);
 
         String base64 = addJudgeBO.getPhoto();
-        baiduFaceUtil.faceSet(base64, snowFlakeId, "judge", null);
+        String img = base64.split(",")[1];
+        baiduFaceUtil.faceSet(img, snowFlakeId, "judge", null);
 
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();
@@ -142,15 +142,15 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     @Override
     public ReturnResult faceSearch(Map<String, Object> map) {
         String base64 = (String) map.get("base64");
-        String response = baiduFaceUtil.faceSearch(base64,"judge");
-        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
-        String resultStr = (String) responseMap.get("result");
+        Map<String, Object> result = faceSearch(base64, "judge");
+        if(result!=null){
+            List<Map<String,Object>> userList = (List<Map<String, Object>>) result.get("user_list");
+            if((double)userList.get(0).get("score")>70){
 
-        if(StringUtils.isNotBlank(resultStr)){
-            Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
-            List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
-            FaceData faceData = userList.get(0);
-            if(faceData.getScore()>95){
+                String id = (String) userList.get(0).get("user_id");
+                Long judgeId = Long.valueOf(id);
+                judgeService.updateArrivalStatus(judgeId);
+
                 return ReturnResult.ok();
             }
         }
