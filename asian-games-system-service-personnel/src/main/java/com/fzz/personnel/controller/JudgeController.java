@@ -143,32 +143,18 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     public ReturnResult faceSearch(Map<String, Object> map) {
         String base64 = (String) map.get("base64");
         String response = baiduFaceUtil.faceSearch(base64,"judge");
-        System.out.println(response);
         Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
         String resultStr = (String) responseMap.get("result");
-        Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
-        List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
-        if(userList==null||userList.size()<1){
-            return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
-        }
-        FaceData faceData = findMostSimilar(userList);
-        if(faceData.getScore()>95){
 
-            return ReturnResult.ok();
+        if(StringUtils.isNotBlank(resultStr)){
+            Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
+            List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
+            FaceData faceData = userList.get(0);
+            if(faceData.getScore()>95){
+                return ReturnResult.ok();
+            }
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
     }
 
-
-    private FaceData findMostSimilar(List<FaceData> faceDataList){
-        FaceData mostSimilar=null;
-        float max=faceDataList.get(0).getScore();
-        for(FaceData faceData:faceDataList){
-            if(max<faceData.getScore()){
-                max=faceData.getScore();
-                mostSimilar=faceData;
-            }
-        }
-        return mostSimilar;
-    }
 }

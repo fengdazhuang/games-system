@@ -20,18 +20,6 @@ public class BaiduFaceUtil {
     private static final String CLIENT_ID = "eoSb4aexFMClCX0ljvuF4WZj";
     private static final String CLIENT_SECRET = "A2mOIPnFynqezt9wKMxbbIWB5MhKMYhr";
 
-    public static void main(String[] args) throws IOException {
-        String url="C:\\Users\\冯大壮\\workspace\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg";
-        byte[] bytes = FileUtil.readFilePathByBytes(url);
-        String encode = Base64Util.encode(bytes);
-
-        String res = faceSearch(encode, "player");
-        Map<String,Object> map=JsonUtils.jsonToPojo(res,Map.class);
-        for(String key: map.keySet()){
-            System.out.println(key+":"+map.get(key));
-        }
-    }
-
     /**
      * 获取API访问token
      */
@@ -74,7 +62,7 @@ public class BaiduFaceUtil {
      * 重要提示代码中所需工具类
      * 下载
      */
-    public static String faceSearch(String base64,String groupId) {
+    public String faceSearch(String base64,String groupId) {
         String url = "https://aip.baidubce.com/rest/2.0/face/v3/search";
         try {
             Map<String, Object> map = new HashMap<>();
