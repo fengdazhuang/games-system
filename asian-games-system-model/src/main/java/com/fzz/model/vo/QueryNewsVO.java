@@ -24,6 +24,8 @@ public class QueryNewsVO {
 
     private Integer isAppoint;
 
+    private Integer readCounts;
+
     private String mongoFileId;
 
     private Long publisherId;

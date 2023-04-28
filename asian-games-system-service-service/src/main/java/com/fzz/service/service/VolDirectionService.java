@@ -6,5 +6,8 @@ import com.fzz.model.entity.VolDirection;
 import java.util.List;
 
 public interface VolDirectionService extends IService<VolDirection> {
+
     List<VolDirection> listVolDirections(Integer volunteerType);
+
+    List<VolDirection> listAllVolDirections();
 }
