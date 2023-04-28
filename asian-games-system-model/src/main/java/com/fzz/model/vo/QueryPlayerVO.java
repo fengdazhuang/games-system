@@ -14,6 +14,8 @@ public class QueryPlayerVO {
 
     private String photo;
 
+    private String mongoId;
+
     private Integer sex;
 
     private String country;

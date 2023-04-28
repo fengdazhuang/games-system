@@ -85,7 +85,7 @@ public class BaiduFaceUtil {
         String url = "https://aip.baidubce.com/rest/2.0/face/v3/search";
         try {
             Map<String, Object> map = new HashMap<>();
-            byte[] readFileByBytes = FileUtil.readFileByBytes("C:\\Users\\冯大壮\\workspace\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg");
+            byte[] readFileByBytes = FileUtil.readFilePathByBytes("C:\\Users\\冯大壮\\workspace\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg");
             String encode = Base64Util.encode(readFileByBytes);
 
             map.put("image", base64);
@@ -142,19 +142,19 @@ public class BaiduFaceUtil {
         try {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("image", source);
-            map1.put("face_type","IDCARD");
+            map1.put("face_type", "IDCARD");
             map1.put("liveness_control", "NORMAL");
             map1.put("image_type", "BASE64");
             map1.put("quality_control", "LOW");
 
             Map<String, Object> map2 = new HashMap<>();
             map2.put("image", target);
-            map2.put("face_type","IDCARD");
+            map2.put("face_type", "IDCARD");
             map2.put("liveness_control", "NORMAL");
             map2.put("image_type", "BASE64");
             map2.put("quality_control", "LOW");
 
-            List<Map<String,Object>> list=new ArrayList<>();
+            List<Map<String, Object>> list = new ArrayList<>();
             list.add(map1);
             list.add(map2);
             String param = JsonUtils.objectToJson(list);
@@ -169,5 +169,5 @@ public class BaiduFaceUtil {
             e.printStackTrace();
         }
         return null;
-
+    }
 }

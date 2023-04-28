@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -55,7 +56,7 @@ public class JsonUtils {
      * @param beanType
      * @return
      */
-    public static <T>List<T> jsonToList(String jsonData, Class<T> beanType) {
+    public static <T> List<T> jsonToList(String jsonData, Class<T> beanType) {
     	JavaType javaType = MAPPER.getTypeFactory().constructParametricType(List.class, beanType);
     	try {
     		List<T> list = MAPPER.readValue(jsonData, javaType);
@@ -65,6 +66,24 @@ public class JsonUtils {
 		}
     	
     	return null;
+    }
+
+    /**
+     * 将json数据转换成pojo对象list
+     * @param jsonData
+     * @param beanType
+     * @return
+     */
+    public static <T> Set<T> jsonToSet(String jsonData, Class<T> beanType) {
+        JavaType javaType = MAPPER.getTypeFactory().constructParametricType(Set.class, beanType);
+        try {
+            Set<T> set = MAPPER.readValue(jsonData, javaType);
+            return set;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
     
 }

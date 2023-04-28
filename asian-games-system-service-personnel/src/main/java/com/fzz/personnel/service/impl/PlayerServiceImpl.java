@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +31,8 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     private static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
     private static final String REDIS_PLAYER_INFO = "redis_player_info";
+    private static final String REDIS_PLAYER_MONGO_IDS = "redis_player_mongo_ids";
+
 
     @Autowired
     private RedisUtil redisUtil;
@@ -105,11 +104,15 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         this.page(playerPage,queryWrapper);
         Page<QueryPlayerVO> queryPlayerVOPage=new Page<>();
         BeanUtils.copyProperties(playerPage,queryPlayerVOPage,"records");
-        List<QueryPlayerVO> queryPlayerVOS = playerPage.getRecords().stream().map((item -> {
+        List<Player> records = playerPage.getRecords();
+        Set<String> set = new HashSet<>();
+        List<QueryPlayerVO> queryPlayerVOS = records.stream().map((item -> {
             QueryPlayerVO queryPlayerVO = new QueryPlayerVO();
+            set.add(item.getMongoId());
             BeanUtils.copyProperties(item, queryPlayerVO);
             return queryPlayerVO;
         })).collect(Collectors.toList());
+        redisUtil.set(REDIS_PLAYER_MONGO_IDS,JsonUtils.objectToJson(set));
         queryPlayerVOPage.setRecords(queryPlayerVOS);
         return queryPlayerVOPage;
     }

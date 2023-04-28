@@ -17,7 +17,7 @@ public class Player {
 
     private String name;
 
-    private String photo;
+    private String mongoId;
 
     private Integer sex;
 
