@@ -67,7 +67,8 @@ public class FileUploadController extends BaseController implements FileUploadCo
     public String uploadToGridFS(Map<String,Object> map) throws IOException {
         String id = (String) map.get("id");
         String base64 = (String) map.get("base64");
-        byte[] bytes = new BASE64Decoder().decodeBuffer(base64.trim());
+        String base64Data =  base64.split(",")[1];
+        byte[] bytes = new BASE64Decoder().decodeBuffer(base64Data);
         ByteArrayInputStream arrayInputStream=new ByteArrayInputStream(bytes);
         ObjectId objectId = gridFSBucket.uploadFromStream(id+".jpeg",arrayInputStream);
         return objectId.toString();
