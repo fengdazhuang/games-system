@@ -142,17 +142,30 @@ public class PlayerController extends BaseController implements PlayerController
     public ReturnResult faceSearch(Map<String, Object> map) {
         String base64 = (String) map.get("base64");
         String response = baiduFaceUtil.faceSearch(base64,"player");
-        System.out.println(response);
         Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
-        String resultStr = (String) responseMap.get("result");
-        Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
-        List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
-        if(userList==null||userList.size()<1){
-            return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
+        Integer errorCode = (Integer) responseMap.get("error_code");
+        if(errorCode==222203){
+            return ReturnResult.error(ResponseStatusEnum.SYSTEM_BUSY_ERROR);
         }
-        FaceData faceData = findMostSimilar(userList);
-        if(faceData.getScore()>95){
-            return ReturnResult.ok();
+        String resultJson = (String) responseMap.get("result");
+        List<FaceData> userList=null;
+        if(StringUtils.isNotBlank(resultJson)){
+            Map<String,Object> result = JsonUtils.jsonToPojo(resultJson,Map.class);
+            String userListStr = (String) result.get("user_list");
+
+            if(StringUtils.isNotBlank(userListStr)){
+                userList = JsonUtils.jsonToList(userListStr, FaceData.class);
+            }
+
+            if(userList==null||userList.size()<1){
+                return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
+            }
+
+            FaceData faceData = findMostSimilar(userList);
+            if(faceData.getScore()>95){
+                return ReturnResult.ok();
+            }
+
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
     }

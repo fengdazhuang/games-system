@@ -21,7 +21,7 @@ public class BaiduFaceUtil {
     private static final String CLIENT_SECRET = "A2mOIPnFynqezt9wKMxbbIWB5MhKMYhr";
 
     public static void main(String[] args) throws IOException {
-        String url="C:\\Users\\冯大壮\\workspace\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg";
+        String url="C:\\Users\\秦世权\\Desktop\\asian-games-system\\asian-games-system-service-personnel\\src\\main\\resources\\312109010821.jpg";
         byte[] bytes = FileUtil.readFilePathByBytes(url);
         String encode = Base64Util.encode(bytes);
 
