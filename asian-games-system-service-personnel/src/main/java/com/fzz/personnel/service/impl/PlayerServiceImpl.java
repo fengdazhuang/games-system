@@ -5,10 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
-import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddPlayerBO;
 import com.fzz.model.entity.Player;
-import com.fzz.model.vo.QueryCountryVO;
 import com.fzz.model.vo.QueryPlayerVO;
 import com.fzz.personnel.mapper.PlayerMapper;
 import com.fzz.personnel.service.PlayerService;
@@ -36,22 +34,6 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     @Autowired
     private RedisUtil redisUtil;
-
-
-    @Override
-    public List<QueryCountryVO> getRatioByCountry() {
-        List<QueryCountryVO> queryCountryVOList=new ArrayList<>();
-        for(String country:countrys){
-            LambdaQueryWrapper<Player> queryWrapper=new LambdaQueryWrapper<>();
-            queryWrapper.eq(Player::getCountry,country);
-            int count = this.count(queryWrapper);
-            QueryCountryVO queryCountryVO=new QueryCountryVO();
-            queryCountryVO.setName(country);
-            queryCountryVO.setCount(count);
-            queryCountryVOList.add(queryCountryVO);
-        }
-        return queryCountryVOList;
-    }
 
 
     @Override

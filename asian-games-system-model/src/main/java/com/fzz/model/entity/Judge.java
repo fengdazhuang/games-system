@@ -19,6 +19,8 @@ public class Judge {
 
     private String email;
 
+    private String mongoId;
+
     private String competitionName;
 
     private Integer sex;

@@ -7,22 +7,34 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
+import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.service.JudgeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class JudgeController extends BaseController implements JudgeControllerApi {
+
 
     @Autowired
     private JudgeService judgeService;
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     @Override
@@ -36,12 +48,49 @@ public class JudgeController extends BaseController implements JudgeControllerAp
         }
         Page<QueryJudgeVO> queryJudgeVOPage=judgeService.pageJudges(pageNumber, pageSize,
                 competitionName, name, country,arrivalStatus,healthyStatus);
+        List<QueryJudgeVO> records = queryJudgeVOPage.getRecords();
+
+        Set<String> set = JsonUtils.jsonToSet(redisUtil.get(REDIS_JUDGE_MONGO_IDS), String.class);
+        List<String> base64List = getBase64ListByMongoId(set);
+
+        int i=0;
+        for(QueryJudgeVO queryJudgeVO:records){
+            queryJudgeVO.setPhoto(base64List.get(i++));
+        }
+        redisUtil.del(REDIS_JUDGE_MONGO_IDS);
+        queryJudgeVOPage.setRecords(records);
         return ReturnResult.ok(queryJudgeVOPage);
     }
 
+
+    private List<String> getBase64ListByMongoId(Set<String> set){
+        String url="http://localhost:8009/api9/file/readInGridFS?set="+JsonUtils.objectToJson(set);
+        ResponseEntity<ReturnResult> entity = restTemplate.getForEntity(url, ReturnResult.class);
+        ReturnResult body = entity.getBody();
+        List<String> base64List = null;
+        if(body.getCode()==200){
+            String json = JsonUtils.objectToJson(body.getData());
+            base64List=JsonUtils.jsonToList(json,String.class);
+        }
+        return base64List;
+    }
+
     @Override
-    public ReturnResult addJudge(AddJudgeBO addJudge) {
-        boolean res = judgeService.saveJudge(addJudge);
+    public ReturnResult addJudge(AddJudgeBO addJudgeBO) {
+        SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil(12,13);
+        Long snowFlakeId  = snowFlakeUtil.getNextId();
+        addJudgeBO.setId(snowFlakeId);
+
+        String base64 = addJudgeBO.getPhoto();
+        String url="http://localhost:8009/api9/file/uploadToGridFS";
+        Map<String,Object> request = new HashMap<>();
+        request.put("id",String.valueOf(snowFlakeId));
+        request.put("base64",base64);
+        ResponseEntity<String> entity = restTemplate.postForEntity(url, request, String.class);
+        String mongoId = entity.getBody();
+        addJudgeBO.setMongoId(mongoId);
+
+        boolean res = judgeService.saveJudge(addJudgeBO);
         if(res){
             return ReturnResult.ok();
         }

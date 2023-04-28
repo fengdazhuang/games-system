@@ -14,6 +14,10 @@ public class QueryJudgeVO {
 
     private String email;
 
+    private String photo;
+
+    private String mongoId;
+
     private String competitionName;
 
     private String competitionCategory;

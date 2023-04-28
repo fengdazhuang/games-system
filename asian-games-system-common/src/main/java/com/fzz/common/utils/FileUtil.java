@@ -1,8 +1,12 @@
 package com.fzz.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Base64;
 
 /**
  * 文件读取工具类
@@ -80,22 +84,28 @@ public class FileUtil {
      * @return
      */
     public static String fileToBase64(File file) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        InputStream in = null;
-        byte[] fileData = null;
-        // 读取文件字节数组
+        String type="data:image/png;base64,";
+        byte[] data = null;
         try {
-            in = new FileInputStream(file);
-            fileData = new byte[in.available()];
-            in.read(fileData);
-            in.close();
-        } catch (IOException e) {
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            int len;
+            byte[] buffer = new byte[1024];
+            while ((len = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, len);
+            }
+            data = baos.toByteArray();
+            fis.close();
+            baos.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         // 对字节数组Base64编码并且返回
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(fileData);
+        String base64 = type + Base64.getEncoder().encodeToString(data);
+        return base64;
     }
+
 
 
 }

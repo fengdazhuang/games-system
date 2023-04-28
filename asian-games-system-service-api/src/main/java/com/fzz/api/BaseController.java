@@ -30,6 +30,7 @@ public class BaseController {
     public static final String REDIS_PLAYER_INFO = "redis_player_info";
     public static final String REDIS_PLAYER_MONGO_IDS = "redis_player_mongo_ids";
     public static final String REDIS_JUDGE_INFO = "redis_judge_info";
+    public static final String REDIS_JUDGE_MONGO_IDS = "redis_judge_mongo_ids";
 
 
     public static final String REDIS_ADMIN_TOKEN = "redis_admin_token";
