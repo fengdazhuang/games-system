@@ -21,6 +21,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="asian-games-system" options="" />
       <module name="asian-games-system-common" options="-parameters" />
       <module name="asian-games-system-model" options="-parameters" />
       <module name="asian-games-system-service-api" options="-parameters" />

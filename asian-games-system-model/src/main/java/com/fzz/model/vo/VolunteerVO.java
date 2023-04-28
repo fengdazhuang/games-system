@@ -43,6 +43,8 @@ public class VolunteerVO {
      */
     private String risk;
 
+    private Integer progress;
+
 
     /**
      * 申请志愿者时间
