@@ -1,5 +1,9 @@
 package com.fzz.api;
 
+import com.fzz.common.enums.ResponseStatusEnum;
+import com.fzz.common.result.ReturnResult;
+import com.fzz.common.utils.BaiduFaceUtil;
+import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 public class BaseController {
 
 
     @Autowired
     public RedisUtil redis;
+
+    @Autowired
+    private BaiduFaceUtil baiduFaceUtil;
 
     public static final String REDIS_ADMIN_INFO = "redis_admin_info";
     public static final String MOBILE_SMSCODE = "mobile:smscode";
@@ -106,6 +115,21 @@ public class BaseController {
             countsStr = "0";
         }
         return Integer.valueOf(countsStr);
+    }
+
+    /**
+     * 人脸查找
+     * @param base64 base64图片
+     * @param groupId 被搜索人脸组
+     * @return 结果
+     */
+    public Map<String,Object> faceSearch(String base64,String groupId) {
+        String searchImg = base64.split(",")[1];
+        String response = baiduFaceUtil.faceSearch(searchImg,groupId);
+        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
+        Map<String,Object> result = (Map<String, Object>) responseMap.get("result");
+        return result;
+
     }
 
 

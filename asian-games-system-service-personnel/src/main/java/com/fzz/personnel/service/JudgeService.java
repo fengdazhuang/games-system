@@ -16,4 +16,6 @@ public interface JudgeService extends IService<Judge> {
 
     Page<QueryJudgeVO> pageJudges(Integer pageNumber, Integer pageSize, String competitionName,
                                   String name, String country, Integer arrivalStatus, Integer healthyStatus);
+
+    void updateArrivalStatus(Long judgeId);
 }

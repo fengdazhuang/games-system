@@ -16,4 +16,6 @@ public interface PlayerService extends IService<Player> {
 
     Page<QueryPlayerVO> pagePlayers(Integer pageNumber, Integer pageSize, String competitionName,
                                     String name, String country,Integer arrivalStatus, Integer healthyStatus);
+
+    void updateArrivalStatus(Long playerId);
 }
