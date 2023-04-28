@@ -143,45 +143,19 @@ public class PlayerController extends BaseController implements PlayerController
         String base64 = (String) map.get("base64");
         String response = baiduFaceUtil.faceSearch(base64,"player");
         Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
-        Integer errorCode = (Integer) responseMap.get("error_code");
-        if(errorCode==222203){
-            return ReturnResult.error(ResponseStatusEnum.SYSTEM_BUSY_ERROR);
-        }
-        String resultJson = (String) responseMap.get("result");
-        List<FaceData> userList=null;
-        if(StringUtils.isNotBlank(resultJson)){
-            Map<String,Object> result = JsonUtils.jsonToPojo(resultJson,Map.class);
-            String userListStr = (String) result.get("user_list");
+        String resultStr = (String) responseMap.get("result");
 
-            if(StringUtils.isNotBlank(userListStr)){
-                userList = JsonUtils.jsonToList(userListStr, FaceData.class);
-            }
-
-            if(userList==null||userList.size()<1){
-                return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
-            }
-
-            FaceData faceData = findMostSimilar(userList);
+        if(StringUtils.isNotBlank(resultStr)){
+            Map<String,Object> result = JsonUtils.jsonToPojo(resultStr,Map.class);
+            List<FaceData> userList = JsonUtils.jsonToList((String) result.get("user_list"), FaceData.class);
+            FaceData faceData = userList.get(0);
             if(faceData.getScore()>95){
                 return ReturnResult.ok();
             }
-
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
     }
 
-
-    private FaceData findMostSimilar(List<FaceData> faceDataList){
-        FaceData mostSimilar=null;
-        float max=faceDataList.get(0).getScore();
-        for(FaceData faceData:faceDataList){
-            if(max<faceData.getScore()){
-                max=faceData.getScore();
-                mostSimilar=faceData;
-            }
-        }
-        return mostSimilar;
-    }
 
 
 }
