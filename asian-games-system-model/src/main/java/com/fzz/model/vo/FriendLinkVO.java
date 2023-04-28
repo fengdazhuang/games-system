@@ -10,6 +10,8 @@ public class FriendLinkVO {
 
     private Integer id;
 
+    private String name;
+
     private String url;
 
     private String logo;

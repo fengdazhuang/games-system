@@ -8,6 +8,7 @@ import com.fzz.api.config.RabbitmqDelayConfig;
 import com.fzz.common.enums.NewsStatusEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
+import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddNewsBO;
 import com.fzz.model.entity.News;
@@ -35,6 +36,11 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
+    private static final String REDIS_NEWS_READ_COUNTS = "redis_news_read_counts";
+
 
     @Override
     public Page<QueryNewsVO> pageNews(Integer pageNumber, Integer pageSize, Date startDate, Date endDate, String keyword, Integer status) {
@@ -50,10 +56,20 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
         List<QueryNewsVO> queryNewsVOS = newsPage.getRecords().stream().map((item -> {
             QueryNewsVO queryNewsVO = new QueryNewsVO();
             BeanUtils.copyProperties(item, queryNewsVO);
+            Integer readCounts = getCountsFromRedis(REDIS_NEWS_READ_COUNTS + ":" + item.getId());
+            queryNewsVO.setReadCounts(readCounts);
             return queryNewsVO;
         })).collect(Collectors.toList());
         queryNewsVOPage.setRecords(queryNewsVOS);
         return queryNewsVOPage;
+    }
+
+    public Integer getCountsFromRedis(String key) {
+        String countsStr = redisUtil.get(key);
+        if (StringUtils.isBlank(countsStr)) {
+            countsStr = "0";
+        }
+        return Integer.valueOf(countsStr);
     }
 
     @Override

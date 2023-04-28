@@ -1,20 +1,16 @@
 package com.fzz.api;
 
-import com.fzz.common.enums.ResponseStatusEnum;
-import com.fzz.common.result.ReturnResult;
 import com.fzz.common.utils.BaiduFaceUtil;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.List;
 import java.util.Map;
 
 public class BaseController {

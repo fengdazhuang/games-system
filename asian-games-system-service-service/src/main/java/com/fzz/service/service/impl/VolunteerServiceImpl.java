@@ -39,13 +39,15 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(volunteerType!=null,Volunteer::getVolunteerType,volunteerType);
         queryWrapper.eq(risk!=null,Volunteer::getRisk,risk);
+        queryWrapper.eq(Volunteer::getStatus,1);
+        queryWrapper.in(Volunteer::getProcess,2,3);
         this.page(page,queryWrapper);
         List<VolunteerVO> volunteerVOList = page.getRecords().stream().map(((item -> {
             VolunteerVO volunteerVO = new VolunteerVO();
             BeanUtils.copyProperties(item, volunteerVO);
             Integer riskId = item.getRisk();
             if(riskId!=null){
-                VolDirection volDirection = volDirectionService.getById(riskId);
+                VolDirection volDirection = getVolDirection(riskId);
                 volunteerVO.setRisk(volDirection.getName());
             }
             return volunteerVO;
@@ -53,6 +55,22 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         volunteerVOPage.setRecords(volunteerVOList);
         return volunteerVOPage;
     }
+
+    /**
+     * 通过服务方向的id获取服务方向
+     * @param riskId id
+     * @return 服务方向
+     */
+    private VolDirection getVolDirection(Integer riskId){
+        List<VolDirection> list = volDirectionService.listAllVolDirections();
+        for(VolDirection volDirection:list){
+            if(volDirection.getId()==riskId){
+                return volDirection;
+            }
+        }
+        return null;
+    }
+
 
     @Override
     public Page<PreVolunteerVO> pagePreVolunteers(Integer pageNumber, Integer pageSize, Integer orderType) {
