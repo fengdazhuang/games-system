@@ -29,6 +29,7 @@ public enum ResponseStatusEnum {
     SYSTEM_BUSY_ERROR(601,false ,"系统繁忙，请稍后重试" ),
     SYSTEM_DATE_PARSER_ERROR(602,false , "时间转换错误"),
     SYSTEM_FILE_NOT_FOUND(603,false ,"文件找不到了" ),
+    FACE_NOT_FOUND(604,false , "人脸信息未找到"),
 
     FRIENDLINK_CREATE_ERROR(651,false ,"友情链接添加失败" ),
     FRIENDLINK_MODIFY_STATUS_ERROR(652, false, "友情链接修改状态失败"),

@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Map;
 
 @RequestMapping("/api1/judge")
 @Api(value = "judgeController")
@@ -24,7 +26,7 @@ public interface JudgeControllerApi {
 
     @PostMapping("/addJudge")
     @ApiOperation(value = "添加裁判")
-    ReturnResult addJudge(@Valid @RequestBody AddJudgeBO addJudge);
+    ReturnResult addJudge(@Valid @RequestBody AddJudgeBO addJudge) throws IOException;
 
     @PutMapping("/updateJudge")
     @ApiOperation(value = "修改裁判")
@@ -37,4 +39,8 @@ public interface JudgeControllerApi {
     @DeleteMapping("/deleteJudge")
     @ApiOperation(value = "删除裁判")
     ReturnResult deleteJudge(@RequestParam Long[] id);
+
+    @PostMapping("/faceSearch")
+    @ApiOperation(value = "搜索人脸")
+    ReturnResult faceSearch(@RequestBody Map<String, Object> map);
 }

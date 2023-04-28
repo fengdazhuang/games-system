@@ -1,4 +1,4 @@
-package com.fzz.model.constant;
+package com.fzz.model.entity.other;
 
 import lombok.Data;
 
