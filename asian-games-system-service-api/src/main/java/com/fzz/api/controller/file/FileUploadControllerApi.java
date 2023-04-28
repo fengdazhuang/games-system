@@ -19,7 +19,7 @@ public interface FileUploadControllerApi {
     String uploadToGridFS(@RequestBody Map<String,Object> map) throws IOException;
 
     @GetMapping("/readInGridFS")
-    ReturnResult readInGridFS(Set<String> idSet) throws Exception;
+    ReturnResult readInGridFS(@RequestParam String set) throws Exception;
 
 
 }

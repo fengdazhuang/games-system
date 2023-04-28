@@ -5,10 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
-import com.fzz.common.utils.SnowFlakeUtil;
 import com.fzz.model.bo.AddJudgeBO;
 import com.fzz.model.entity.Judge;
-import com.fzz.model.entity.Player;
 import com.fzz.model.vo.QueryJudgeVO;
 import com.fzz.personnel.mapper.JudgeMapper;
 import com.fzz.personnel.service.JudgeService;
@@ -17,9 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,22 +23,21 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
 
     private static final String REDIS_COMPETITION_INFOS = "redis_competition_infos";
     private static final String REDIS_JUDGE_INFO = "redis_judge_info";
+    private static final String REDIS_JUDGE_MONGO_IDS = "redis_judge_mongo_ids";
 
     @Autowired
     private RedisUtil redisUtil;
 
 
     @Override
-    public boolean saveJudge(AddJudgeBO addJudge) {
+    public boolean saveJudge(AddJudgeBO addJudgeBO) {
+        Long id = addJudgeBO.getId();
         Judge judge=new Judge();
-        BeanUtils.copyProperties(addJudge,judge);
-        SnowFlakeUtil snowFlakeUtil = new SnowFlakeUtil (12,13);
-        Long snowFlakeId  = snowFlakeUtil.getNextId();
-        judge.setId(snowFlakeId);
+        BeanUtils.copyProperties(addJudgeBO,judge);
         judge.setCreateTime(new Date());
         boolean res = this.save(judge);
         if(res){
-            redisUtil.set(REDIS_JUDGE_INFO+":"+snowFlakeId,JsonUtils.objectToJson(judge));
+            redisUtil.set(REDIS_JUDGE_INFO+":"+id,JsonUtils.objectToJson(judge));
             return true;
         }
         return false;
@@ -81,11 +76,14 @@ public class JudgeServiceImpl extends ServiceImpl<JudgeMapper, Judge> implements
         this.page(playerPage,queryWrapper);
         Page<QueryJudgeVO> queryJudgeVOPage=new Page<>();
         BeanUtils.copyProperties(playerPage,queryJudgeVOPage,"records");
+        Set<String> set = new HashSet<>();
         List<QueryJudgeVO> queryJudgeVOS = playerPage.getRecords().stream().map((item -> {
             QueryJudgeVO queryJudgeVO=new QueryJudgeVO();
             BeanUtils.copyProperties(item, queryJudgeVO);
+            set.add(item.getMongoId());
             return queryJudgeVO;
         })).collect(Collectors.toList());
+        redisUtil.set(REDIS_JUDGE_MONGO_IDS,JsonUtils.objectToJson(set));
         queryJudgeVOPage.setRecords(queryJudgeVOS);
         return queryJudgeVOPage;
     }

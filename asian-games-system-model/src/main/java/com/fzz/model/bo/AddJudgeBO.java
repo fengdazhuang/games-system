@@ -32,4 +32,6 @@ public class AddJudgeBO {
     @NotBlank(message = "邮箱不能为空")
     private String email;
 
+    private String mongoId;
+
 }
