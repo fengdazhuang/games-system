@@ -1,5 +1,7 @@
 package com.fzz.common.utils;
 
+import io.netty.handler.codec.base64.Base64Decoder;
+import io.netty.handler.codec.base64.Base64Encoder;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.BASE64Encoder;
 
@@ -20,23 +22,23 @@ public class FileUtil {
         File file = new File(filePath);
         if (!file.exists()) {
             throw new FileNotFoundException(filePath);
-        } 
+        }
 
         if (file.length() > 1024 * 1024 * 1024) {
             throw new IOException("File is too large");
-        } 
+        }
 
         StringBuilder sb = new StringBuilder((int) (file.length()));
-        // 创建字节输入流  
-        FileInputStream fis = new FileInputStream(filePath);  
+        // 创建字节输入流
+        FileInputStream fis = new FileInputStream(filePath);
         // 创建一个长度为10240的Buffer
-        byte[] bbuf = new byte[10240];  
-        // 用于保存实际读取的字节数  
-        int hasRead = 0;  
-        while ( (hasRead = fis.read(bbuf)) > 0 ) {  
+        byte[] bbuf = new byte[10240];
+        // 用于保存实际读取的字节数
+        int hasRead = 0;
+        while ( (hasRead = fis.read(bbuf)) > 0 ) {
             sb.append(new String(bbuf, 0, hasRead,"GBK"));
-        }  
-        fis.close();  
+        }
+        fis.close();
         return sb.toString();
     }
 
@@ -84,7 +86,6 @@ public class FileUtil {
      * @return
      */
     public static String fileToBase64(File file) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        String type="data:image/png;base64,";
         byte[] data = null;
         try {
             FileInputStream fis = new FileInputStream(file);
@@ -102,8 +103,8 @@ public class FileUtil {
             e.printStackTrace();
         }
         // 对字节数组Base64编码并且返回
-        String base64 = type + Base64.getEncoder().encodeToString(data);
-        return base64;
+        return new BASE64Encoder().encode(data);
+
     }
 
 

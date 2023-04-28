@@ -22,10 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @RestController
 public class FileUploadController extends BaseController implements FileUploadControllerApi {
@@ -71,7 +69,7 @@ public class FileUploadController extends BaseController implements FileUploadCo
         String base64 = (String) map.get("base64");
         byte[] bytes = new BASE64Decoder().decodeBuffer(base64.trim());
         ByteArrayInputStream arrayInputStream=new ByteArrayInputStream(bytes);
-        ObjectId objectId = gridFSBucket.uploadFromStream(id+".png",arrayInputStream);
+        ObjectId objectId = gridFSBucket.uploadFromStream(id+".jpeg",arrayInputStream);
         return objectId.toString();
     }
 
