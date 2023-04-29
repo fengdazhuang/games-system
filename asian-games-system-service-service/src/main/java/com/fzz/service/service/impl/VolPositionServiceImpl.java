@@ -52,7 +52,7 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
             if(volDirection!=null){
                 volPositionVO.setRisk(volDirection.getName());
             }
-            volPositionVO.setName(volunteer.getName());
+            volPositionVO.setPrincipal(volunteer.getName());
             volPositionVO.setPrincipalPhoto(volunteer.getPhoto());
             volPositionVO.setPrincipalEmail(volunteer.getEmail());
             return volPositionVO;

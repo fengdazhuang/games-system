@@ -211,7 +211,7 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Override
     public ReturnResult deleteVolPosition(String[] ids) {
-        
+
         return null;
     }
 
@@ -234,11 +234,6 @@ public class VolunteerController extends BaseController implements VolunteerCont
     public ReturnResult getVolTeamInfo(String teamId) {
         VolTeamDto volTeamDto = volunteerService.getVolTeamInfo(teamId);
         return ReturnResult.ok(volTeamDto);
-    }
-
-    @Override
-    public ReturnResult queryVolPositions() {
-        return null;
     }
 
     @Override
