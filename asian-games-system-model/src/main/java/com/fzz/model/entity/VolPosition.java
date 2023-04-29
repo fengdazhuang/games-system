@@ -1,6 +1,5 @@
 package com.fzz.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,16 +11,18 @@ import java.util.Date;
 @TableName("volunteer_position")
 public class VolPosition {
 
-    @TableId(type= IdType.ASSIGN_ID)
-    private Long id;
+    @TableId
+    private String id;
 
     private String name;
 
     private String position;
 
-    private String risk;
+    private Integer risk;
 
     private Integer volunteerCount;
+
+    private Integer volunteerType;
 
     private Integer principalId;
 

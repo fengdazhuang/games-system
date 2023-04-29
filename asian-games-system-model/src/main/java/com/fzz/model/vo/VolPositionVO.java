@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class VolPositionVO {
 
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -15,9 +15,9 @@ public class VolPositionVO {
 
     private String risk;
 
-    private Integer volunteerCount;
+    private Integer volunteerCounts;
 
-    private String principalName;
+    private String principal;
 
     private String principalEmail;
 

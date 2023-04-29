@@ -8,12 +8,16 @@ import com.fzz.common.enums.OrderColumnEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
 import com.fzz.model.bo.*;
+import com.fzz.model.dto.VolTeamDto;
 import com.fzz.model.entity.VolDirection;
+import com.fzz.model.entity.VolPosition;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
+import com.fzz.model.vo.VolBaseInfoVO;
 import com.fzz.model.vo.VolunteerVO;
 import com.fzz.service.mapper.VolunteerMapper;
 import com.fzz.service.service.VolDirectionService;
+import com.fzz.service.service.VolPositionService;
 import com.fzz.service.service.VolunteerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +34,9 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
 
     @Autowired
     private VolDirectionService volDirectionService;
+
+    @Autowired
+    private VolPositionService volPositionService;
 
     @Override
     public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, Integer risk) {
@@ -102,6 +109,28 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(Volunteer::getEmail,email);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public VolTeamDto getVolTeamInfo(String teamId) {
+        VolTeamDto volTeamDto=new VolTeamDto();
+
+        VolPosition volPosition = volPositionService.getById(teamId);
+        volTeamDto.setTeamId(teamId);
+        volTeamDto.setName(volPosition.getName());
+        volTeamDto.setPosition(volPosition.getPosition());
+
+        LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(teamId),Volunteer::getTeamId,teamId);
+
+        List<Volunteer> volunteerList = this.list(queryWrapper);
+        List<VolBaseInfoVO> volBaseInfoVOList = volunteerList.stream().map(((item -> {
+            VolBaseInfoVO volBaseInfoVO = new VolBaseInfoVO();
+            BeanUtils.copyProperties(item, volBaseInfoVO);
+            return volBaseInfoVO;
+        }))).collect(Collectors.toList());
+        volTeamDto.setMembers(volBaseInfoVOList);
+        return volTeamDto;
     }
 
     @Override
