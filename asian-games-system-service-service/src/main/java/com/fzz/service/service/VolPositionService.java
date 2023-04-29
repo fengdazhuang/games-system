@@ -15,4 +15,6 @@ public interface VolPositionService extends IService<VolPosition> {
     List<VolPosition> listVolPositionsByRisk(Integer risk);
 
     boolean addVolunteerPosition(AddVolPositionBO addVolPositionBO);
+
+    boolean removeVolPositions(String[] ids);
 }

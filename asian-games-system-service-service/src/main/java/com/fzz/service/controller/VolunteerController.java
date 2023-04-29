@@ -26,12 +26,10 @@ import com.wf.captcha.SpecCaptcha;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.temporal.Temporal;
 import java.util.*;
 
 @RestController
@@ -211,8 +209,11 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Override
     public ReturnResult deleteVolPosition(String[] ids) {
-
-        return null;
+        boolean res = volPositionService.removeVolPositions(ids);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_POSITION_DELETE_ERROR);
     }
 
     @Override

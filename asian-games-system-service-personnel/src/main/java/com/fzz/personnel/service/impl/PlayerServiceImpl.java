@@ -57,9 +57,6 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     public boolean removePlayers(Long[] id) {
         boolean res = this.removeByIds(Arrays.asList(id));
         if(res){
-            for(Long playerId:id){
-                redisUtil.del(REDIS_PLAYER_INFO+":"+playerId);
-            }
             return true;
         }
         return false;
