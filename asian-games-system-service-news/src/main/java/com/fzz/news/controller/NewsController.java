@@ -36,9 +36,10 @@ public class NewsController extends BaseController implements NewsControllerApi 
         }else if(articleType==1&&StringUtils.isBlank(articleCover)){
             return ReturnResult.error(ResponseStatusEnum.NEWS_COVER_IS_NULL);
         }
-        newsService.saveNews(addNewsBO);
-        return ReturnResult.ok();
 
+        newsService.saveNews(addNewsBO);
+
+        return ReturnResult.ok();
     }
 
     @Override
@@ -63,6 +64,12 @@ public class NewsController extends BaseController implements NewsControllerApi 
             redisUtil.increment(REDIS_NEWS_READ_COUNTS + ":" + id, 1);
         }
         return ReturnResult.ok();
+    }
+
+    @Override
+    public ReturnResult getHotNews() {
+        //http://c.3g.163.com/nc/article/list/T1467284926140/0-20.html 精选
+        return null;
     }
 
     @Override

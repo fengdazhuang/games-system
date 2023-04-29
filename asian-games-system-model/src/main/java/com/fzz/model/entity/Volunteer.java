@@ -107,6 +107,11 @@ public class Volunteer {
     private String comment;
 
     /**
+     * 志愿者所属志愿者团队id
+     */
+    private String teamId;
+
+    /**
      * 用户个人信息完善状态       未完善个人信息不能申请志愿者
      * 0 未完善信息 1 已完善信息
      */

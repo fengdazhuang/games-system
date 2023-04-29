@@ -79,7 +79,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
         News news=new News();
         BeanUtils.copyProperties(addNewsBO,news);
         long id = new SnowFlakeUtil(12, 13).getNextId();
-        news.setId(id);
+        addNewsBO.setId(id);
         news.setCreateTime(new Date());
         news.setUpdateTime(new Date());
 

@@ -1,6 +1,6 @@
 package com.fzz.service.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.service.VolunteerControllerApi;
@@ -10,6 +10,7 @@ import com.fzz.common.utils.JsonUtils;
 import com.fzz.common.utils.RedisUtil;
 import com.fzz.common.utils.ValidateCodeUtils;
 import com.fzz.model.bo.*;
+import com.fzz.model.dto.VolTeamDto;
 import com.fzz.model.entity.VolDirection;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
@@ -24,10 +25,12 @@ import com.wf.captcha.SpecCaptcha;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.temporal.Temporal;
 import java.util.*;
 
 @RestController
@@ -70,14 +73,25 @@ public class VolunteerController extends BaseController implements VolunteerCont
     @Override
     public ReturnResult sendEmailCode(Map<String,Object> map) {
         String email = (String) map.get("email");
-        Volunteer volunteer = volunteerService.getVolunteerByEmail(email);
-        if(volunteer!=null){
-            return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_IS_ALREADY_EXISTS);
-        }
+        Integer type = (Integer) map.get("type");
         String randomCode = RandomStringUtils.randomAlphanumeric(10);
-        emailService.sendSimpleMail(Arrays.asList(email),"亚运会志愿者注册",randomCode);
-        redisUtil.set(REDIS_VOLUNTEER_EMAIL_CODE+":"+email,randomCode,30*60);
-        return ReturnResult.ok();
+        Volunteer volunteer = volunteerService.getVolunteerByEmail(email);
+        if(type==0){
+            if(volunteer!=null){
+                return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_IS_ALREADY_EXISTS);
+            }
+            emailService.sendSimpleMail(Arrays.asList(email),"亚运会志愿者注册",randomCode);
+            redisUtil.set(REDIS_VOLUNTEER_EMAIL_CODE+":"+email,randomCode,30*60);
+            return ReturnResult.ok();
+        } else if(type==1){
+            if(volunteer==null){
+                return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_IS_NOT_EXISTS);
+            }
+            emailService.sendSimpleMail(Arrays.asList(email),"亚运会志愿者重置密码",randomCode);
+            redisUtil.set(REDIS_VOLUNTEER_EMAIL_CODE+":"+email,randomCode,30*60);
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.FAILED);
     }
 
     @Override
@@ -195,6 +209,12 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
 
     @Override
+    public ReturnResult getVolTeamInfo(String teamId) {
+        VolTeamDto volTeamDto = volunteerService.getVolTeamInfo(teamId);
+        return ReturnResult.ok(volTeamDto);
+    }
+
+    @Override
     public ReturnResult queryVolunteer(Long id) {
         Volunteer volunteer = volunteerService.getVolunteerDetailById(id);
         return ReturnResult.ok(volunteer);
@@ -210,14 +230,15 @@ public class VolunteerController extends BaseController implements VolunteerCont
     }
 
     @Override
-    public ReturnResult pageVolunteerPositions(Integer pageNumber, Integer pageSize) {
+    public ReturnResult pageVolunteerPositions(Integer pageNumber, Integer pageSize, Integer risk,
+                                               Integer volunteerType, String name) {
         if(pageNumber<=0){
             pageNumber=COMMON_START_PAGE;
         }
         if(pageSize<=0){
             pageSize=COMMON_PAGE_SIZE;
         }
-        Page<VolPositionVO> page = volPositionService.pageVolunteerPositions(pageNumber,pageSize);
+        Page<VolPositionVO> page = volPositionService.pageVolunteerPositions(pageNumber,pageSize,risk,volunteerType,name);
         return ReturnResult.ok(page);
     }
 

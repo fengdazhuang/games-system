@@ -85,7 +85,10 @@ public interface VolunteerControllerApi {
     @GetMapping("/pageVolPositions")
     @ApiOperation(value = "分页条件查询志愿服务点")
     ReturnResult pageVolunteerPositions(@RequestParam Integer pageNumber,
-                                   @RequestParam Integer pageSize);
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam Integer risk,
+                                        @RequestParam Integer volunteerType,
+                                        @RequestParam String name);
 
 
     @PostMapping("/applyVolunteer")
@@ -96,6 +99,16 @@ public interface VolunteerControllerApi {
     @GetMapping("/queryVolunteer")
     @ApiOperation(value = "获取志愿者个人信息")
     ReturnResult queryVolunteer(@RequestParam Long id);
+
+
+    @GetMapping("/volTeamInfo")
+    @ApiOperation(value = "获取志愿者团队成员信息")
+    ReturnResult getVolTeamInfo(@RequestParam String teamId);
+
+    
+    @GetMapping("/queryVolPositions")
+    @ApiOperation(value = "获取此种服务方向的所有志愿服务点")
+    ReturnResult queryVolPositions();
 
 
 

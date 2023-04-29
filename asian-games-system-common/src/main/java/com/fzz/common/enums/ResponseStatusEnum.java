@@ -64,7 +64,8 @@ public enum ResponseStatusEnum {
     VOLUNTEER_MODIFY_PASSWORD_FAILED(1007,false ,"密码修改失败" ),
     VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败"),
     VOLUNTEER_MODIFY_TYPE_FAILED(1009,false ,"志愿者类型选择失败，请稍后再试" ),
-    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" );
+    VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" ),
+    VOLUNTEER_IS_NOT_EXISTS(1011,false ,"志愿者不存在，请先注册" );
 
 
 

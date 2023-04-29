@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.core.DefaultTypedTuple;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -255,6 +258,20 @@ public class RedisUtil {
 	 */
 	public long rpush(String key, String value) {
 		return redisTemplate.opsForList().rightPush(key, value);
+	}
+
+
+	public Set<ZSetOperations.TypedTuple<String>> zSet(String setName, Integer start, Integer end){
+		Set<ZSetOperations.TypedTuple<String>> rangeWithScores =
+				redisTemplate.opsForZSet().reverseRangeWithScores(setName, 0, 10);
+		return rangeWithScores;
+	}
+
+	public void addSet(String setName, String key,double score){
+		Set<ZSetOperations.TypedTuple<String>> tuples = new HashSet<>();
+		DefaultTypedTuple<String> tuple = new DefaultTypedTuple<>(key,score);
+		tuples.add(tuple);
+		redisTemplate.opsForZSet().add(key, tuples);
 	}
 
 }

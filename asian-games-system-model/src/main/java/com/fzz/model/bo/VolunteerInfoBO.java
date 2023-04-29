@@ -65,9 +65,6 @@ public class VolunteerInfoBO {
     @NotBlank(message = "居住地址不能为空")
     private String address;
 
-    @NotBlank(message = "志愿者服务意向不能为空")
-    private String intention;
-
     /**
      * 申请备注，如个人特长，经历
      */

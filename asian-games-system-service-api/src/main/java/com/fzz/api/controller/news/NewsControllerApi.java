@@ -43,4 +43,8 @@ public interface NewsControllerApi {
     @ApiOperation(value = "获取新闻阅读数")
     ReturnResult getReadCounts(@RequestParam Long id);
 
+    @GetMapping("/hotNews")
+    @ApiOperation(value = "最热的十条资讯")
+    ReturnResult getHotNews();
+
 }

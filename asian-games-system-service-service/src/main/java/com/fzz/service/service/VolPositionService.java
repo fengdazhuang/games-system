@@ -6,5 +6,6 @@ import com.fzz.model.entity.VolPosition;
 import com.fzz.model.vo.VolPositionVO;
 
 public interface VolPositionService extends IService<VolPosition> {
-    Page<VolPositionVO> pageVolunteerPositions(Integer pageNumber, Integer pageSize);
+    Page<VolPositionVO> pageVolunteerPositions(Integer pageNumber, Integer pageSize,Integer risk,
+                                               Integer volunteerType, String name);
 }
