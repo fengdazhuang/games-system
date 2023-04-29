@@ -2,13 +2,17 @@ package com.fzz.api.controller.service;
 
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.*;
+import com.fzz.model.entity.VolPosition;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Map;
 
 @RequestMapping("/api3/volunteer")
@@ -105,10 +109,20 @@ public interface VolunteerControllerApi {
     @ApiOperation(value = "获取志愿者团队成员信息")
     ReturnResult getVolTeamInfo(@RequestParam String teamId);
 
-    
+
     @GetMapping("/queryVolPositions")
     @ApiOperation(value = "获取此种服务方向的所有志愿服务点")
-    ReturnResult queryVolPositions();
+    ReturnResult queryVolPositions(Integer risk);
+
+    @PostMapping("/addVolPosition")
+    @ApiOperation(value = "添加志愿服务点")
+    ReturnResult addVolPosition(@RequestBody AddVolPositionBO addVolPositionBO);
+
+
+    @DeleteMapping("/deleteVolPosition")
+    @ApiOperation(value = "删除志愿服务点")
+    ReturnResult deleteVolPosition(@RequestParam String[] ids);
+
 
 
 

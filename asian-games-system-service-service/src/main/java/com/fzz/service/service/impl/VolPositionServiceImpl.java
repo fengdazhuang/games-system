@@ -3,6 +3,7 @@ package com.fzz.service.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fzz.model.bo.AddVolPositionBO;
 import com.fzz.model.entity.VolDirection;
 import com.fzz.model.entity.VolPosition;
 import com.fzz.model.entity.Volunteer;
@@ -11,11 +12,13 @@ import com.fzz.service.mapper.VolPositionMapper;
 import com.fzz.service.service.VolDirectionService;
 import com.fzz.service.service.VolPositionService;
 import com.fzz.service.service.VolunteerService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +59,25 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
         }))).collect(Collectors.toList());
         volPositionVOPage.setRecords(volPositionVOList);
         return volPositionVOPage;
+    }
+
+    @Override
+    public boolean addVolunteerPosition(AddVolPositionBO addVolPositionBO) {
+        VolPosition volPosition=new VolPosition();
+        BeanUtils.copyProperties(addVolPositionBO,volPosition);
+        volPosition.setCreateTime(new Date());
+        String id = RandomStringUtils.randomNumeric(6);
+        volPosition.setId(id);
+        return this.save(volPosition);
+    }
+
+
+
+    @Override
+    public List<VolPosition> listVolPositionsByRisk(Integer risk) {
+        LambdaQueryWrapper<VolPosition> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(VolPosition::getRisk,risk);
+        return this.list(queryWrapper);
     }
 
 

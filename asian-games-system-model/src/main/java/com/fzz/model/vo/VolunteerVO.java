@@ -45,6 +45,10 @@ public class VolunteerVO {
 
     private Integer progress;
 
+    private String profession;
+
+    private String address;
+
 
     /**
      * 申请志愿者时间

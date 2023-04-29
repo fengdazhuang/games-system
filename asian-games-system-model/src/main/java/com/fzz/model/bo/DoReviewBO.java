@@ -18,7 +18,9 @@ public class DoReviewBO {
     @Min(value = 0 , message = "志愿者状态不正确")
     private Integer status;
 
-    private String risk;
+    private Integer risk;
+
+    private String teamId;
 
     @NotBlank(message = "志愿者邮箱不能为空")
     private String email;

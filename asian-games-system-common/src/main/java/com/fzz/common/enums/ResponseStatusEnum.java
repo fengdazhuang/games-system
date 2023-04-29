@@ -65,7 +65,8 @@ public enum ResponseStatusEnum {
     VOLUNTEER_MODIFY_INFO_FAILED(1008, false, "志愿者信息更新失败"),
     VOLUNTEER_MODIFY_TYPE_FAILED(1009,false ,"志愿者类型选择失败，请稍后再试" ),
     VOLUNTEER_APPLY_FAILED(1010,false ,"志愿者申请失败" ),
-    VOLUNTEER_IS_NOT_EXISTS(1011,false ,"志愿者不存在，请先注册" );
+    VOLUNTEER_IS_NOT_EXISTS(1011,false ,"志愿者不存在，请先注册" ),
+    VOLUNTEER_POSITION_CREATE_ERROR(1012,false , "志愿服务点创建失败");
 
 
 
