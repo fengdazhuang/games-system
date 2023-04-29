@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,13 +53,24 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
             if(volDirection!=null){
                 volPositionVO.setRisk(volDirection.getName());
             }
-            volPositionVO.setName(volunteer.getName());
-            volPositionVO.setPrincipalPhoto(volunteer.getPhoto());
-            volPositionVO.setPrincipalEmail(volunteer.getEmail());
+            if(volunteer!=null){
+                volPositionVO.setName(volunteer.getName());
+                volPositionVO.setPrincipalPhoto(volunteer.getPhoto());
+                volPositionVO.setPrincipalEmail(volunteer.getEmail());
+            }
             return volPositionVO;
         }))).collect(Collectors.toList());
         volPositionVOPage.setRecords(volPositionVOList);
         return volPositionVOPage;
+    }
+
+    @Override
+    public boolean removeVolPositions(String[] ids) {
+        boolean res = this.removeByIds(Arrays.asList(ids));
+        if(res){
+            return true;
+        }
+        return false;
     }
 
     @Override

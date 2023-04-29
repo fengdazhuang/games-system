@@ -20,10 +20,7 @@ public class PreVolunteerVO {
      */
     private String photo;
 
-    /**
-     * 邮箱
-     */
-    private String email;
+
 
     /**
      * 性别
@@ -40,7 +37,12 @@ public class PreVolunteerVO {
      */
     private String profession;
 
+    /**
+     * 邮箱
+     */
+    private String email;
 
+    
     /**
      * 证件类型，如居民身份证，港澳台身份证，前台的单选框写死
      */
@@ -66,11 +68,6 @@ public class PreVolunteerVO {
      * 申请的志愿意向
      */
     private String intention;
-
-    /**
-     * 分配任务类型
-     */
-    private String risk;
 
 
     /**

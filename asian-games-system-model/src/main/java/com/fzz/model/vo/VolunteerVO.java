@@ -37,13 +37,10 @@ public class VolunteerVO {
 
     private Integer process;
 
-
     /**
      * 分配任务类型
      */
     private String risk;
-
-    private Integer progress;
 
     private String profession;
 
