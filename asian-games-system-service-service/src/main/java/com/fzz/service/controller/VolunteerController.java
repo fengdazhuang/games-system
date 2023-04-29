@@ -215,6 +215,11 @@ public class VolunteerController extends BaseController implements VolunteerCont
     }
 
     @Override
+    public ReturnResult queryVolPositions() {
+        return null;
+    }
+
+    @Override
     public ReturnResult queryVolunteer(Long id) {
         Volunteer volunteer = volunteerService.getVolunteerDetailById(id);
         return ReturnResult.ok(volunteer);
