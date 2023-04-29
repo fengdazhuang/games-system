@@ -7,6 +7,8 @@ public class AddFriendLinkBO {
 
     private String url;
 
+    private String name;
+
     private String logo;
 
     private Integer status;

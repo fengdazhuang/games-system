@@ -221,17 +221,18 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
     @Transactional
     public boolean doReview(DoReviewBO doReviewBO) {
         Integer status = doReviewBO.getStatus();
-
         LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Volunteer::getId,doReviewBO.getId());
         if(status==0){
             updateWrapper.set(Volunteer::getProcess,4);
         }
         if(status==1){
-            String risk = doReviewBO.getRisk();
-            if(StringUtils.isNotBlank(risk)){
+            Integer risk = doReviewBO.getRisk();
+            String teamId = doReviewBO.getTeamId();
+            if(risk!=null){
                 updateWrapper.set(Volunteer::getProcess,3);
                 updateWrapper.set(Volunteer::getRisk,risk);
+                updateWrapper.set(Volunteer::getTeamId,teamId);
             }else{
                 updateWrapper.set(Volunteer::getProcess,2);
             }

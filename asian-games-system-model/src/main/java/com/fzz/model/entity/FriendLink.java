@@ -14,6 +14,8 @@ public class FriendLink {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    private String name;
+
     private String url;
 
     private String logo;

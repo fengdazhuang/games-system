@@ -12,6 +12,7 @@ import com.fzz.common.utils.ValidateCodeUtils;
 import com.fzz.model.bo.*;
 import com.fzz.model.dto.VolTeamDto;
 import com.fzz.model.entity.VolDirection;
+import com.fzz.model.entity.VolPosition;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.ValidateCodeVO;
@@ -207,6 +208,27 @@ public class VolunteerController extends BaseController implements VolunteerCont
         return ReturnResult.ok(validateCodeVO);
     }
 
+
+    @Override
+    public ReturnResult deleteVolPosition(String[] ids) {
+        
+        return null;
+    }
+
+    @Override
+    public ReturnResult addVolPosition(AddVolPositionBO addVolPositionBO) {
+        boolean res = volPositionService.addVolunteerPosition(addVolPositionBO);
+        if(res){
+            return ReturnResult.ok();
+        }
+        return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_POSITION_CREATE_ERROR);
+    }
+
+    @Override
+    public ReturnResult queryVolPositions(Integer risk) {
+        List<VolPosition> volPositionList = volPositionService.listVolPositionsByRisk(risk);
+        return ReturnResult.ok(volPositionList);
+    }
 
     @Override
     public ReturnResult getVolTeamInfo(String teamId) {
