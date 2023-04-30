@@ -209,6 +209,7 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
     @Override
     public ReturnResult deleteVolPosition(String[] ids) {
+
         boolean res = volPositionService.removeVolPositions(ids);
         if(res){
             return ReturnResult.ok();
