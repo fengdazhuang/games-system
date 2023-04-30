@@ -3,6 +3,7 @@ package com.fzz.service.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fzz.common.utils.RedisUtil;
 import com.fzz.model.bo.AddVolPositionBO;
 import com.fzz.model.entity.VolDirection;
 import com.fzz.model.entity.VolPosition;
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -26,11 +28,17 @@ import java.util.stream.Collectors;
 @Service
 public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPosition> implements VolPositionService {
 
+    private static final String REDIS_POSITION_VOLUNTEER_COUNTS = "redis_position_volunteer_counts";
+
     @Autowired
     private VolunteerService volunteerService;
 
     @Autowired
     private VolDirectionService volDirectionService;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
 
     @Override
     public Page<VolPositionVO> pageVolunteerPositions(Integer pageNumber, Integer pageSize, Integer risk,
@@ -58,10 +66,19 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
                 volPositionVO.setPrincipalPhoto(volunteer.getPhoto());
                 volPositionVO.setPrincipalEmail(volunteer.getEmail());
             }
+            volPositionVO.setVolunteerCounts(getCountsFromRedis(REDIS_POSITION_VOLUNTEER_COUNTS+":"+item.getId()));
             return volPositionVO;
         }))).collect(Collectors.toList());
         volPositionVOPage.setRecords(volPositionVOList);
         return volPositionVOPage;
+    }
+
+    public Integer getCountsFromRedis(String key) {
+        String countsStr = redisUtil.get(key);
+        if (StringUtils.isBlank(countsStr)) {
+            countsStr = "0";
+        }
+        return Integer.valueOf(countsStr);
     }
 
     @Override
@@ -74,6 +91,7 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
     }
 
     @Override
+    @Transactional
     public boolean addVolunteerPosition(AddVolPositionBO addVolPositionBO) {
         VolPosition volPosition=new VolPosition();
         BeanUtils.copyProperties(addVolPositionBO,volPosition);
@@ -81,6 +99,7 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
         String id = RandomStringUtils.randomNumeric(6);
         volPosition.setId(id);
         return this.save(volPosition);
+
     }
 
 

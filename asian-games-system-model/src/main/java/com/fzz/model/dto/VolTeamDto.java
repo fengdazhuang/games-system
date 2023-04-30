@@ -14,6 +14,10 @@ public class VolTeamDto {
 
     private String position;
 
+    private String principal;
+
+
+
 
     List<VolBaseInfoVO> members;
 }

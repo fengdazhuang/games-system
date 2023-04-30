@@ -42,7 +42,7 @@ public class PreVolunteerVO {
      */
     private String email;
 
-    
+
     /**
      * 证件类型，如居民身份证，港澳台身份证，前台的单选框写死
      */
@@ -68,6 +68,11 @@ public class PreVolunteerVO {
      * 申请的志愿意向
      */
     private String intention;
+
+
+    private String teamId;
+
+    private Integer risk;
 
 
     /**
