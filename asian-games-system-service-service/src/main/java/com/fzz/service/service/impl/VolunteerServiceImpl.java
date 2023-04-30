@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fzz.common.enums.OrderColumnEnum;
 import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.exception.CustomException;
+import com.fzz.common.utils.RedisUtil;
 import com.fzz.model.bo.*;
 import com.fzz.model.dto.VolTeamDto;
 import com.fzz.model.entity.VolDirection;
@@ -32,11 +33,15 @@ import java.util.stream.Collectors;
 @Service
 public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer> implements VolunteerService {
 
+    private static final String REDIS_POSITION_VOLUNTEER_COUNTS = "redis_position_volunteer_counts";
     @Autowired
     private VolDirectionService volDirectionService;
 
     @Autowired
     private VolPositionService volPositionService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public Page<VolunteerVO> pageVolunteers(Integer pageNumber, Integer pageSize, Integer volunteerType, Integer risk) {
@@ -98,6 +103,11 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         List<PreVolunteerVO> volunteerVOList = page.getRecords().stream().map(((item -> {
             PreVolunteerVO preVolunteerVO = new PreVolunteerVO();
             BeanUtils.copyProperties(item, preVolunteerVO);
+            String teamId = item.getTeamId();
+            if(StringUtils.isNotBlank(teamId)){
+                VolPosition volPosition = volPositionService.getById(teamId);
+                preVolunteerVO.setRisk(volPosition.getRisk());
+            }
             return preVolunteerVO;
         }))).collect(Collectors.toList());
         volunteerVOPage.setRecords(volunteerVOList);
@@ -141,12 +151,24 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
     @Override
     @Transactional
     public boolean applyVolunteer(ApplyVolunteerBO applyVolunteerBO) {
+        Integer type = applyVolunteerBO.getType();
+        String teamId = applyVolunteerBO.getTeamId();
         LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Volunteer::getId,applyVolunteerBO.getId());
         updateWrapper.set(Volunteer::getApplyTime,new Date());
         updateWrapper.set(Volunteer::getIntention,applyVolunteerBO.getIntention());
         updateWrapper.set(Volunteer::getComment,applyVolunteerBO.getComment());
         updateWrapper.set(Volunteer::getProcess,1);
+
+        if(type==0&&StringUtils.isNotBlank(teamId)){
+            updateWrapper.set(Volunteer::getTeamId, teamId);
+        }
+        else if(type==1){
+            updateWrapper.set(Volunteer::getTeamId, null);
+        }
+        else if(type==0&&!StringUtils.isNotBlank(teamId)){
+            throw new CustomException(ResponseStatusEnum.SYSTEM_BUSY_ERROR);
+        }
         return this.update(updateWrapper);
     }
 
@@ -233,6 +255,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
                 updateWrapper.set(Volunteer::getProcess,3);
                 updateWrapper.set(Volunteer::getRisk,risk);
                 updateWrapper.set(Volunteer::getTeamId,teamId);
+                redisUtil.increment(REDIS_POSITION_VOLUNTEER_COUNTS+":"+teamId,1);
             }else{
                 updateWrapper.set(Volunteer::getProcess,2);
             }
@@ -240,4 +263,6 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         }
         return this.update(updateWrapper);
     }
+
+
 }

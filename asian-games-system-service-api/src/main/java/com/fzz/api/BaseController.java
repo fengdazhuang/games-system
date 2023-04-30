@@ -55,6 +55,10 @@ public class BaseController {
     public static final String REDIS_VOLUNTEER_EMAIL_CODE="redis_volunteer_email_code";
     public static final String REDIS_VOLUNTEER_DIRECTION_INFOS = "redis_volunteer_direction_infos";
 
+    public static final String REDIS_POSITION_VOLUNTEER_COUNTS = "redis_position_volunteer_counts";
+    public static final String REDIS_VOLUNTEER_COUNTS="redis_volunteer_counts";
+    public static final String REDIS_VOLUNTEER_POSITION_COUNTS="redis_volunteer_position_counts";
+
     public static final Integer COOKIE_MONTH = 30 * 24 * 60 * 60;
     public static final Integer COOKIE_DELETE = 0;
 

@@ -35,6 +35,8 @@ import java.util.*;
 @RestController
 public class VolunteerController extends BaseController implements VolunteerControllerApi {
 
+
+
     @Autowired
     private VolunteerService volunteerService;
 
@@ -128,6 +130,9 @@ public class VolunteerController extends BaseController implements VolunteerCont
                 emailService.sendSimpleMail(Arrays.asList(email),
                         status ==1?"志愿者审核通过":"志愿者审核未通过",emailContent);
             }
+            if(status==1){
+                redisUtil.increment(REDIS_VOLUNTEER_COUNTS,1);
+            }
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_REVIEW_ERROR);
@@ -220,6 +225,7 @@ public class VolunteerController extends BaseController implements VolunteerCont
     public ReturnResult addVolPosition(AddVolPositionBO addVolPositionBO) {
         boolean res = volPositionService.addVolunteerPosition(addVolPositionBO);
         if(res){
+            redisUtil.increment(REDIS_VOLUNTEER_POSITION_COUNTS,1);
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_POSITION_CREATE_ERROR);
