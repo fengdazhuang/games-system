@@ -51,15 +51,19 @@ public class DopTestController extends BaseController implements DopTestControll
 
     @Override
     public ReturnResult addDopTest(AddDopTestBO addDopTestBO) {
-        Long playerId = addDopTestBO.getPlayerId();
-        String faceBase64 = faceGet(String.valueOf(playerId), "player");
-        Map<String, Object> map = faceMatch(addDopTestBO.getBase64(), faceBase64);
-        if((double)map.get("score")>75){
-            boolean res = dopTestService.saveDopTest(addDopTestBO);
-            if(res){
-                return ReturnResult.ok();
+        String base64 = addDopTestBO.getBase64();
+        Map<String, Object> result = faceSearch(base64, "player");
+        if(result!=null){
+            List<Map<String,Object>> userList = (List<Map<String, Object>>) result.get("user_list");
+            Map<String, Object> userInfo = userList.get(0);
+            if((double) userInfo.get("score")>70){
+                boolean res = dopTestService.saveDopTest(addDopTestBO);
+                if(res){
+                    return ReturnResult.ok();
+                }
+                return ReturnResult.error(ResponseStatusEnum.DOP_TEST_REGISTER_FAILED);
             }
-            return ReturnResult.error(ResponseStatusEnum.DOP_TEST_REGISTER_FAILED);
+            return ReturnResult.error(ResponseStatusEnum.FACE_NOT_MATCH);
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_MATCH);
     }
