@@ -129,12 +129,18 @@ public class PlayerController extends BaseController implements PlayerController
     @Override
     public ReturnResult queryPlayer(Long id) {
         String playerStr = redisUtil.get(REDIS_PLAYER_INFO + ":" + id);
-        if(StringUtils.isNotBlank(playerStr)){
-            Player player = JsonUtils.jsonToPojo(playerStr, Player.class);
+        Player player=null;
+        if(StringUtils.isBlank(playerStr)){
+            player = playerService.getById(id);
+            if(player==null){
+                return ReturnResult.error(ResponseStatusEnum.PLAYER_NOT_EXISTS);
+            }
             redisUtil.set(REDIS_PLAYER_INFO + ":" + id,JsonUtils.objectToJson(player));
             return ReturnResult.ok(player);
         }
-        return ReturnResult.error(ResponseStatusEnum.PLAYER_NOT_EXISTS);
+        player = JsonUtils.jsonToPojo(playerStr, Player.class);
+        return ReturnResult.ok(player);
+
     }
 
     @Override

@@ -75,8 +75,11 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
         dopTest.setInspector(addDopTestBO.getInspector());
         String playerJson = redisUtil.get(REDIS_PLAYER_INFO + ":" + playerId);
         Player player = JsonUtils.jsonToPojo(playerJson, Player.class);
-        dopTest.setCountry(player.getCountry());
-        dopTest.setName(player.getName());
+        if(player!=null){
+            dopTest.setCountry(player.getCountry());
+            dopTest.setName(player.getName());
+        }
+
         dopTest.setExaminationResult(2);
         dopTest.setExaminationType(addDopTestBO.getExaminationType());
         dopTest.setExaminationPosition(addDopTestBO.getExaminationPosition());

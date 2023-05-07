@@ -119,12 +119,18 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     @Override
     public ReturnResult queryJudge(Long id) {
         String judgeStr = redisUtil.get(REDIS_JUDGE_INFO + ":" + id);
-        if(StringUtils.isNotBlank(judgeStr)){
-            Judge judge = JsonUtils.jsonToPojo(judgeStr, Judge.class);
+        Judge judge=null;
+        if(StringUtils.isBlank(judgeStr)){
+            judge = judgeService.getById(id);
+            if(judge==null){
+                return ReturnResult.error(ResponseStatusEnum.JUDGE_NOT_EXISTS);
+            }
+
             redisUtil.set(REDIS_JUDGE_INFO + ":" + id,JsonUtils.objectToJson(judge));
             return ReturnResult.ok(judge);
         }
-        return ReturnResult.error(ResponseStatusEnum.JUDGE_NOT_EXISTS);
+        judge = JsonUtils.jsonToPojo(judgeStr, Judge.class);
+        return ReturnResult.ok(judge);
     }
 
     @Override
