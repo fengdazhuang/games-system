@@ -20,7 +20,7 @@ public class VolPosition {
 
     private Integer risk;
 
-    private Integer volunteerCount;
+    private Integer volunteerCounts;
 
     private Integer volunteerType;
 

@@ -37,6 +37,8 @@ public class VolunteerVO {
 
     private Integer process;
 
+    private Integer volunteerType;
+
     /**
      * 分配任务类型
      */
@@ -45,6 +47,8 @@ public class VolunteerVO {
     private String profession;
 
     private String address;
+
+    private String teamId;
 
 
     /**

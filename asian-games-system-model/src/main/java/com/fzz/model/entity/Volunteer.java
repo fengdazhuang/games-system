@@ -118,4 +118,11 @@ public class Volunteer {
     private Integer status;
 
 
+    /**
+     * 志愿者申请类型
+     * 0 指定团队申请  1 随机分配模式
+     */
+    private Integer joinType;
+
+
 }

@@ -2,6 +2,8 @@ package com.fzz.model.bo;
 
 import lombok.Data;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +26,8 @@ public class ApplyVolunteerBO {
      * 0 加入指定志愿者团队
      * 1 按照官方分配
      */
+    @Max(value = 1,message = "申请服务点类型格式错误")
+    @Min(value = 0,message = "申请服务点类型格式错误")
     private Integer type;
 
     private String teamId;

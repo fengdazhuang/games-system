@@ -82,12 +82,9 @@ public class VolPositionServiceImpl extends ServiceImpl<VolPositionMapper, VolPo
     }
 
     @Override
+    @Transactional
     public boolean removeVolPositions(String[] ids) {
-        boolean res = this.removeByIds(Arrays.asList(ids));
-        if(res){
-            return true;
-        }
-        return false;
+        return this.removeByIds(Arrays.asList(ids));
     }
 
     @Override

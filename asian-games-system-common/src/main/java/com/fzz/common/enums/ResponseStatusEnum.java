@@ -30,6 +30,10 @@ public enum ResponseStatusEnum {
     SYSTEM_DATE_PARSER_ERROR(602,false , "时间转换错误"),
     SYSTEM_FILE_NOT_FOUND(603,false ,"文件找不到了" ),
     FACE_NOT_FOUND(604,false , "人脸信息未找到"),
+    FACE_NOT_MATCH(605,false , "人脸信息不匹配"),
+
+    DOP_TEST_REGISTER_FAILED(630, false, "兴奋剂检测登记失败，请重试"),
+    DOP_TEST_RESULT_SUBMIT_FAILED(631,false , "兴奋剂检测结果提交失败，请重试"),
 
     FRIENDLINK_CREATE_ERROR(651,false ,"友情链接添加失败" ),
     FRIENDLINK_MODIFY_STATUS_ERROR(652, false, "友情链接修改状态失败"),

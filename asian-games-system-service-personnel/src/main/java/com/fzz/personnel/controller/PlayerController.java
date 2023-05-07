@@ -146,6 +146,7 @@ public class PlayerController extends BaseController implements PlayerController
             if((double)userList.get(0).get("score")>70){
                 String id = (String) userList.get(0).get("user_id");
                 Long playerId = Long.valueOf(id);
+                redisUtil.del(REDIS_PLAYER_INFO + ":" + id);
                 playerService.updateArrivalStatus(playerId);
 
                 return ReturnResult.ok();

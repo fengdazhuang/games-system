@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fzz.model.bo.*;
 import com.fzz.model.dto.VolTeamDto;
+import com.fzz.model.entity.VolPosition;
 import com.fzz.model.entity.Volunteer;
 import com.fzz.model.vo.PreVolunteerVO;
 import com.fzz.model.vo.VolunteerVO;
@@ -38,4 +39,6 @@ public interface VolunteerService extends IService<Volunteer> {
     Volunteer getVolunteerDetailById(Long id);
 
     VolTeamDto getVolTeamInfo(String teamId);
+
+    List<Volunteer> getVolunteersByTeamId(String teamId);
 }
