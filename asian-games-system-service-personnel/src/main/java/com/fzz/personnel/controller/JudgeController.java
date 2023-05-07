@@ -134,10 +134,11 @@ public class JudgeController extends BaseController implements JudgeControllerAp
     }
 
     @Override
-    public ReturnResult deleteJudge(Long[] id) {
+    public ReturnResult deleteJudge(Long[] id) throws IOException {
         boolean res = judgeService.removeJudges(id);
         if(res){
             for(Long judgeId:id){
+                baiduFaceUtil.userFaceDelete(judgeId,"judge");
                 redisUtil.del(REDIS_JUDGE_INFO + ":" + judgeId);
             }
             return ReturnResult.ok();

@@ -85,8 +85,7 @@ public class PlayerController extends BaseController implements PlayerController
         addPlayerBO.setId(snowFlakeId);
         String base64 = addPlayerBO.getPhoto();
         String img = base64.split(",")[1];
-        baiduFaceUtil.faceSet(img, snowFlakeId, "player", null);
-
+        faceSet(img, snowFlakeId, "player", null);
         //将图片上传到mongodb中并返回objectId
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();
@@ -104,10 +103,11 @@ public class PlayerController extends BaseController implements PlayerController
     }
 
     @Override
-    public ReturnResult deletePlayer(Long[] id) {
+    public ReturnResult deletePlayer(Long[] id) throws IOException {
         boolean res = playerService.removePlayers(id);
         if(res){
             for(Long playerId:id){
+                baiduFaceUtil.userFaceDelete(playerId,"player");
                 redisUtil.del(REDIS_PLAYER_INFO + ":" + playerId);
             }
             return ReturnResult.ok();

@@ -105,6 +105,25 @@ public class BaiduFaceUtil {
     }
 
 
+    public String userFaceDelete(Long id,String groupId) throws IOException {
+        String url = "https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/delete";
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("user_id", id);
+            map.put("group_id", groupId);
+
+            String param = JsonUtils.objectToJson(map);
+            String accessToken = getAuth();
+            String result = HttpUtil.post(url, accessToken, "application/json", param);
+            System.out.println(result);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public String faceMatch(String source,String target) {
         String url = "https://aip.baidubce.com/rest/2.0/face/v3/match";
         try {

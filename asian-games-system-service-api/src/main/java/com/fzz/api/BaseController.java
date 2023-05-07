@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -133,6 +134,16 @@ public class BaseController {
     }
 
 
+    public Map<String,Object> faceSet(String base64,Long id,String groupId,String info) throws IOException {
+        String img = base64.split(",")[1];
+        String response = baiduFaceUtil.faceSet(img,id,groupId,info);
+        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
+        Map<String,Object> result = (Map<String, Object>) responseMap.get("result");
+        return result;
+
+    }
+
+
     /**
      * 人脸对比
      */
@@ -146,17 +157,6 @@ public class BaseController {
 
     }
 
-
-    /**
-     * 根据id获取人脸
-     * @param userId 用户id
-     * @param groupId 组id
-     * @return base64
-     */
-    public String faceGet(String userId,String groupId){
-        String face = baiduFaceUtil.userGet(userId, groupId);
-        return face;
-    }
 
 
 

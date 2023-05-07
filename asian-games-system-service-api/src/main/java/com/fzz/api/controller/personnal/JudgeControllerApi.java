@@ -38,7 +38,7 @@ public interface JudgeControllerApi {
 
     @DeleteMapping("/deleteJudge")
     @ApiOperation(value = "删除裁判")
-    ReturnResult deleteJudge(@RequestParam Long[] id);
+    ReturnResult deleteJudge(@RequestParam Long[] id) throws IOException;
 
     @PostMapping("/faceSearch")
     @ApiOperation(value = "搜索人脸")

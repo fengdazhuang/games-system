@@ -79,7 +79,6 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
             dopTest.setCountry(player.getCountry());
             dopTest.setName(player.getName());
         }
-
         dopTest.setExaminationResult(2);
         dopTest.setExaminationType(addDopTestBO.getExaminationType());
         dopTest.setExaminationPosition(addDopTestBO.getExaminationPosition());
@@ -91,6 +90,7 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
         List<Long> idList = submitDopResultList.stream().map((SubmitDopResult::getId)).collect(Collectors.toList());
         LambdaUpdateWrapper<DopTest> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.set(DopTest::getExaminationResult,submitDopResultList.get(0).getResult());
+        updateWrapper.set(DopTest::getExaminationTime,new Date());
         updateWrapper.in(DopTest::getId,idList);
         return this.update(updateWrapper);
     }

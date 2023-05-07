@@ -31,7 +31,7 @@ public interface PlayerControllerApi {
 
     @DeleteMapping("/deletePlayer")
     @ApiOperation(value = "删除运动员")
-    ReturnResult deletePlayer(@RequestParam Long[] id);
+    ReturnResult deletePlayer(@RequestParam Long[] id) throws IOException;
 
     @PutMapping("/updatePlayer")
     @ApiOperation(value = "修改运动员")
