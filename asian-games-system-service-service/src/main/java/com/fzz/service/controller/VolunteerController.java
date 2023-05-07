@@ -1,6 +1,6 @@
 package com.fzz.service.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fzz.api.BaseController;
 import com.fzz.api.controller.service.VolunteerControllerApi;
@@ -217,6 +217,16 @@ public class VolunteerController extends BaseController implements VolunteerCont
 
         boolean res = volPositionService.removeVolPositions(ids);
         if(res){
+            LambdaUpdateWrapper<Volunteer> updateWrapper=new LambdaUpdateWrapper<>();
+            updateWrapper.set(Volunteer::getTeamId,null);
+//            updateWrapper.set(Volunteer::getProcess,2);
+            updateWrapper.set(Volunteer::getRisk,null);
+            updateWrapper.in(Volunteer::getTeamId, (Object[]) ids);
+            volunteerService.update(updateWrapper);
+            redisUtil.decrement(REDIS_VOLUNTEER_POSITION_COUNTS,ids.length);
+            for(String id:ids){
+                redisUtil.del(REDIS_POSITION_VOLUNTEER_COUNTS+":"+id);
+            }
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.VOLUNTEER_POSITION_DELETE_ERROR);

@@ -133,6 +133,32 @@ public class BaseController {
     }
 
 
+    /**
+     * 人脸对比
+     */
+    public Map<String,Object> faceMatch(String source,String target) {
+        String sourceImg = source.split(",")[1];
+        String targetImg = target.split(",")[1];
+        String response = baiduFaceUtil.faceMatch(sourceImg,targetImg);
+        Map<String,Object> responseMap = JsonUtils.jsonToPojo(response, Map.class);
+        Map<String,Object> result = (Map<String, Object>) responseMap.get("result");
+        return result;
+
+    }
+
+
+    /**
+     * 根据id获取人脸
+     * @param userId 用户id
+     * @param groupId 组id
+     * @return base64
+     */
+    public String faceGet(String userId,String groupId){
+        String face = baiduFaceUtil.userGet(userId, groupId);
+        return face;
+    }
+
+
 
 
 

@@ -130,10 +130,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         volTeamDto.setName(volPosition.getName());
         volTeamDto.setPosition(volPosition.getPosition());
 
-        LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
-        queryWrapper.eq(StringUtils.isNotBlank(teamId),Volunteer::getTeamId,teamId);
-
-        List<Volunteer> volunteerList = this.list(queryWrapper);
+        List<Volunteer> volunteerList = getVolunteersByTeamId(teamId);
         List<VolBaseInfoVO> volBaseInfoVOList = volunteerList.stream().map(((item -> {
             VolBaseInfoVO volBaseInfoVO = new VolBaseInfoVO();
             BeanUtils.copyProperties(item, volBaseInfoVO);
@@ -141,6 +138,15 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         }))).collect(Collectors.toList());
         volTeamDto.setMembers(volBaseInfoVOList);
         return volTeamDto;
+    }
+
+
+    @Override
+    public List<Volunteer> getVolunteersByTeamId(String teamId) {
+        LambdaQueryWrapper<Volunteer> queryWrapper=new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(teamId),Volunteer::getTeamId,teamId);
+
+        return this.list(queryWrapper);
     }
 
     @Override
@@ -169,6 +175,7 @@ public class VolunteerServiceImpl extends ServiceImpl<VolunteerMapper, Volunteer
         else if(type==0&&!StringUtils.isNotBlank(teamId)){
             throw new CustomException(ResponseStatusEnum.SYSTEM_BUSY_ERROR);
         }
+        updateWrapper.set(Volunteer::getJoinType,type );
         return this.update(updateWrapper);
     }
 

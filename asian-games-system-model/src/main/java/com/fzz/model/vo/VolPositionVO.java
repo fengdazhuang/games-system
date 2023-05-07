@@ -13,6 +13,8 @@ public class VolPositionVO {
 
     private String position;
 
+    private Integer volunteerType;
+
     private String risk;
 
     private Integer volunteerCounts;
@@ -20,6 +22,7 @@ public class VolPositionVO {
     private String principal;
 
     private String principalEmail;
+
 
     private String principalPhoto;
 

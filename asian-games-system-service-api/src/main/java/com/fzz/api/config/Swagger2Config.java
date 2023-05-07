@@ -30,6 +30,8 @@ public class Swagger2Config {
         Predicate<RequestHandler> competitionPredicate = RequestHandlerSelectors.basePackage("com.fzz.competition.controller");
         Predicate<RequestHandler> newsPredicate = RequestHandlerSelectors.basePackage("com.fzz.news.controller");
         Predicate<RequestHandler> servicePredicate = RequestHandlerSelectors.basePackage("com.fzz.service.controller");
+        Predicate<RequestHandler> medicalPredicate = RequestHandlerSelectors.basePackage("com.fzz.medical.controller");
+        Predicate<RequestHandler> systemPredicate = RequestHandlerSelectors.basePackage("com.fzz.system.controller");
 
         return new Docket(DocumentationType.SWAGGER_2)  // 指定api类型为swagger2
                 .apiInfo(apiInfo())                 // 用于定义api文档汇总信息

@@ -14,6 +14,7 @@
         <module>asian-games-system-service-competition</module>
         <module>asian-games-system-service-file</module>
         <module>asian-games-system-service-system</module>
+        <module>asian-games-system-service-medical</module>
     </modules>
 
 
