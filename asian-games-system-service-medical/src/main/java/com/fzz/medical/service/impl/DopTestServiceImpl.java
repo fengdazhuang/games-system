@@ -53,6 +53,7 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
         LambdaQueryWrapper<DopTest> queryWrapper=new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(sampleNumber),DopTest::getSampleNumber,sampleNumber);
         queryWrapper.eq(DopTest::getExaminationResult,2);
+        queryWrapper.orderByDesc(DopTest::getRegistrationTime);
         Page<DopTest> page = this.page(dopTestPage, queryWrapper);
         List<DopTestVO> dopTestVOList = page.getRecords().stream().map(((item -> {
             DopTestVO dopTestVO = new DopTestVO();

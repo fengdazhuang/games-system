@@ -84,8 +84,7 @@ public class PlayerController extends BaseController implements PlayerController
         Long snowFlakeId  = snowFlakeUtil.getNextId();
         addPlayerBO.setId(snowFlakeId);
         String base64 = addPlayerBO.getPhoto();
-        String img = base64.split(",")[1];
-        faceSet(img, snowFlakeId, "player", null);
+        faceSet(base64, snowFlakeId, "player", null);
         //将图片上传到mongodb中并返回objectId
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();

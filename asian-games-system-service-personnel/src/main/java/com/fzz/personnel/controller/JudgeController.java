@@ -87,8 +87,7 @@ public class JudgeController extends BaseController implements JudgeControllerAp
         addJudgeBO.setId(snowFlakeId);
 
         String base64 = addJudgeBO.getPhoto();
-        String img = base64.split(",")[1];
-        baiduFaceUtil.faceSet(img, snowFlakeId, "judge", null);
+        baiduFaceUtil.faceSet(base64, snowFlakeId, "judge", null);
 
         String url="http://localhost:8009/api9/file/uploadToGridFS";
         Map<String,Object> request = new HashMap<>();

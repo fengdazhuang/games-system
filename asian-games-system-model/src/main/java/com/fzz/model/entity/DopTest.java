@@ -1,5 +1,8 @@
 package com.fzz.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,6 +10,7 @@ import java.util.Date;
 @Data
 public class DopTest {
 
+    @TableId(type= IdType.ASSIGN_ID)
     private Long id;
 
     private Long playerId;
@@ -34,8 +38,10 @@ public class DopTest {
      */
     private Integer examinationType;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh", timezone = "GMT+8")
     private Date registrationTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",locale = "zh", timezone = "GMT+8")
     private Date examinationTime;
 
 }
