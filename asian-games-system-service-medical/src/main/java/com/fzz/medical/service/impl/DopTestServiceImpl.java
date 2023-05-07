@@ -78,6 +78,8 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
         dopTest.setCountry(player.getCountry());
         dopTest.setName(player.getName());
         dopTest.setExaminationResult(2);
+        dopTest.setExaminationType(addDopTestBO.getExaminationType());
+        dopTest.setExaminationPosition(addDopTestBO.getExaminationPosition());
         return this.save(dopTest);
     }
 
