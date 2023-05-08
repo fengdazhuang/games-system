@@ -12,6 +12,8 @@ import com.fzz.model.entity.Medicine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class MedicineController extends BaseController implements MedicineControllerApi {
 
@@ -42,12 +44,16 @@ public class MedicineController extends BaseController implements MedicineContro
 
     @Override
     public ReturnResult replenishInventory(ReplenishInventoryBO replenishInventoryBO) {
-        Integer oldNumber = getCountsFromRedis(REDIS_MEDICINE_INVENTORY + ":" + replenishInventoryBO.getId());
-        replenishInventoryBO.setOldNumber(oldNumber);
         boolean res = medicineService.replenishMedicineInventory(replenishInventoryBO);
         if(res){
             return ReturnResult.ok();
         }
         return ReturnResult.error(ResponseStatusEnum.MEDICINE_ADD_FAILED);
+    }
+
+    @Override
+    public ReturnResult queryAllMedicines() {
+        List<Medicine> list = medicineService.listMedicines();
+        return ReturnResult.ok(list);
     }
 }

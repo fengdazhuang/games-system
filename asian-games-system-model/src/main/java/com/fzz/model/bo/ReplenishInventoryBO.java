@@ -9,6 +9,7 @@ public class ReplenishInventoryBO {
 
     private Integer oldNumber;
 
+    private String medicineName;
 
     /**
      * 数量

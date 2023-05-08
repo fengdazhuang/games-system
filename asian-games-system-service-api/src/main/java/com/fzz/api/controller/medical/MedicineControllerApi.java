@@ -26,4 +26,8 @@ public interface MedicineControllerApi {
     @ApiOperation(value = "扩充药品库存")
     ReturnResult replenishInventory(@RequestBody ReplenishInventoryBO replenishInventoryBO);
 
+    @GetMapping("/queryMedicines")
+    @ApiOperation(value="查询所有的药品")
+    ReturnResult queryAllMedicines();
+
 }

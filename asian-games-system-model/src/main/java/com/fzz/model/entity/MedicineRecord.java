@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class MedicineList {
+public class MedicineRecord {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
@@ -21,10 +21,14 @@ public class MedicineList {
      */
     private Integer number;
 
+    private String info;
+
     /**
      * 0 出          1 入
      */
     private Integer type;
+
+    private Integer nowNumber;
 
     private Date createTime;
 
