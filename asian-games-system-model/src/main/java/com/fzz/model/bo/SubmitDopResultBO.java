@@ -3,7 +3,7 @@ package com.fzz.model.bo;
 import lombok.Data;
 
 @Data
-public class SubmitDopResult {
+public class SubmitDopResultBO {
 
     private Long id;
 

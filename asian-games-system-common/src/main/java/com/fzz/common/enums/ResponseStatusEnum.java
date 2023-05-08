@@ -39,6 +39,9 @@ public enum ResponseStatusEnum {
     FRIENDLINK_MODIFY_STATUS_ERROR(652, false, "友情链接修改状态失败"),
     FRIENDLINK_UPDATE_INFO_ERROR(653,false ,"友情链接修改失败" ),
 
+    MEDICINE_ADD_FAILED(680, false, "药品添加失败"),
+    TREATMENT_REGISTER_FAILED(681,false ,"就诊登记失败" ),
+
     PLAYER_CREATE_ERROR(701,false ,"运动员添加失败" ),
     PLAYER_DELETE_ERROR(702,false ,"运动员删除失败" ),
     PLAYER_NOT_EXISTS(703,false , "该运动员不存在"),

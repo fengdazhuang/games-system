@@ -3,7 +3,7 @@ package com.fzz.api.controller.medical;
 
 import com.fzz.common.result.ReturnResult;
 import com.fzz.model.bo.AddDopTestBO;
-import com.fzz.model.bo.SubmitDopResult;
+import com.fzz.model.bo.SubmitDopResultBO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +40,5 @@ public interface DopTestControllerApi {
 
     @PutMapping("/submitResult")
     @ApiOperation(value = "批量提交兴奋剂检测结果")
-    ReturnResult submitResult(@RequestBody List<SubmitDopResult> submitDopResultList);
+    ReturnResult submitResult(@RequestBody List<SubmitDopResultBO> submitDopResultBOList);
 }

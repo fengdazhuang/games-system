@@ -4,7 +4,7 @@ package com.fzz.medical.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fzz.model.bo.AddDopTestBO;
-import com.fzz.model.bo.SubmitDopResult;
+import com.fzz.model.bo.SubmitDopResultBO;
 import com.fzz.model.entity.DopTest;
 import com.fzz.model.vo.DopTestVO;
 import org.springframework.stereotype.Service;
@@ -20,5 +20,5 @@ public interface DopTestService extends IService<DopTest> {
 
     boolean saveDopTest(AddDopTestBO addDopTestBO);
 
-    boolean updateExaminationResult(List<SubmitDopResult> submitDopResultList);
+    boolean updateExaminationResult(List<SubmitDopResultBO> submitDopResultBOList);
 }

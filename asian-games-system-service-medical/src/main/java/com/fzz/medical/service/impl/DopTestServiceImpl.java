@@ -10,7 +10,7 @@ import com.fzz.common.utils.TimeUtil;
 import com.fzz.medical.mapper.DopTestMapper;
 import com.fzz.medical.service.DopTestService;
 import com.fzz.model.bo.AddDopTestBO;
-import com.fzz.model.bo.SubmitDopResult;
+import com.fzz.model.bo.SubmitDopResultBO;
 import com.fzz.model.entity.DopTest;
 import com.fzz.model.entity.Player;
 import com.fzz.model.vo.DopTestVO;
@@ -87,10 +87,10 @@ public class DopTestServiceImpl extends ServiceImpl<DopTestMapper, DopTest> impl
     }
 
     @Override
-    public boolean updateExaminationResult(List<SubmitDopResult> submitDopResultList) {
-        List<Long> idList = submitDopResultList.stream().map((SubmitDopResult::getId)).collect(Collectors.toList());
+    public boolean updateExaminationResult(List<SubmitDopResultBO> submitDopResultBOList) {
+        List<Long> idList = submitDopResultBOList.stream().map((SubmitDopResultBO::getId)).collect(Collectors.toList());
         LambdaUpdateWrapper<DopTest> updateWrapper=new LambdaUpdateWrapper<>();
-        updateWrapper.set(DopTest::getExaminationResult,submitDopResultList.get(0).getResult());
+        updateWrapper.set(DopTest::getExaminationResult, submitDopResultBOList.get(0).getResult());
         updateWrapper.set(DopTest::getExaminationTime,new Date());
         updateWrapper.in(DopTest::getId,idList);
         return this.update(updateWrapper);

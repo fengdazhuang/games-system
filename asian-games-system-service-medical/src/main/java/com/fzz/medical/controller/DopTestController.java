@@ -8,7 +8,7 @@ import com.fzz.common.enums.ResponseStatusEnum;
 import com.fzz.common.result.ReturnResult;
 import com.fzz.medical.service.DopTestService;
 import com.fzz.model.bo.AddDopTestBO;
-import com.fzz.model.bo.SubmitDopResult;
+import com.fzz.model.bo.SubmitDopResultBO;
 import com.fzz.model.entity.DopTest;
 import com.fzz.model.vo.DopTestVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +69,8 @@ public class DopTestController extends BaseController implements DopTestControll
     }
 
     @Override
-    public ReturnResult submitResult(List<SubmitDopResult> submitDopResultList) {
-        boolean res = dopTestService.updateExaminationResult(submitDopResultList);
+    public ReturnResult submitResult(List<SubmitDopResultBO> submitDopResultBOList) {
+        boolean res = dopTestService.updateExaminationResult(submitDopResultBOList);
         if(res){
             return ReturnResult.ok();
         }

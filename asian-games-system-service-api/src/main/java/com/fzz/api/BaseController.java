@@ -26,6 +26,8 @@ public class BaseController {
     public static final String REDIS_ADMIN_INFO = "redis_admin_info";
     public static final String MOBILE_SMSCODE = "mobile:smscode";
 
+    public static final String REDIS_MEDICINE_INVENTORY = "redis_medicine_inventory";
+
 
     public static final String REDIS_VOLUNTEER_TOKEN="redis_volunteer_token";
     public static final String REDIS_VOLUNTEER_INFO = "redis_volunteer_info";
@@ -114,6 +116,7 @@ public class BaseController {
         String countsStr = redis.get(key);
         if (StringUtils.isBlank(countsStr)) {
             countsStr = "0";
+            redis.set(key,countsStr);
         }
         return Integer.valueOf(countsStr);
     }
