@@ -40,12 +40,21 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, Medicine> i
         queryWrapper.orderByDesc(Medicine::getCreateTime);
         this.page(page,queryWrapper);
         List<Medicine> newList = page.getRecords().stream().map(((item -> {
-            Integer nowNumber = Integer.valueOf(redisUtil.get(REDIS_MEDICINE_INVENTORY + ":" + item.getId()));
+            Integer nowNumber = getCountsFromRedis(REDIS_MEDICINE_INVENTORY + ":" + item.getId());
             item.setInventory(nowNumber);
             return item;
         }))).collect(Collectors.toList());
         page.setRecords(newList);
         return page;
+    }
+
+    private Integer getCountsFromRedis(String key) {
+        String countsStr = redisUtil.get(key);
+        if (StringUtils.isBlank(countsStr)) {
+            countsStr = "0";
+            redisUtil.set(key,countsStr);
+        }
+        return Integer.valueOf(countsStr);
     }
 
     @Override
@@ -67,7 +76,7 @@ public class MedicineServiceImpl extends ServiceImpl<MedicineMapper, Medicine> i
 //        updateWrapper.eq(Medicine::getId,id);
 //        updateWrapper.set(Medicine::getInventory,oldNumber+addNumber);
         redisUtil.increment(REDIS_MEDICINE_INVENTORY+":"+id,addNumber);
-        Integer nowNumber = Integer.valueOf(redisUtil.get(REDIS_MEDICINE_INVENTORY + ":" + id));
+        Integer nowNumber = getCountsFromRedis(REDIS_MEDICINE_INVENTORY + ":" + id);
         MedicineRecord medicineRecord =new MedicineRecord();
         medicineRecord.setMedicineId(id);
         medicineRecord.setCreateTime(new Date());
