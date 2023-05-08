@@ -12,7 +12,7 @@ public class MedicineRecord {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    private Long MedicineId;
+    private Long medicineId;
 
     private String medicineName;
 

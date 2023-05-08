@@ -1,11 +1,13 @@
 package com.fzz.medical.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fzz.common.enums.ResponseStatusEnum;
+import com.fzz.common.exception.CustomException;
 import com.fzz.common.utils.JsonUtils;
+import com.fzz.common.utils.RedisUtil;
 import com.fzz.medical.mapper.MedicalRecordMapper;
 import com.fzz.medical.service.MedicalRecordService;
 import com.fzz.medical.service.MedicineRecordService;
-import com.fzz.medical.service.MedicineService;
 import com.fzz.model.bo.AddMedicalRecordBO;
 import com.fzz.model.dto.ObjectCountDto;
 import com.fzz.model.entity.MedicalRecord;
@@ -22,10 +24,12 @@ import java.util.List;
 public class MedicalRecordServiceImpl extends ServiceImpl<MedicalRecordMapper, MedicalRecord> implements MedicalRecordService {
 
     @Autowired
-    private MedicineService medicineService;
+    private MedicineRecordService medicineRecordService;
 
     @Autowired
-    private MedicineRecordService medicineRecordService;
+    private RedisUtil redisUtil;
+
+    private static final String REDIS_MEDICINE_INVENTORY = "redis_medicine_inventory";
 
 
     @Override
@@ -47,7 +51,14 @@ public class MedicalRecordServiceImpl extends ServiceImpl<MedicalRecordMapper, M
                 medicineRecord.setType(0);
                 medicineRecordList.add(medicineRecord);
             }
-            medicineRecordService.saveBatch(medicineRecordList);
+            boolean res = medicineRecordService.saveBatch(medicineRecordList);
+            if(res){
+                for (ObjectCountDto objectCountDto:medicineList){
+                    redisUtil.decrement(REDIS_MEDICINE_INVENTORY+":"+objectCountDto.getId(),objectCountDto.getCount());
+                }
+            }else{
+                throw new CustomException(ResponseStatusEnum.SYSTEM_BUSY_ERROR);
+            }
         }
 
         return this.save(medicalRecord);
