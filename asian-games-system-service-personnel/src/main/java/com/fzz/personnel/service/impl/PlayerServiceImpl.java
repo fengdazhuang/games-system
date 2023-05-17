@@ -73,11 +73,11 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
     @Override
     @Transactional
-    public void updateArrivalStatus(Long playerId) {
+    public boolean updateArrivalStatus(Long playerId) {
         LambdaUpdateWrapper<Player> updateWrapper=new LambdaUpdateWrapper<>();
         updateWrapper.eq(Player::getId,playerId);
         updateWrapper.set(Player::getArrivalStatus,0);
-        this.update(updateWrapper);
+        return this.update(updateWrapper);
     }
 
     @Override

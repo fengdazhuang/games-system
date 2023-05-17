@@ -128,7 +128,7 @@ public class PlayerController extends BaseController implements PlayerController
     @Override
     public ReturnResult queryPlayer(Long id) {
         String playerStr = redisUtil.get(REDIS_PLAYER_INFO + ":" + id);
-        Player player=null;
+        Player player;
         if(StringUtils.isBlank(playerStr)){
             player = playerService.getById(id);
             if(player==null){
@@ -152,9 +152,10 @@ public class PlayerController extends BaseController implements PlayerController
                 String id = (String) userList.get(0).get("user_id");
                 Long playerId = Long.valueOf(id);
                 redisUtil.del(REDIS_PLAYER_INFO + ":" + id);
-                playerService.updateArrivalStatus(playerId);
-
-                return ReturnResult.ok();
+                boolean res = playerService.updateArrivalStatus(playerId);
+                if(res){
+                    return ReturnResult.ok();
+                }
             }
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
