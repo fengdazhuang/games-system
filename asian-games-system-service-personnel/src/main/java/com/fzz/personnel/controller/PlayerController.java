@@ -156,6 +156,7 @@ public class PlayerController extends BaseController implements PlayerController
                 if(res){
                     return ReturnResult.ok();
                 }
+                return ReturnResult.error(ResponseStatusEnum.PLAYER_MODIFY_ERROR);
             }
         }
         return ReturnResult.error(ResponseStatusEnum.FACE_NOT_FOUND);
