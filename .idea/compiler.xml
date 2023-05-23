@@ -12,6 +12,7 @@
         <module name="asian-games-system-service-news" />
         <module name="asian-games-system-service-medical" />
         <module name="asian-games-system-service-system" />
+        <module name="asian-games-system-security" />
         <module name="asian-games-system-service-competition" />
         <module name="asian-games-system-common" />
         <module name="asian-games-system-service-api" />
@@ -25,6 +26,7 @@
       <module name="asian-games-system" options="" />
       <module name="asian-games-system-common" options="-parameters" />
       <module name="asian-games-system-model" options="-parameters" />
+      <module name="asian-games-system-security" options="-parameters" />
       <module name="asian-games-system-service-api" options="-parameters" />
       <module name="asian-games-system-service-competition" options="-parameters" />
       <module name="asian-games-system-service-file" options="-parameters" />

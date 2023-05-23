@@ -1,4 +1,4 @@
-package com.fzz.api.mapper;
+package com.fzz.security.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fzz.model.entity.Admin;

@@ -1,7 +1,7 @@
-package com.fzz.api.service;
+package com.fzz.security.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.fzz.api.mapper.AdminMapper;
+import com.fzz.security.mapper.AdminMapper;
 import com.fzz.model.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

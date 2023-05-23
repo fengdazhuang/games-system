@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>asian-games-system-service-api</artifactId>
+    <artifactId>asian-games-system-security</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -19,39 +19,18 @@
     <dependencies>
         <dependency>
             <groupId>com.fzz</groupId>
-            <artifactId>asian-games-system-model</artifactId>
+            <artifactId>asian-games-system-service-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <!-- swagger2 配置 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-        </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
-
-
-        <!-- 文件上传fdfs工具 -->
         <dependency>
-            <groupId>com.github.tobato</groupId>
-            <artifactId>fastdfs-client</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
-
-
     </dependencies>
 
 </project>
